@@ -1,0 +1,276 @@
+`timescale 1ns / 1ps
+/*
+ * Copyright (C) 2023 Matthew Harlum <matt@harlum.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+module CIDER(
+    inout [15:12] DBUS,
+    input [23:1] ADDR,
+    input UDS_n,
+    input LDS_n,
+    input RW,
+    inout AS_n,
+    inout BERR_n,
+    input BGACK_n,
+    input RESET_n,
+    input ECLK,
+    output DTACK_n,
+// IDE stuff
+    input IDEEN,
+    input IORDY,
+    input INTREQ,
+    output IOR_n,
+    output IOW_n,
+    output IDECS1_n,
+    output IDECS2_n,
+    output IDEBUF_OE,
+// SDRAM Stuff
+    input CFGIN_n,
+    input MEMCLK,
+    input RAM_J1,
+    input RAM_J2,
+    output MEMW_n,
+    output RAS_n,
+    output CAS_n,
+    output CKE,
+    output DQML,
+    output DQMH,
+    output RAMCS_n,
+    output [11:0] MA,
+    output [1:0] BA,
+    output RAMOE_n
+    );
+
+`include "globalparams.vh"
+
+`ifdef gayle_ide
+wire gayle_dout;
+wire gayle_access;
+`endif
+wire autoconfig_cycle;
+wire ctrl_access;
+wire [3:0] autoconfig_dout;
+wire [23:1] ram_addr;
+wire ide_dtack;
+wire ram_dtack;
+wire autoconf_dtack;
+reg dtack;
+
+wire ram_access;
+wire ide_access;
+
+reg ram_enabled;
+reg ranger_enabled;
+wire otherram_enabled;
+
+reg ide_enabled;
+
+localparam RAM_FAST_RANGER_OTHER = 2'b11,
+           RAM_FAST_RANGER       = 2'b10,
+           RAM_FAST              = 2'b01,
+           RAM_DISABLED          = 2'b00;
+
+
+always @(posedge RESET_n) begin
+  ide_enabled <= IDEEN;
+  case ({RAM_J1,RAM_J2})
+    RAM_FAST_RANGER_OTHER:
+      begin
+        ram_enabled       <= 1;
+        //otherram_enabled  <= 1;
+        ranger_enabled    <= 1;
+      end
+    RAM_FAST_RANGER:
+      begin
+        ram_enabled      <= 1;
+        //otherram_enabled <= 0;
+        ranger_enabled   <= 1;
+      end
+    RAM_FAST:
+      begin
+        ram_enabled      <= 1;
+        //otherram_enabled <= 0;
+        ranger_enabled   <= 0;
+      end
+    RAM_DISABLED:
+      begin
+        ram_enabled      <= 0;
+        //otherram_enabled <= 0;
+        ranger_enabled   <= 0;
+      end
+  endcase
+end
+
+reg [1:0] UDS_n_sync;
+reg [1:0] LDS_n_sync;
+reg [2:0] AS_n_sync;
+reg [1:0] RW_sync;
+
+always @(posedge MEMCLK or negedge RESET_n) begin
+  if (!RESET_n) begin
+    UDS_n_sync <= 2'b11;
+    LDS_n_sync <= 2'b11;
+    AS_n_sync  <= 3'b111;
+    RW_sync    <= 2'b11;
+  end else begin
+    UDS_n_sync[1:0] <= {UDS_n_sync[0],UDS_n};
+    LDS_n_sync[1:0] <= {LDS_n_sync[0],LDS_n};
+    AS_n_sync[2:0]  <= {AS_n_sync[1:0],AS_n};
+    RW_sync         <= {RW_sync[0],RW};
+  end
+end
+
+reg [1:0] z2_state;
+
+always @(posedge MEMCLK or negedge RESET_n) begin
+  if (!RESET_n) begin
+    z2_state <= Z2_IDLE;
+    dtack    <= 0; 
+  end else begin
+    case (z2_state)
+      Z2_IDLE:
+        begin
+          dtack <= 0;
+          if (~AS_n_sync[2] && (ctrl_access || ram_access || gayle_access || ide_access || autoconfig_cycle)) begin
+            z2_state <= Z2_START;
+          end
+        end
+      Z2_START:
+        begin
+          if (!UDS_n_sync[1] || !LDS_n_sync[1]) begin
+            z2_state <= Z2_DATA;
+          end
+        end
+      Z2_DATA:
+        begin
+          if (ctrl_access || ram_dtack || autoconf_dtack || ide_dtack) begin
+            dtack <= 1'b1;
+            z2_state <= Z2_END;
+          end
+        end
+      Z2_END:
+        if (AS_n_sync[1]) begin
+          dtack <= 0;
+          z2_state <= Z2_IDLE;
+        end
+    endcase
+  end
+end
+Autoconfig AUTOCONFIG (
+  .ADDR (ADDR),
+  .AS_n (AS_n_sync[1]),
+  .RW (RW_sync[1]),
+  .CLK (MEMCLK),
+  .CFGIN_n (CFGIN_n),
+  .DIN (DBUS[15:12]),
+  .RESET_n (RESET_n),
+  .ram_ovr (ram_override),
+  .ram_access (ram_access),
+  .RAM_EN (ram_enabled),
+  .RANGER_EN (ranger_enabled),
+  .OTHER_EN (otherram_enabled),
+  .autoconfig_cycle (autoconfig_cycle),
+  .DOUT (autoconfig_dout),
+  .z2_state (z2_state),
+  .dtack (autoconf_dtack),
+  .maprom_en (maprom_en),
+  .mapext_en (mapext_en),
+  .ctrl_access (ctrl_access),
+  .OVL (OVL)
+);
+
+SDRAM SDRAM (
+  .ADDR (ADDR[23:1]),
+  .z2_state (z2_state),
+  .UDS_n (UDS_n_sync[1]),
+  .LDS_n (LDS_n_sync[1]),
+  .RAM_CYCLE (ram_access),
+  .RESET_n (RESET_n),
+  .RW (RW_sync[1]),
+  .CLK (MEMCLK),
+  .CKE (CKE),
+  .BA (BA),
+  .MADDR (MA),
+  .CAS_n (CAS_n),
+  .RAS_n (RAS_n),
+  .CS_n (RAMCS_n),
+  .WE_n (MEMW_n),
+  .DQML (DQML),
+  .DQMH (DQMH),
+  .dtack (ram_dtack),
+  .ECLK (ECLK)
+);
+
+`ifdef gayle_ide
+IDE IDE (
+  .DIN (DBUS[15]),
+  .DOUT (gayle_dout),
+  .ADDR (ADDR[23:12]),
+  .UDS_n (UDS_n_sync[1]),
+  .LDS_n (LDS_n_sync[1]),
+  .RW (RW),
+  .AS_n (AS_n_sync[2]),
+  .RESET_n (RESET_n),
+  .CLK (MEMCLK),
+  .IDE_ENABLED (ide_enabled),
+  .IORDY (IORDY),
+  .INTREQ (INTREQ),
+  .INT2 (ide_int),
+  .DTACK (ide_dtack),
+  .IOR_n (IOR_n),
+  .IOW_n (IOW_n),
+  .IDECS1_n (IDECS1_n),
+  .IDECS2_n (IDECS2_n),
+  .reg_access (gayle_access),
+  .ide_access (ide_access),
+  .z2_state (z2_state)
+);
+`endif
+
+ControlReg ControlReg (
+  .ADDR (ADDR[23:16]),
+  .DIN (DBUS[15:12]),
+  .CLK (MEMCLK),
+  .ctrl_access (ctrl_access),
+  .RW (RW_sync[1]),
+  .AS_n (AS_n_sync[1]),
+  .z2_state (z2_state),
+  .RESET_n (RESET_n),
+  .maprom_en (maprom_en),
+  .mapext_en (mapext_en),
+  .otherram_en (otherram_enabled),
+  .OVL (OVL)
+);
+
+`ifdef gayle_ide
+assign DBUS[15:12] = ((gayle_access || autoconfig_cycle) && RW && !UDS_n && RESET_n) ? (autoconfig_cycle) ? autoconfig_dout : {gayle_dout, 3'b0} : 'bZ;
+`else
+assign DBUS[15:12] = ((autoconfig_cycle) && RW && !UDS_n && RESET_n) ? autoconfig_dout : 'bZ;
+`endif
+
+assign RAMOE_n = !(ram_access && BERR_n && !AS_n && RESET_n);
+
+wire RAM_OVR = (ctrl_access || ram_override || autoconfig_cycle && !AS_n);
+`ifdef gayle_ide
+wire IDE_OVR = (ide_access || gayle_access && !AS_n);
+`else
+wire IDE_OVR = 1'b0;
+`endif
+
+assign DTACK_n = (dtack && (IDE_OVR || RAM_OVR)) ? 1'b0 : 1'bZ;
+
+assign IDEBUF_OE = !(ide_access && BERR_n && !AS_n && RESET_n);
+
+endmodule
