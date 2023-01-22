@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "CDTV-DIAG")(type "KiCad")(uri "${KIPRJMOD}/Libraries/CDTV-DIAG.kicad_sym")(options "")(descr ""))
+)
