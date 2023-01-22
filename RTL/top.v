@@ -27,15 +27,16 @@ module CIDER(
     input RESET_n,
     input ECLK,
     output DTACK_n,
+    output OVR_n,
 // IDE stuff
     input IDEEN,
     input IORDY,
-    input INTREQ,
     output IOR_n,
     output IOW_n,
     output IDECS1_n,
     output IDECS2_n,
     output IDEBUF_OE,
+    output IDE_ROMEN,
 // SDRAM Stuff
     input CFGIN_n,
     input MEMCLK,
@@ -50,19 +51,22 @@ module CIDER(
     output RAMCS_n,
     output [11:0] MA,
     output [1:0] BA,
-    output RAMOE_n
+    output RAMOE_n,
+// FLASH Stuff
+    input FLASH_BUSY_n,
+    output FLASH_CE_n,
+    output FLASH_A19
     );
+
+assign FLASH_A19 = 0;
 
 `include "globalparams.vh"
 
-`ifdef gayle_ide
-wire gayle_dout;
-wire gayle_access;
-`endif
 wire autoconfig_cycle;
 wire ctrl_access;
+wire flash_access;
 wire [3:0] autoconfig_dout;
-wire [23:1] ram_addr;
+wire [3:0] ctrl_dout;
 wire ide_dtack;
 wire ram_dtack;
 wire autoconf_dtack;
@@ -143,7 +147,7 @@ always @(posedge MEMCLK or negedge RESET_n) begin
       Z2_IDLE:
         begin
           dtack <= 0;
-          if (~AS_n_sync[2] && (ctrl_access || ram_access || gayle_access || ide_access || autoconfig_cycle)) begin
+          if (~AS_n_sync[2] && (ctrl_access || ram_access || ide_access || autoconfig_cycle || flash_access)) begin
             z2_state <= Z2_START;
           end
         end
@@ -155,7 +159,7 @@ always @(posedge MEMCLK or negedge RESET_n) begin
         end
       Z2_DATA:
         begin
-          if (ctrl_access || ram_dtack || autoconf_dtack || ide_dtack) begin
+          if (ctrl_access || ram_dtack || autoconf_dtack || ide_dtack || flash_access) begin
             dtack <= 1'b1;
             z2_state <= Z2_END;
           end
@@ -168,6 +172,7 @@ always @(posedge MEMCLK or negedge RESET_n) begin
     endcase
   end
 end
+
 Autoconfig AUTOCONFIG (
   .ADDR (ADDR),
   .AS_n (AS_n_sync[1]),
@@ -176,7 +181,6 @@ Autoconfig AUTOCONFIG (
   .CFGIN_n (CFGIN_n),
   .DIN (DBUS[15:12]),
   .RESET_n (RESET_n),
-  .ram_ovr (ram_override),
   .ram_access (ram_access),
   .RAM_EN (ram_enabled),
   .RANGER_EN (ranger_enabled),
@@ -188,6 +192,8 @@ Autoconfig AUTOCONFIG (
   .maprom_en (maprom_en),
   .mapext_en (mapext_en),
   .ctrl_access (ctrl_access),
+  .ide_access (ide_access),
+  .flash_access (flash_access),
   .OVL (OVL)
 );
 
@@ -213,35 +219,27 @@ SDRAM SDRAM (
   .ECLK (ECLK)
 );
 
-`ifdef gayle_ide
 IDE IDE (
-  .DIN (DBUS[15]),
-  .DOUT (gayle_dout),
   .ADDR (ADDR[23:12]),
   .UDS_n (UDS_n_sync[1]),
   .LDS_n (LDS_n_sync[1]),
   .RW (RW),
   .AS_n (AS_n_sync[2]),
-  .RESET_n (RESET_n),
   .CLK (MEMCLK),
-  .IDE_ENABLED (ide_enabled),
   .IORDY (IORDY),
-  .INTREQ (INTREQ),
-  .INT2 (ide_int),
   .DTACK (ide_dtack),
   .IOR_n (IOR_n),
   .IOW_n (IOW_n),
   .IDECS1_n (IDECS1_n),
   .IDECS2_n (IDECS2_n),
-  .reg_access (gayle_access),
   .ide_access (ide_access),
-  .z2_state (z2_state)
+  .IDE_ROMEN (IDE_ROMEN)
 );
-`endif
 
 ControlReg ControlReg (
   .ADDR (ADDR[23:16]),
   .DIN (DBUS[15:12]),
+  .DOUT (ctrl_dout),
   .CLK (MEMCLK),
   .ctrl_access (ctrl_access),
   .RW (RW_sync[1]),
@@ -251,25 +249,21 @@ ControlReg ControlReg (
   .maprom_en (maprom_en),
   .mapext_en (mapext_en),
   .otherram_en (otherram_enabled),
+  .FLASH_BUSY_n (FLASH_BUSY_n),
   .OVL (OVL)
 );
 
-`ifdef gayle_ide
-assign DBUS[15:12] = ((gayle_access || autoconfig_cycle) && RW && !UDS_n && RESET_n) ? (autoconfig_cycle) ? autoconfig_dout : {gayle_dout, 3'b0} : 'bZ;
-`else
-assign DBUS[15:12] = ((autoconfig_cycle) && RW && !UDS_n && RESET_n) ? autoconfig_dout : 'bZ;
-`endif
+assign DBUS[15:12] = (autoconfig_cycle || ctrl_access) && RW && !UDS_n && RESET_n ? (autoconfig_cycle) ? autoconfig_dout : ctrl_dout : 'bZ;
 
 assign RAMOE_n = !(ram_access && BERR_n && !AS_n && RESET_n);
 
-wire RAM_OVR = (ctrl_access || ram_override || autoconfig_cycle && !AS_n);
-`ifdef gayle_ide
-wire IDE_OVR = (ide_access || gayle_access && !AS_n);
-`else
-wire IDE_OVR = 1'b0;
-`endif
+assign FLASH_CE_n = !(flash_access && !AS_n);
 
-assign DTACK_n = (dtack && (IDE_OVR || RAM_OVR)) ? 1'b0 : 1'bZ;
+wire RAM_OVR = (ctrl_access || ram_access || autoconfig_cycle && !AS_n);
+wire IDE_OVR = (ide_access && !AS_n);
+
+assign OVR_n   = (IDE_OVR || RAM_OVR || flash_access) ? 1'b0 : 1'bZ;
+assign DTACK_n = (dtack && (IDE_OVR || RAM_OVR || flash_access)) ? 1'b0 : 1'bZ;
 
 assign IDEBUF_OE = !(ide_access && BERR_n && !AS_n && RESET_n);
 

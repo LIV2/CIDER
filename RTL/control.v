@@ -15,14 +15,16 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
  module ControlReg (
+    input AS_n,
     input [23:16] ADDR,
     input [15:12] DIN,
     input CLK,
     input ctrl_access,
+    input FLASH_BUSY_n,
     input RW,
-    input AS_n,
     input [1:0] z2_state,
     input RESET_n,
+    output reg [3:0] DOUT,
     output reg maprom_en,
     output reg mapext_en,
     output reg otherram_en,
@@ -46,15 +48,20 @@ always @(posedge CLK or negedge RESET_n)
         if (ADDR[23:16] == 8'hBF && !RW && !AS_n)
             OVL <= 0; // Write to CIA seen, time to disable early boot overlay
 
-        if (z2_state == Z2_DATA && !dtack && ctrl_access && !RW) begin
-            if (DIN[12]) begin
-                maprom_next <= maprom_next | DIN[15];
-                mapext_next <= mapext_next | DIN[14];
-                otherram_en <= otherram_en | DIN[13];
+        if (z2_state == Z2_DATA && !dtack && ctrl_access) begin
+            if (!RW) begin
+                if (DIN[12]) begin
+                    maprom_next <= maprom_next | DIN[15];
+                    mapext_next <= mapext_next | DIN[14];
+                    otherram_en <= otherram_en | DIN[13];
+                end else begin
+                    maprom_next <= maprom_next & ~DIN[15];
+                    mapext_next <= mapext_next & ~DIN[14];
+                    otherram_en <= otherram_en & ~DIN[13];
+                end
             end else begin
-                maprom_next <= maprom_next & ~DIN[15];
-                mapext_next <= mapext_next & ~DIN[14];
-                otherram_en <= otherram_en & ~DIN[13];
+                DOUT[3] <= FLASH_BUSY_n;
+                DOUT[1] <= otherram_en;
             end
             dtack <= 1;
         end else begin

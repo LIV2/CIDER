@@ -269,8 +269,8 @@ always @(posedge CLK or negedge RESET_n) begin
         begin
           `cmd(cmd_write)
           MADDR[11:0] <= {4'b010,ADDR[9:1]};
-          DQMH      <= UDS_n;
-          DQML      <= LDS_n;
+          DQMH        <= UDS_n;
+          DQML        <= LDS_n;
           ram_state   <= precharge_wait;
         end
 

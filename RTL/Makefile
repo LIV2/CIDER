@@ -2,12 +2,12 @@ PROJECT=CIDER
 PART=XC95144XL-10-TQ100
 WORKDIR=tmp
 SERIAL=0
-PRODID=73
-DEFINES=makedefines gayle_ide SERIAL=32'h${SERIAL} PRODID=${PRODID}
+PRODID=74
+DEFINES=makedefines SERIAL=32'h${SERIAL} PRODID=${PRODID}
 
 CABLE=usb21
 
-CPLDFITFLAGS=-loc off -slew slow -init low -terminate keeper -optimize speed -keepio
+CPLDFITFLAGS=-loc on -slew slow -init low -terminate keeper -optimize density -keepio
 
 .PHONY:	all clean
 

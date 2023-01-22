@@ -7,10 +7,10 @@ run
 -ofmt NGC
 -p xc9500xl
 -top CIDER
--opt_mode Speed
+-opt_mode Area
 -opt_level 2
 -iuc NO
--keep_hierarchy No
+-keep_hierarchy Yes
 -netlist_hierarchy As_Optimized
 -rtlview No
 -hierarchy_separator /
