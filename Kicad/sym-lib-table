@@ -1,3 +1,5 @@
 (sym_lib_table
   (lib (name "CDTV-DIAG")(type "KiCad")(uri "${KIPRJMOD}/Libraries/CDTV-DIAG.kicad_sym")(options "")(descr ""))
+  (lib (name "29F160")(type "KiCad")(uri "${KIPRJMOD}/Libraries/29F160.kicad_sym")(options "")(descr ""))
+  (lib (name "39SF010-TSOP")(type "KiCad")(uri "${KIPRJMOD}/Libraries/39SF010-TSOP.kicad_sym")(options "")(descr ""))
 )
