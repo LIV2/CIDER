@@ -11,7 +11,7 @@ CPLDFITFLAGS=-loc on -slew slow -init low -terminate keeper -optimize density -k
 
 .PHONY:	all clean
 
-all:	$(PROJECT).jed $(PROJECT).rpt
+all:	$(PROJECT).jed
 
 $(PROJECT).prj: *.v
 	-$(shell rm -f $@)
@@ -27,9 +27,7 @@ $(WORKDIR)/%.ngd:	$(WORKDIR)/%.ngc $(PROJECT).ucf
 
 $(WORKDIR)/%.rpt $(WORKDIR)/%.vm6:	$(WORKDIR)/%.ngd $(PROJECT).ucf
 	cd $(WORKDIR) && cpldfit $(CPLDFITFLAGS) -p $(PART) ../$< | egrep -v "^CS: block|^$$"
-
-%.rpt:	$(WORKDIR)/%.rpt
-	cp $< $@
+	cp $(WORKDIR)/$(PROJECT).rpt .
 
 %.jed:	$(WORKDIR)/%.vm6
 	hprep6 -i $<
