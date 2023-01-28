@@ -741,6 +741,9 @@
     (path "/d38593d3-05da-4175-a3d2-50fbeb925878/16b865db-10ee-4394-8a67-f33ca5f2d8d8"
       (reference "#PWR060") (unit 1) (value "GND") (footprint "")
     )
+    (path "/56208f6c-5bb1-4cf5-b245-158039d3a48a/d28ebdd1-6206-4d71-a9a8-b64b371116e3"
+      (reference "#PWR0101") (unit 1) (value "VCC") (footprint "")
+    )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/e000336a-200f-46b9-a82c-1a20eb3f6b2b"
       (reference "C1") (unit 1) (value "0.1u") (footprint "Capacitor_SMD:C_0603_1608Metric")
     )
@@ -825,14 +828,17 @@
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/c947839d-6612-4454-8256-bf64cecbe088"
       (reference "CN1") (unit 1) (value "CDTV-DIAG") (footprint "KEL-8800-080-170SF:KEL-8800-080-170S")
     )
+    (path "/56208f6c-5bb1-4cf5-b245-158039d3a48a/8ab454ae-a933-4eb4-b543-b5a3033e6482"
+      (reference "F1") (unit 1) (value "Polyfuse 500mA Hold") (footprint "Fuse:Fuse_1206_3216Metric")
+    )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/a5c0f049-d21d-47b2-b675-e75dc20f5d87"
       (reference "J1") (unit 1) (value "Conn_01x06_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical")
     )
     (path "/56208f6c-5bb1-4cf5-b245-158039d3a48a/e08a6b5e-97ae-43bc-9ee6-6ea267650d8c"
       (reference "J2") (unit 1) (value "LED") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
     )
-    (path "/56208f6c-5bb1-4cf5-b245-158039d3a48a/4af24b9a-d571-4637-bbaa-b031fec04151"
-      (reference "J3") (unit 1) (value "IDE") (footprint "Connector_IDC:IDC-Header_2x20_P2.54mm_Vertical")
+    (path "/56208f6c-5bb1-4cf5-b245-158039d3a48a/9ff05fab-792e-4354-b3f3-98a2cc1d598c"
+      (reference "J3") (unit 1) (value "Conn_02x22_Odd_Even") (footprint "Connector_PinHeader_2.00mm:PinHeader_2x22_P2.00mm_Vertical")
     )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/16afb78f-9840-4109-926c-6523efea2b7d"
       (reference "JP1") (unit 1) (value "disable_ide") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
