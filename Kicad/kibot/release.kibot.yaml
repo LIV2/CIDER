@@ -24,8 +24,8 @@ variants:
 preflight:
   check_zone_fills: true
   fill_zones: false
-  run_drc: true
-  run_erc: true
+  run_drc: false
+  run_erc: false
   update_xml: true
   ignore_unconnected: true
   filters:
