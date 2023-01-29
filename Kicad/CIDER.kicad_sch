@@ -590,9 +590,6 @@
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/372e813c-74fd-4410-b8cd-4ba1e9ea5b13"
       (reference "#PWR022") (unit 1) (value "GND") (footprint "")
     )
-    (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/83c6f498-1737-46fd-9939-7a704cbe7bc0"
-      (reference "#PWR023") (unit 1) (value "GND") (footprint "")
-    )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/b91c78da-e7cf-4abf-be23-4b7b6a3604c8"
       (reference "#PWR024") (unit 1) (value "GND") (footprint "")
     )
@@ -806,9 +803,6 @@
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/16afb78f-9840-4109-926c-6523efea2b7d"
       (reference "JP1") (unit 1) (value "disable_ide") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
     )
-    (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/0546dfef-0b20-46db-88b2-54c5e3c6a782"
-      (reference "JP2") (unit 1) (value "configure_ram") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
-    )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/ca4187d0-0cb9-4f09-a425-58249113e5a8"
       (reference "JP3") (unit 1) (value "configure_ram") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
     )
@@ -817,9 +811,6 @@
     )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/b983e3dd-5648-48ee-bf61-be81ab4c0939"
       (reference "R2") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0603_1608Metric")
-    )
-    (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/b5ed5c18-3ece-453d-ab3a-12e3e8fd6058"
-      (reference "R3") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/0e73faa4-6b3e-41c8-b5e9-d98ee820736a"
       (reference "R4") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0603_1608Metric")
@@ -867,10 +858,10 @@
       (reference "U7") (unit 1) (value "74LVC245") (footprint "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm")
     )
     (path "/630b208b-10ae-4511-a2aa-10492c9d744e/f85146a4-5354-490b-8e09-2aa488935f99"
-      (reference "U8") (unit 1) (value "MT48LC4M16A2P") (footprint "Package_SO:TSOP-II-54_22.2x10.16mm_P0.8mm")
+      (reference "U8") (unit 1) (value "MT48LC8M16A2P") (footprint "Package_SO:TSOP-II-54_22.2x10.16mm_P0.8mm")
     )
     (path "/630b208b-10ae-4511-a2aa-10492c9d744e/c91b776f-b9d0-40e6-94a1-73200e57bb6b"
-      (reference "U8") (unit 2) (value "MT48LC4M16A2P") (footprint "Package_SO:TSOP-II-54_22.2x10.16mm_P0.8mm")
+      (reference "U8") (unit 2) (value "MT48LC8M16A2P") (footprint "Package_SO:TSOP-II-54_22.2x10.16mm_P0.8mm")
     )
     (path "/d38593d3-05da-4175-a3d2-50fbeb925878/5f369ce2-aa99-4769-9c3e-df1bb60bbb88"
       (reference "U9") (unit 1) (value "29F160") (footprint "Package_SO:TSOP-I-48_18.4x12mm_P0.5mm")
