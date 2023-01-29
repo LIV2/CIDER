@@ -18,12 +18,11 @@
 module CIDER(
     inout [15:12] DBUS,
     input [23:1] ADDR,
+    input BERR_n,
     input UDS_n,
     input LDS_n,
     input RW,
     inout AS_n,
-    inout BERR_n,
-    input BGACK_n,
     input RESET_n,
     input ECLK,
     output DTACK_n,
@@ -41,7 +40,6 @@ module CIDER(
     input CFGIN_n,
     input MEMCLK,
     input RAM_J1,
-    input RAM_J2,
     output MEMW_n,
     output RAS_n,
     output CAS_n,
@@ -75,47 +73,13 @@ reg dtack;
 wire ram_access;
 wire ide_access;
 
-reg ram_enabled;
-reg ranger_enabled;
 wire otherram_enabled;
-
-reg ide_enabled;
 
 localparam RAM_FAST_RANGER_OTHER = 2'b11,
            RAM_FAST_RANGER       = 2'b10,
            RAM_FAST              = 2'b01,
            RAM_DISABLED          = 2'b00;
 
-
-always @(posedge RESET_n) begin
-  ide_enabled <= IDEEN;
-  case ({RAM_J1,RAM_J2})
-    RAM_FAST_RANGER_OTHER:
-      begin
-        ram_enabled       <= 1;
-        //otherram_enabled  <= 1;
-        ranger_enabled    <= 1;
-      end
-    RAM_FAST_RANGER:
-      begin
-        ram_enabled      <= 1;
-        //otherram_enabled <= 0;
-        ranger_enabled   <= 1;
-      end
-    RAM_FAST:
-      begin
-        ram_enabled      <= 1;
-        //otherram_enabled <= 0;
-        ranger_enabled   <= 0;
-      end
-    RAM_DISABLED:
-      begin
-        ram_enabled      <= 0;
-        //otherram_enabled <= 0;
-        ranger_enabled   <= 0;
-      end
-  endcase
-end
 
 reg [1:0] UDS_n_sync;
 reg [1:0] LDS_n_sync;
@@ -141,7 +105,7 @@ reg [1:0] z2_state;
 always @(posedge MEMCLK or negedge RESET_n) begin
   if (!RESET_n) begin
     z2_state <= Z2_IDLE;
-    dtack    <= 0; 
+    dtack    <= 0;
   end else begin
     case (z2_state)
       Z2_IDLE:
@@ -182,8 +146,8 @@ Autoconfig AUTOCONFIG (
   .DIN (DBUS[15:12]),
   .RESET_n (RESET_n),
   .ram_access (ram_access),
-  .RAM_EN (ram_enabled),
-  .RANGER_EN (ranger_enabled),
+  .RAM_EN (RAM_J1),
+  .RANGER_EN (RAM_J1),
   .OTHER_EN (otherram_enabled),
   .autoconfig_cycle (autoconfig_cycle),
   .DOUT (autoconfig_dout),
@@ -233,6 +197,7 @@ IDE IDE (
   .IDECS1_n (IDECS1_n),
   .IDECS2_n (IDECS2_n),
   .ide_access (ide_access),
+  .ide_enabled (IDEEN),
   .IDE_ROMEN (IDE_ROMEN)
 );
 
@@ -255,7 +220,7 @@ ControlReg ControlReg (
 
 assign DBUS[15:12] = (autoconfig_cycle || ctrl_access) && RW && !UDS_n && RESET_n ? (autoconfig_cycle) ? autoconfig_dout : ctrl_dout : 'bZ;
 
-assign RAMOE_n = !(ram_access && BERR_n && !AS_n && RESET_n);
+assign RAMOE_n = !(ram_access && !AS_n && RESET_n);
 
 assign FLASH_CE_n = !(flash_access && !AS_n);
 
@@ -265,6 +230,6 @@ wire IDE_OVR = (ide_access && !AS_n);
 assign OVR_n   = (IDE_OVR || RAM_OVR || flash_access) ? 1'b0 : 1'bZ;
 assign DTACK_n = (dtack && (IDE_OVR || RAM_OVR || flash_access)) ? 1'b0 : 1'bZ;
 
-assign IDEBUF_OE = !(ide_access && BERR_n && !AS_n && RESET_n);
+assign IDEBUF_OE = !(ide_access && !AS_n && RESET_n);
 
 endmodule

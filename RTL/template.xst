@@ -7,7 +7,7 @@ run
 -ofmt NGC
 -p xc9500xl
 -top CIDER
--opt_mode Area
+-opt_mode speed
 -opt_level 2
 -iuc NO
 -keep_hierarchy Yes

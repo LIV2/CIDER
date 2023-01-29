@@ -25,6 +25,7 @@ module IDE(
     input CLK,
     input ide_access,
     input IORDY,
+    input ide_enabled,
     output DTACK,
     output reg IOR_n,
     output reg IOW_n,
@@ -37,10 +38,10 @@ wire ds = !UDS_n || !LDS_n;
 
 reg ide_dtack;
 
-assign IDECS1_n = !(ide_access && ADDR[15:14] == 2'b00 && !ADDR[12]);
-assign IDECS2_n = !(ide_access && ADDR[15:14] == 2'b00 && ADDR[12]);
+assign IDECS1_n = !(ide_access && ADDR[15:14] == 2'b00 && !ADDR[12]) || !ide_enabled;
+assign IDECS2_n = !(ide_access && ADDR[15:14] == 2'b00 && ADDR[12]) || !ide_enabled;
 
-assign IDE_ROMEN = !(ide_access && (ADDR[15] == 1 || ADDR[14] == 1));
+assign IDE_ROMEN = !(ide_access && (!ide_enabled || ADDR[15] == 1 || ADDR[14] == 1));
 
 reg [2:0] ds_delay;
 
