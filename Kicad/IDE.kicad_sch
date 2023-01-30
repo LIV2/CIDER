@@ -895,6 +895,7 @@
   (no_connect (at 105.41 161.925) (uuid 2f41237b-1529-4825-9aec-6a681e8796c5))
   (no_connect (at 197.485 103.505) (uuid 88db8e22-4cb0-4f00-8553-5a84030d1442))
   (no_connect (at 197.485 106.045) (uuid b163fa5f-977b-45a1-871e-45d7ae2f3ed9))
+  (no_connect (at 197.485 118.745) (uuid c5dc7703-5743-405a-b927-bfcd9943c63c))
   (no_connect (at 197.485 88.265) (uuid eebae964-7620-40b4-85e8-435f271ded6c))
 
   (bus_entry (at 73.025 97.155) (size 2.54 2.54)
@@ -1976,7 +1977,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 39688e05-3c69-46e1-a7c3-ebee700715b7)
   )
-  (label "~{RESET}" (at 80.01 164.465 180)
+  (label "~{RST}" (at 80.01 164.465 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 3b3f27be-6e38-47f2-a6f6-db54d97ccc31)
   )

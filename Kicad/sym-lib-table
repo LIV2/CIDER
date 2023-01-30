@@ -2,4 +2,5 @@
   (lib (name "CDTV-DIAG")(type "KiCad")(uri "${KIPRJMOD}/Libraries/CDTV-DIAG.kicad_sym")(options "")(descr ""))
   (lib (name "29F160")(type "KiCad")(uri "${KIPRJMOD}/Libraries/29F160.kicad_sym")(options "")(descr ""))
   (lib (name "39SF010-TSOP")(type "KiCad")(uri "${KIPRJMOD}/Libraries/39SF010-TSOP.kicad_sym")(options "")(descr ""))
+  (lib (name "MT48LC8M16A2P")(type "KiCad")(uri "${KIPRJMOD}/Libraries/MT48LC8M16A2P.kicad_sym")(options "")(descr ""))
 )

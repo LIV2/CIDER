@@ -2039,7 +2039,7 @@
     (property "Datasheet" "~" (id 3) (at 86.995 186.69 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "LCSC #" "C117023" (id 4) (at 86.995 186.69 0)
+    (property "LCSC #" "C7171" (id 4) (at 86.995 186.69 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid c03e8bee-ef2a-43eb-a8c0-1d60c9a97ef6))
