@@ -827,6 +827,18 @@
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/689c27d0-1654-4831-a4cf-f0ff1f3a33e5"
       (reference "RN1") (unit 1) (value "R_Pack04") (footprint "Resistor_SMD:R_Array_Convex_4x0603")
     )
+    (path "/630b208b-10ae-4511-a2aa-10492c9d744e/b54956b9-e455-4d14-a564-3a7bd4c7a606"
+      (reference "RN2") (unit 1) (value "R_Pack04") (footprint "Resistor_SMD:R_Array_Convex_4x0603")
+    )
+    (path "/630b208b-10ae-4511-a2aa-10492c9d744e/493fecd9-d3f5-4099-abf0-9ac9312fac38"
+      (reference "RN3") (unit 1) (value "R_Pack04") (footprint "Resistor_SMD:R_Array_Convex_4x0603")
+    )
+    (path "/630b208b-10ae-4511-a2aa-10492c9d744e/1a118d6d-4f6c-4fe2-86f2-dc6f8678016d"
+      (reference "RN4") (unit 1) (value "R_Pack04") (footprint "Resistor_SMD:R_Array_Convex_4x0603")
+    )
+    (path "/630b208b-10ae-4511-a2aa-10492c9d744e/622a6d78-7f2a-4d0b-9a66-0a395de1429b"
+      (reference "RN5") (unit 1) (value "R_Pack04") (footprint "Resistor_SMD:R_Array_Convex_4x0603")
+    )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/c64e7f71-5f52-4706-9302-2f8168b83a4d"
       (reference "SW1") (unit 1) (value "SW_DIP_x04") (footprint "Button_Switch_SMD:SW_DIP_SPSTx04_Slide_Omron_A6H-4101_W6.15mm_P1.27mm")
     )

@@ -1,4 +1,4 @@
 # CDTV IDE + RAM
 
-![PCB](Docs/PCB.png?raw=True)
+![PCB](Docs/Render.png?raw=True)
 

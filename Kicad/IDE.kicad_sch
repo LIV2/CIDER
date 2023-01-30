@@ -2600,7 +2600,7 @@
     (property "Datasheet" "~" (id 3) (at 222.25 113.03 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "LCSC #" "C210831" (id 4) (at 222.25 113.03 0)
+    (property "LCSC #" "C151162" (id 4) (at 222.25 113.03 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid 979e4df7-e9b5-40f8-812e-c86de774265f))
