@@ -20,30 +20,30 @@
     input [15:12] DIN,
     input CLK,
     input ctrl_access,
-    input FLASH_BUSY_n,
+    input flash_enabled,
+    input flash_bank,
     input RW,
     input [1:0] z2_state,
     input RESET_n,
+    output FLASH_A19,
     output reg [3:0] DOUT,
-    output reg maprom_en,
-    output reg mapext_en,
     output reg otherram_en,
     output reg OVL
 );
 
 `include "globalparams.vh"
 
-reg maprom_next = 0;
-reg mapext_next = 0;
 reg dtack;
+reg flash_progbank;
+
+assign FLASH_A19 = (flash_enabled) ? flash_bank : flash_progbank;
 
 always @(posedge CLK or negedge RESET_n)
     if (!RESET_n) begin
-        maprom_en   <= maprom_next;
-        mapext_en   <= mapext_next;
-        otherram_en <= 0;
-        OVL         <= 1;
-        dtack       <= 0;
+        flash_progbank  <= 0;
+        otherram_en     <= 0;
+        OVL             <= 1;
+        dtack           <= 0;
     end else begin
         if (ADDR[23:16] == 8'hBF && !RW && !AS_n)
             OVL <= 0; // Write to CIA seen, time to disable early boot overlay
@@ -51,16 +51,14 @@ always @(posedge CLK or negedge RESET_n)
         if (z2_state == Z2_DATA && !dtack && ctrl_access) begin
             if (!RW) begin
                 if (DIN[12]) begin
-                    maprom_next <= maprom_next | DIN[15];
-                    mapext_next <= mapext_next | DIN[14];
-                    otherram_en <= otherram_en | DIN[13];
+                    flash_progbank  <= flash_progbank | DIN[14];
+                    otherram_en     <= otherram_en        | DIN[13];
                 end else begin
-                    maprom_next <= maprom_next & ~DIN[15];
-                    mapext_next <= mapext_next & ~DIN[14];
-                    otherram_en <= otherram_en & ~DIN[13];
+                    flash_progbank  <= flash_progbank & ~DIN[14];
+                    otherram_en     <= otherram_en    & ~DIN[13];
                 end
             end else begin
-                DOUT[3] <= FLASH_BUSY_n;
+                DOUT[3] <= flash_enabled;
                 DOUT[1] <= otherram_en;
             end
             dtack <= 1;

@@ -28,7 +28,7 @@ module CIDER(
     output DTACK_n,
     output OVR_n,
 // IDE stuff
-    input IDEEN,
+    input IDEEN_n,
     input IORDY,
     output IOR_n,
     output IOW_n,
@@ -39,7 +39,8 @@ module CIDER(
 // SDRAM Stuff
     input CFGIN_n,
     input MEMCLK,
-    input RAM_J1,
+    input RAM_EN_n,
+    input RANGER_EN_n,
     output MEMW_n,
     output RAS_n,
     output CAS_n,
@@ -51,12 +52,11 @@ module CIDER(
     output [1:0] BA,
     output RAMOE_n,
 // FLASH Stuff
-    input FLASH_BUSY_n,
+    input FLASH_BANK,
+    input FLASH_EN_n,
     output FLASH_CE_n,
     output FLASH_A19
     );
-
-assign FLASH_A19 = 0;
 
 `include "globalparams.vh"
 
@@ -68,7 +68,10 @@ wire [3:0] ctrl_dout;
 wire ide_dtack;
 wire ram_dtack;
 wire autoconf_dtack;
+
 reg dtack;
+reg flash_enabled;
+reg flash_bank;
 
 wire ram_access;
 wire ide_access;
@@ -80,6 +83,12 @@ localparam RAM_FAST_RANGER_OTHER = 2'b11,
            RAM_FAST              = 2'b01,
            RAM_DISABLED          = 2'b00;
 
+always @(posedge MEMCLK) begin
+  if (!RESET_n) begin
+    flash_bank <= FLASH_BANK;
+    flash_enabled <= ~FLASH_EN_n;
+  end
+end
 
 reg [1:0] UDS_n_sync;
 reg [1:0] LDS_n_sync;
@@ -146,15 +155,15 @@ Autoconfig AUTOCONFIG (
   .DIN (DBUS[15:12]),
   .RESET_n (RESET_n),
   .ram_access (ram_access),
-  .RAM_EN (RAM_J1),
-  .RANGER_EN (RAM_J1),
+  .RAM_EN (~RAM_EN_n),
+  .RANGER_EN (~RANGER_EN_n),
   .OTHER_EN (otherram_enabled),
   .autoconfig_cycle (autoconfig_cycle),
   .DOUT (autoconfig_dout),
   .z2_state (z2_state),
   .dtack (autoconf_dtack),
-  .maprom_en (maprom_en),
-  .mapext_en (mapext_en),
+  .maprom_en (~FLASH_EN_n),
+  .mapext_en (~FLASH_EN_n),
   .ctrl_access (ctrl_access),
   .ide_access (ide_access),
   .flash_access (flash_access),
@@ -197,7 +206,7 @@ IDE IDE (
   .IDECS1_n (IDECS1_n),
   .IDECS2_n (IDECS2_n),
   .ide_access (ide_access),
-  .ide_enabled (IDEEN),
+  .ide_enabled (IDEEN_n),
   .IDE_ROMEN (IDE_ROMEN)
 );
 
@@ -211,10 +220,10 @@ ControlReg ControlReg (
   .AS_n (AS_n_sync[1]),
   .z2_state (z2_state),
   .RESET_n (RESET_n),
-  .maprom_en (maprom_en),
-  .mapext_en (mapext_en),
   .otherram_en (otherram_enabled),
-  .FLASH_BUSY_n (FLASH_BUSY_n),
+  .flash_enabled (flash_enabled),
+  .FLASH_A19  (FLASH_A19),
+  .flash_bank (flash_bank),
   .OVL (OVL)
 );
 
