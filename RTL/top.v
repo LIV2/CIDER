@@ -52,9 +52,10 @@ module CIDER(
     output [1:0] BA,
     output RAMOE_n,
 // FLASH Stuff
-    input FLASH_BANK,
+    input FLASH_BANK_SEL,
     input FLASH_EN_n,
     output FLASH_CE_n,
+    output FLASH_A18,
     output FLASH_A19
     );
 
@@ -85,7 +86,7 @@ localparam RAM_FAST_RANGER_OTHER = 2'b11,
 
 always @(posedge MEMCLK) begin
   if (!RESET_n) begin
-    flash_bank <= FLASH_BANK;
+    flash_bank <= FLASH_BANK_SEL;
     flash_enabled <= ~FLASH_EN_n;
   end
 end
@@ -222,7 +223,8 @@ ControlReg ControlReg (
   .RESET_n (RESET_n),
   .otherram_en (otherram_enabled),
   .flash_enabled (flash_enabled),
-  .FLASH_A19  (FLASH_A19),
+  .flash_a18  (FLASH_A18),
+  .flash_a19  (FLASH_A19),
   .flash_bank (flash_bank),
   .OVL (OVL)
 );

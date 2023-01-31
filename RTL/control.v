@@ -25,7 +25,8 @@
     input RW,
     input [1:0] z2_state,
     input RESET_n,
-    output FLASH_A19,
+    output flash_a18,
+    output flash_a19,
     output reg [3:0] DOUT,
     output reg otherram_en,
     output reg OVL
@@ -36,7 +37,10 @@
 reg dtack;
 reg flash_progbank;
 
-assign FLASH_A19 = (flash_enabled) ? flash_bank : flash_progbank;
+assign flash_a19 = (flash_enabled) ? flash_bank : flash_progbank;
+
+// Force Flash to Kick rather than Ext rom during early boot access.
+assign flash_a18 = (OVL && !ADDR[23]) ? 1'b1 : ADDR[19];
 
 always @(posedge CLK or negedge RESET_n)
     if (!RESET_n) begin
@@ -52,7 +56,7 @@ always @(posedge CLK or negedge RESET_n)
             if (!RW) begin
                 if (DIN[12]) begin
                     flash_progbank  <= flash_progbank | DIN[14];
-                    otherram_en     <= otherram_en        | DIN[13];
+                    otherram_en     <= otherram_en    | DIN[13];
                 end else begin
                     flash_progbank  <= flash_progbank & ~DIN[14];
                     otherram_en     <= otherram_en    & ~DIN[13];

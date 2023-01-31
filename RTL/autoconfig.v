@@ -97,7 +97,7 @@ begin
             case (ac_state)
               ac_ram:  DOUT <= 2'b10; // Memory / Link to free mem pool
               ac_ide:  DOUT <= 2'b01; // IO / Read from autoboot rom
-              ac_ctl: DOUT <= 2'b00; // IO
+              ac_ctl:  DOUT <= 2'b00; // IO
             endcase
           end
         8'h01:   DOUT <= {3'b000, ac_state == ac_ram ? 1'b0 :  1'b1};  // Size: 8MB : 64KB
@@ -165,10 +165,9 @@ assign otherram_access = bonus_access && OTHER_EN;
 
 assign ranger_access   = (ADDR[23:16] >= 8'hC0) && (ADDR[23:16] <= 8'hD7) && RANGER_EN;
 
-assign ram_access =
-      (ADDR[23:20] >= 4'h2 || ADDR[23:20] <= 4'h9) && ram_configured ||
-      otherram_access ||
-      ranger_access;
+assign ram_access      = (ADDR[23:20] >= 4'h2 || ADDR[23:20] <= 4'h9) && ram_configured ||
+                         otherram_access ||
+                         ranger_access;
 
 assign ctrl_access = (ADDR[23:16] == {4'hF,ctrl_base}) && ctl_configured;
 endmodule
