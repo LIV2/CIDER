@@ -206,6 +206,11 @@
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid e2ef0f92-e9ee-40ef-aecc-9d13b50d48a7)
   )
+
+  (wire (pts (xy 133.985 147.32) (xy 168.275 147.32))
+    (stroke (width 0) (type default) (color 0 0 0 0))
+    (uuid e9df1467-a858-426d-991a-2f721b39c859)
+  )
   (bus (pts (xy 158.115 59.055) (xy 168.275 59.055))
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid eb1be883-1638-4a80-997b-a9fad51bcb0d)
@@ -463,6 +468,10 @@
       (effects (font (size 1.27 1.27)) (justify right))
       (uuid 30bbd0e0-7b87-4f7c-a6f3-a6dc3995a1b0)
     )
+    (pin "FLASH_A18" output (at 133.985 147.32 0)
+      (effects (font (size 1.27 1.27)) (justify right))
+      (uuid d46d8e8e-aeb4-4b8e-836f-5e2de34d06d0)
+    )
   )
 
   (sheet (at 168.275 132.08) (size 12.7 31.115)
@@ -506,6 +515,10 @@
     (pin "~{IDE_ROMCS}" input (at 168.275 156.845 180)
       (effects (font (size 1.27 1.27)) (justify left))
       (uuid 1cb221ae-ee9f-49ef-b3f7-37e4b9357c4b)
+    )
+    (pin "FLASH_A18" input (at 168.275 147.32 180)
+      (effects (font (size 1.27 1.27)) (justify left))
+      (uuid 0463db19-6d7e-4710-b2d0-9f4aad6e3188)
     )
   )
 
