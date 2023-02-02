@@ -43,7 +43,7 @@ module Autoconfig (
 `define maprom
 `ifndef makedefines
 `define SERIAL 32'd421
-`define PRODID 8'74
+`define PRODID 8'd72
 `endif
 
 // Autoconfig
