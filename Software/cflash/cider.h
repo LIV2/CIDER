@@ -1,0 +1,3 @@
+#define SET_BANKBIT 0x5000
+#define CLR_BANKBIT 0x4000
+#define BONUSEN_BIT 0x2000
