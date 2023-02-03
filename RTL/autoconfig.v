@@ -19,7 +19,6 @@ module Autoconfig (
     input AS_n,
     input CLK,
     input RW,
-    input CFGIN_n,
     input [3:0] DIN,
     input RESET_n,
     input RAM_EN,
@@ -57,7 +56,9 @@ reg ctl_configured;
 
 reg [3:0] ide_base;
 reg [3:0] ctrl_base;
-reg CFGOUT;
+reg cdtv_configured;
+reg cfgin;
+reg cfgout;
 
 reg [1:0] ac_state;
 
@@ -66,23 +67,36 @@ localparam ac_ram  = 2'b00,
            ac_ctl  = 2'b10,
            ac_done = 2'b11;
 
-assign autoconfig_cycle = (ADDR[23:16] == 8'hE8) && !CFGIN_n && CFGOUT && RAM_EN;
+assign autoconfig_cycle = (ADDR[23:16] == 8'hE8) && cfgin && !cfgout;
 
-
-always @(posedge AS_n or negedge RESET_n) begin
+// CDTV DMAC is first in chain.
+// So we wait until it's configured before we talk
+always @(posedge CLK or negedge RESET_n) begin
   if (!RESET_n) begin
-    CFGOUT <= 1;
+    cdtv_configured <= 0;
   end else begin
-    CFGOUT <= ~(ac_state == ac_done);
+    if (ADDR[23:16] == 8'hE8 & ADDR[8:1] == 8'h24 & !AS_n & !RW) begin
+      cdtv_configured <= 1'b1;
+    end
   end
 end
 
-// Offers an 8MB block first, if there's no space offer 4MB, 2MB then 1MB before giving up
+// These need to be registered at the end of a bus cycle
+always @(posedge AS_n or negedge RESET_n) begin
+  if (!RESET_n) begin
+    cfgout <= 0;
+    cfgin  <= 0;
+  end else begin
+    cfgin  <= cdtv_configured;
+    cfgout <= (ac_state == ac_done);
+  end
+end
+
 always @(posedge CLK or negedge RESET_n)
 begin
   if (!RESET_n) begin
     DOUT           <= 'b0;
-    ac_state       <= 0;
+    ac_state       <= (RAM_EN) ? ac_ram : ac_ide;
     dtack          <= 0;
     ide_base       <= 4'h0;
     ide_configured <= 0;

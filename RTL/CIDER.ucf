@@ -27,7 +27,6 @@ NET "BA<0>"  LOC = "P27"  ;
 NET "BA<1>"  LOC = "P29"  ;
 NET "BERR_n"  LOC = "P70"  ;
 NET "CAS_n"  LOC = "P20"  ;
-NET "CFGIN_n"  LOC = "P95"  ;
 NET "CKE"  LOC = "P25"  ;
 NET "DBUS<12>"  LOC = "P59"  ;
 NET "DBUS<13>"  LOC = "P58"  ;

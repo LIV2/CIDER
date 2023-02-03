@@ -37,7 +37,6 @@ module CIDER(
     output IDEBUF_OE,
     output IDE_ROMEN,
 // SDRAM Stuff
-    input CFGIN_n,
     input MEMCLK,
     input RAM_EN_n,
     input RANGER_EN_n,
@@ -152,7 +151,6 @@ Autoconfig AUTOCONFIG (
   .AS_n (AS_n_sync[1]),
   .RW (RW_sync[1]),
   .CLK (MEMCLK),
-  .CFGIN_n (CFGIN_n),
   .DIN (DBUS[15:12]),
   .RESET_n (RESET_n),
   .ram_access (ram_access),
