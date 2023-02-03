@@ -7,3 +7,4 @@ Gerbers
 *-erc.txt
 *-drc.txt
 kibot_errors.*
+*.kicad_prl
