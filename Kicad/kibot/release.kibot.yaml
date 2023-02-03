@@ -31,8 +31,6 @@ preflight:
   update_xml: true
   ignore_unconnected: true
   filters:
-    - error: 'pin_not_connected'
-      filter: 'Pin not connected'
     - error: 'silk_overlap'
       filter: 'Silkscreen overlap'
     - error: 'pin_not_driven'
