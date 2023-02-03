@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
               case OP_PROGRAM:
                 if (config->source == SOURCE_ROM) {
                   erase_bank(config->programBank);
-                  printf("Copying Kickstart ROM to bank %d\n",(config->programBank == FLASH_BANK_0) ? 0 : 1);
+                  printf("Copying Kickstart ROM to bank %d\n",(int)config->programBank >> 19);
                   copyBufToFlash((void *)0xF80000,config->programBank,ROM_512K,config->skipVerify);
                 } else {
                   ULONG romSize = 0;
@@ -117,16 +117,14 @@ int main(int argc, char *argv[])
                   if ((romSize = getFileSize(config->ks_filename)) != 0) {
                     if (romSize == ROM_256K || romSize == ROM_512K || romSize == ROM_1M) {
                       if (romSize == ROM_1M) {
-                        erase_chip();
-                      } else {
-                        erase_bank(config->programBank);
+                        if (config->programBank & ODD_BANK) {
+                          config->programBank &= ~(ODD_BANK); // Force alignment of 1MB ROM to Bank 0 or 2
+                          printf("WARN: Cannot write 1MB ROM to odd banks, forcing alignment to bank %d.\n", (int)config->programBank);
+                        }
+                        erase_bank(config->programBank + ROM_512K);
                       }
-                      if (romSize == ROM_1M) {
-                        // Force Bank X0 for 1M rom as it will fill both banks.
-                        copyFileToFlash(config->ks_filename,FLASH_BANK_0,romSize,config->skipVerify);
-                      } else {
-                        copyFileToFlash(config->ks_filename,config->programBank,romSize,config->skipVerify);
-                      }
+                      erase_bank(config->programBank);
+                      copyFileToFlash(config->ks_filename,config->programBank,romSize,config->skipVerify);
                     } else {
                       printf("Bad file size, 256K/512K/1M ROM required.\n");
                       rc = 5;
@@ -428,7 +426,7 @@ bool verifyFile(char *filename, ULONG bank) {
   if ((romSize = getFileSize(filename)) != 0) {
     if (romSize == ROM_256K || romSize == ROM_512K || romSize == ROM_1M) {
         if ((buffer = readFileToBuf(filename)) != NULL) {
-          if (romSize == ROM_1M) bank = FLASH_BANK_0;
+          if (romSize == ROM_1M) bank &= ~(ODD_BANK); // Force alignment to Bank 0 or 2 for 1MB ROM
           success = verifyBank(buffer,bank,romSize);
           FreeMem(buffer,romSize);
       }

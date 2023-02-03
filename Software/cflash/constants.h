@@ -22,6 +22,8 @@
 #define ROM_512K 0x080000
 #define ROM_1M   0x100000
 
+#define ODD_BANK 0x080000
+
 #define FLASH_BANK_0  0x000000
 #define FLASH_BANK_1  0x080000
 #define FLASH_BANK_2  0x100000

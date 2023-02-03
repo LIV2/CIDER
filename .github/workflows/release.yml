@@ -30,3 +30,4 @@ jobs:
             Gerbers/*_bom_jlc.csv
             Gerbers/*_cpl_jlc.csv
             Binary/*.jed
+            Software/cflash/cflash
