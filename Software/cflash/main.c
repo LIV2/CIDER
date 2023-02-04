@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
                       if (romSize == ROM_1M) {
                         if (config->programBank & ODD_BANK) {
                           config->programBank &= ~(ODD_BANK); // Force alignment of 1MB ROM to Bank 0 or 2
-                          printf("WARN: Cannot write 1MB ROM to odd banks, forcing alignment to bank %d.\n", (int)config->programBank);
+                          printf("WARN: Cannot write 1MB ROM to odd banks, forcing alignment to bank %d.\n", (int)config->programBank >> 19);
                         }
                         erase_bank(config->programBank + ROM_512K);
                       }
@@ -226,9 +226,9 @@ int main(int argc, char *argv[])
  * @param bank Address of the bank to erase
 */
 void erase_bank(ULONG bank) {
-  bank = bank >> 19;
+  bank >>= 19;
 
-  printf("Erasing bank %d\n", (int)bank >> 19);
+  printf("Erasing bank %d\n", (int)bank);
   kick_flash_erase_bank(bank);
 }
 

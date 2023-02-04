@@ -48,7 +48,7 @@ void ide_flash_writeByte(UWORD address, UBYTE data) {
  * @brief send a command to the Flash
  * @param command
 */
-void ide_flash_command(UWORD command) {
+void ide_flash_command(UBYTE command) {
   *(UBYTE *)(ide_flashBase + ADDR_CMD_STEP_1) = command;
 
   return;
