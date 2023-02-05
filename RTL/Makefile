@@ -9,9 +9,9 @@ CABLE=usb21
 
 CPLDFITFLAGS=-loc on -slew slow -init low -terminate keeper -optimize speed -keepio
 
-.PHONY:	all clean
+.PHONY:	all clean timing
 
-all:	$(PROJECT).jed
+all:	$(PROJECT).jed timing
 
 $(PROJECT).prj: *.v
 	-$(shell rm -f $@)
@@ -35,6 +35,12 @@ $(WORKDIR)/%.rpt $(WORKDIR)/%.vm6:	$(WORKDIR)/%.ngd $(PROJECT).ucf
 
 fit:	$(WORKDIR)/$(PROJECT).vm6
 
+
+%.tim:	$(WORKDIR)/%.vm6
+	cd $(WORKDIR) && taengine -l ../$@ -f $(PROJECT)
+
+
+timing:	$(PROJECT).tim
 
 clean:
 	-rm -rvf tmp
