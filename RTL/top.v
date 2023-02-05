@@ -26,7 +26,8 @@ module CIDER(
     input RESET_n,
     input ECLK,
     output DTACK_n,
-    output OVR_n,
+    output OVR_1_n,
+    output OVR_2_n,
 // IDE stuff
     input IDEEN_n,
     input IORDY,
@@ -233,11 +234,12 @@ assign RAMOE_n = !(ram_access && !AS_n && RESET_n);
 
 assign FLASH_CE_n = !(flash_access && !AS_n);
 
-wire RAM_OVR = (ctrl_access || ram_access || autoconfig_cycle && !AS_n);
-wire IDE_OVR = (ide_access && !AS_n);
+wire OVR = ((ram_access || ide_access || flash_access) && !AS_n) ? 1'b0 : 1'bZ;
 
-assign OVR_n   = (IDE_OVR || RAM_OVR || flash_access) ? 1'b0 : 1'bZ;
-assign DTACK_n = (dtack && (IDE_OVR || RAM_OVR || flash_access)) ? 1'b0 : 1'bZ;
+assign OVR_1_n = OVR;
+assign OVR_2_n = OVR;
+
+assign DTACK_n = ((ram_access || ide_access || flash_access) && !AS_n && dtack) ? 1'b0 : 1'bZ;
 
 assign IDEBUF_OE = !(ide_access && !AS_n && RESET_n);
 
