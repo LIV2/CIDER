@@ -183,5 +183,5 @@ assign ram_access      = (ADDR[23:20] >= 4'h2 || ADDR[23:20] <= 4'h9) && ram_con
                          otherram_access ||
                          ranger_access;
 
-assign ctrl_access = (ADDR[23:16] == {4'hF,ctrl_base}) && ctl_configured;
+assign ctrl_access = (ADDR[23:16] == {4'hE,ctrl_base}) && ctl_configured;
 endmodule
