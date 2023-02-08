@@ -52,5 +52,4 @@ Designator,Val,Package,Mid X,Mid Y,Rotation,Layer
 "U7","74LVC245","TSSOP-20_4.4x6.5mm_P0.65mm",142.4941,-138.3747,90.0000,top
 "U8","MT48LC8M16A2P","TSOP-II-54_22.2x10.16mm_P0.8mm",164.5412,-141.8590,0.0000,top
 "U9","29F160","TSOP-I-48_18.4x12mm_P0.5mm",131.4940,-112.5988,0.0000,top
-"U10","SST39SF010","TSOP-I-32_11.8x8mm_P0.5mm",131.4940,-125.7808,180.0000,top
 "X1","50MHz","Oscillator_SMD_Abracon_ASE-4Pin_3.2x2.5mm_HandSoldering",154.7706,-130.0891,-90.0000,top
