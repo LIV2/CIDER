@@ -5,12 +5,12 @@ Design:     CIDER
 Device:     XC95144XL-10-TQ100
 Speed File: Version 3.0
 Program:    Timing Report Generator:  version P.20131013
-Date:       Mon Feb  6 00:24:03 2023
+Date:       Sun Feb 19 08:43:44 2023
 
 Performance Summary:
 
-Pad to Pad (tPD)                          :         20.1ns (2 macrocell levels)
-Pad 'ADDR<23>' to Pad 'DBUS<12>'                                  
+Pad to Pad (tPD)                          :         41.8ns (5 macrocell levels)
+Pad 'ADDR<19>' to Pad 'DBUS<12>'                                  
 
 Clock net 'AS_n_sync<1>.Q' path delays:
 
@@ -30,19 +30,19 @@ Target FF drives output net 'SDRAM/refresh_timer<0>'
 
 Clock net 'MEMCLK' path delays:
 
-Clock Pad to Output Pad (tCO)             :         30.1ns (4 macrocell levels)
+Clock Pad to Output Pad (tCO)             :         45.3ns (6 macrocell levels)
 Clock Pad 'MEMCLK' to Output Pad 'DBUS<12>'                               (GCK)
 
-Clock to Setup (tCYC)                     :         20.3ns (2 macrocell levels)
-Clock to Q, net 'AUTOCONFIG/ctrl_base<3>.Q' to TFF Setup(D) at 'z2_state_FSM_FFd2.D'        (GCK)
-Target FF drives output net 'z2_state_FSM_FFd2'
+Clock to Setup (tCYC)                     :         40.8ns (5 macrocell levels)
+Clock to Q, net 'AUTOCONFIG/ctrl_base<3>.Q' to DFF Setup(D) at 'ControlReg/otherram_en.D'        (GCK)
+Target FF drives output net 'ControlReg/otherram_en'
 
-Setup to Clock at the Pad (tSU)           :         16.8ns (1 macrocell levels)
-Data signal 'ADDR<19>' to TFF D input Pin at 'z2_state_FSM_FFd2.D'
+Setup to Clock at the Pad (tSU)           :         37.3ns (4 macrocell levels)
+Data signal 'ADDR<19>' to DFF D input Pin at 'ControlReg/otherram_en.D'
 Clock pad 'MEMCLK'                                                        (GCK)
 
-                          Minimum Clock Period: 20.3ns
-                     Maximum Internal Clock Speed: 49.2Mhz
+                          Minimum Clock Period: 40.8ns
+                     Maximum Internal Clock Speed: 24.5Mhz
                             (Limited by Cycle Time)
 
 --------------------------------------------------------------------------------
@@ -53,59 +53,59 @@ Clock pad 'MEMCLK'                                                        (GCK)
   \             D     D     D     D     D     D     D     D     D     D     D
    \            R     R     R     R     R     R     R     R     R     R     R
     \           <     <     <     <     <     <     <     <     <     <     <
-     \          1     1     1     1     1     1     1     2     2     2     2
-      \         2     4     5     6     7     8     9     0     1     2     3
+     \          1     1     1     1     1     1     1     1     2     2     2
+      \         2     3     4     5     6     7     8     9     0     1     2
        \        >     >     >     >     >     >     >     >     >     >     >
         \                                                                    
          \                                                                   
           \                                                                  
   To       \------------------------------------------------------------------
 
-DBUS<12>                       20.1  20.1  20.1  20.1  20.1  20.1  20.1  20.1
-DBUS<13>                       20.1  20.1  20.1  20.1  20.1  20.1  20.1  20.1
-DBUS<14>                       20.1  20.1  20.1  20.1  20.1  20.1  20.1  20.1
-DBUS<15>                       20.1  20.1  20.1  20.1  20.1  20.1  20.1  20.1
-DTACK_n                        19.7  20.1  20.1  20.1  20.1  20.1  20.1  19.7
-FLASH_A18                                        14.5                    14.5
-FLASH_CE_n                           14.5  14.5  14.5  15.5  15.5  15.5  15.5
-IDEBUF_OE                      15.9  16.3  15.9  16.3  15.5  15.5  15.5  14.5
-IDECS1_n     15.9  15.9  15.9  15.9  15.9  15.9  15.9  15.9  15.9  15.9  15.9
-IDECS2_n     16.3  16.3  16.3  16.3  16.3  16.3  16.3  16.3  16.3  16.3  16.3
-IDE_ROMEN          15.9  15.9  15.5  15.9  15.5  15.9  14.5  14.5  15.5  14.5
-OVR_1_n                        19.7  20.1  20.1  20.1  20.1  20.1  20.1  19.7
-OVR_2_n                        19.7  20.1  20.1  20.1  20.1  20.1  20.1  19.7
-RAMOE_n                              15.5  15.5  15.9  15.5  15.9  15.9  15.9
+DBUS<12>                             26.4  34.1  34.1  41.8  34.1  34.1  34.1
+DBUS<13>                             26.4  34.1  34.1  41.8  34.1  34.1  34.1
+DBUS<14>                             26.4  34.1  34.1  41.8  34.1  34.1  34.1
+DBUS<15>                             26.4  34.1  34.1  41.8  34.1  34.1  34.1
+DTACK_n                              34.1  34.1  34.1  41.8  34.1  34.1  34.1
+FLASH_A18                                              14.5                  
+FLASH_CE_n                                 29.9  29.9  29.9  29.9  22.2  22.2
+IDEBUF_OE                            29.9  29.9  22.2  37.6  29.9  29.9  29.9
+IDECS1_n     14.5        14.5  14.5  29.9  29.9  22.2  37.6  29.9  29.9  29.9
+IDECS2_n           14.5  14.5  14.5  29.9  29.9  22.2  37.6  29.9  29.9  29.9
+IDE_ROMEN                            29.9  29.9  22.2  37.6  29.9  29.9  29.9
+OVR_1_n                              34.1  34.1  34.1  41.8  34.1  34.1  34.1
+OVR_2_n                              34.1  34.1  34.1  41.8  34.1  34.1  34.1
+RAMOE_n                                    29.9  29.9  29.9  29.9  23.2  23.2
 
 --------------------------------------------------------------------------------
                             Pad to Pad (tPD) (nsec)
 
-\ From          A     F     I     R     R     R     U
- \              S     L     D     A     E     W     D
-  \             _     A     E     N     S           S
-   \            n     S     E     G     E           _
-    \                 H     N     E     T           n
-     \                _     _     R     _            
-      \               E     n     _     n            
-       \              N           E                  
-        \             _           N                  
-         \            n           _                  
+\ From          A     A     F     R     R     R     U
+ \              D     S     L     A     E     W     D
+  \             D     _     A     N     S           S
+   \            R     n     S     G     E           _
+    \           <           H     E     T           n
+     \          2           _     R     _            
+      \         3           E     _     n            
+       \        >           N     E                  
+        \                   _     N                  
+         \                  n     _                  
           \                       n                  
   To       \------------------------------------------
 
-DBUS<12>                             11.0  11.0  11.0
-DBUS<13>                             11.0  11.0  11.0
-DBUS<14>                             11.0  11.0  11.0
-DBUS<15>                             11.0  11.0  11.0
-DTACK_n      11.0  19.7        19.7                  
-FLASH_A18                                            
-FLASH_CE_n   15.5  15.5                              
-IDEBUF_OE    15.5                    15.5            
-IDECS1_n                 15.9                        
-IDECS2_n                 16.3                        
-IDE_ROMEN                15.9                        
-OVR_1_n      11.0  19.7        19.7                  
-OVR_2_n      11.0  19.7        19.7                  
-RAMOE_n      15.9              15.9  15.9            
+DBUS<12>     34.1                    11.0  11.0  11.0
+DBUS<13>     34.1                    11.0  11.0  11.0
+DBUS<14>     34.1                    11.0  11.0  11.0
+DBUS<15>     34.1                    11.0  11.0  11.0
+DTACK_n      34.1  11.0  26.4  27.4                  
+FLASH_A18    15.5                                    
+FLASH_CE_n   22.2  14.5  22.2                        
+IDEBUF_OE    29.9                                    
+IDECS1_n     29.9                                    
+IDECS2_n     29.9                                    
+IDE_ROMEN    29.9                                    
+OVR_1_n      34.1  11.0  26.4  27.4                  
+OVR_2_n      34.1  11.0  26.4  27.4                  
+RAMOE_n      23.2  14.5        23.2  14.5            
 
 --------------------------------------------------------------------------------
                       Clock Pad to Output Pad (tCO) (nsec)
@@ -126,20 +126,20 @@ BA<0>       10.3
 BA<1>       10.3
 CAS_n       10.3
 CKE         10.3
-DBUS<12>    30.1
-DBUS<13>    30.1
-DBUS<14>    30.1
-DBUS<15>    30.1
+DBUS<12>    45.3
+DBUS<13>    45.3
+DBUS<14>    45.3
+DBUS<15>    45.3
 DQMH        10.3
 DQML        10.3
-DTACK_n     23.6
-FLASH_A18   18.0
+DTACK_n     45.3
+FLASH_A18   19.0
 FLASH_A19   18.0
-FLASH_CE_n  19.0
-IDEBUF_OE   19.8
-IDECS1_n    19.4
-IDECS2_n    19.8
-IDE_ROMEN   19.4
+FLASH_CE_n  25.7
+IDEBUF_OE   41.1
+IDECS1_n    41.1
+IDECS2_n    41.1
+IDE_ROMEN   41.1
 IOR_n       10.3
 IOW_n       10.3
 MA<0>       10.3
@@ -155,10 +155,10 @@ MA<7>       10.3
 MA<8>       10.3
 MA<9>       10.3
 MEMW_n      10.3
-OVR_1_n     23.6
-OVR_2_n     23.6
+OVR_1_n     45.3
+OVR_2_n     45.3
 RAMCS_n     10.3
-RAMOE_n     19.0
+RAMOE_n     25.7
 RAS_n       10.3
 
 --------------------------------------------------------------------------------
@@ -181,41 +181,42 @@ RAS_n       10.3
   To          \------
 
 ADDR<10>         7.5
-ADDR<11>         7.5
-ADDR<12>         7.5
+ADDR<11>         6.5
+ADDR<12>         6.5
 ADDR<13>         6.5
 ADDR<14>         6.5
-ADDR<15>         7.5
-ADDR<16>        16.6
-ADDR<17>        16.6
-ADDR<18>        16.6
-ADDR<19>        16.8
-ADDR<1>          7.5
-ADDR<20>        16.6
-ADDR<21>        16.6
-ADDR<22>        16.6
-ADDR<23>        16.6
+ADDR<15>         6.5
+ADDR<16>        29.6
+ADDR<17>        29.6
+ADDR<18>        29.6
+ADDR<19>        37.3
+ADDR<1>         14.2
+ADDR<20>        29.6
+ADDR<21>        29.6
+ADDR<22>        29.6
+ADDR<23>        29.6
 ADDR<2>          7.5
-ADDR<3>          7.5
-ADDR<4>          7.5
-ADDR<5>          7.5
-ADDR<6>          7.5
-ADDR<7>          7.5
-ADDR<8>          7.5
-ADDR<9>          7.5
+ADDR<3>         14.2
+ADDR<4>         14.2
+ADDR<5>         14.2
+ADDR<6>         14.2
+ADDR<7>         14.2
+ADDR<8>         14.2
+ADDR<9>          6.5
 AS_n             6.5
-DBUS<12>         7.5
-DBUS<13>         8.7
-DBUS<14>         7.9
+DBUS<12>         6.5
+DBUS<13>        14.2
+DBUS<14>        14.2
 DBUS<15>         6.5
 FLASH_BANK_SEL   6.5
-FLASH_EN_n      15.2
-IORDY            7.5
+FLASH_EN_n      21.9
+IDEEN_n          6.5
+IORDY            6.5
 LDS_n            6.5
-RAM_EN_n         7.5
-RANGER_EN_n      8.3
-RESET_n          7.5
-RW               7.5
+RAM_EN_n         6.5
+RANGER_EN_n     22.9
+RESET_n         14.2
+RW               6.5
 UDS_n            6.5
 
 --------------------------------------------------------------------------------
@@ -268,54 +269,69 @@ SDRAM/refresh_timer<3>.D  10.0  10.0  10.0  10.0
         \                         c     c     c     I     I     I     I     I
          \                        <     <     <     G     G     G     G     G
           \                       0     1     2     /     /     /     /     /
-           \                      >     >     >     a     a     c     c     c
-            \                     .     .     .     c     c     t     t     t
-             \                    Q     Q     Q     _     _     l     r     r
-              \                                     s     s     _     l     l
-               \                                    t     t     c     _     _
-                \                                   a     a     o     b     b
-                 \                                  t     t     n     a     a
-                  \                                 e     e     f     s     s
-                   \                                <     <     i     e     e
-                    \                               0     1     g     <     <
-                     \                              >     >     u     0     1
-                      \                             .     .     r     >     >
-                       \                            Q     Q     e     .     .
-                        \                                       d     Q     Q
-                         \                                      .            
-                          \                                     Q            
+           \                      >     >     >     D     D     D     D     a
+            \                     .     .     .     O     O     O     O     c
+             \                    Q     Q     Q     U     U     U     U     _
+              \                                     T     T     T     T     s
+               \                                    <     <     <     <     t
+                \                                   0     1     2     3     a
+                 \                                  >     >     >     >     t
+                  \                                 .     .     .     .     e
+                   \                                Q     Q     Q     Q     <
+                    \                                                       0
+                     \                                                      >
+                      \                                                     .
+                       \                                                    Q
+                        \                                                    
+                         \                                                   
+                          \                                                  
                            \                                                 
                             \                                                
   To                         \------------------------------------------------
 
 AS_n_sync<1>.D                 10.0                                          
 AS_n_sync<2>.D                       10.0                                    
-AUTOCONFIG/ac_state<0>.D                         11.0                        
-AUTOCONFIG/ac_state<1>.D                         10.0  10.0                  
+AUTOCONFIG/DOUT<0>.CE                                                        
+AUTOCONFIG/DOUT<0>.D                             11.0                    11.0
+AUTOCONFIG/DOUT<1>.CE                                                        
+AUTOCONFIG/DOUT<1>.D                                   11.0              11.0
+AUTOCONFIG/DOUT<2>.CE                                                        
+AUTOCONFIG/DOUT<2>.D                                         11.0        18.7
+AUTOCONFIG/DOUT<3>.CE                                                        
+AUTOCONFIG/DOUT<3>.D                                               11.0  18.7
+AUTOCONFIG/ac_state<0>.D                                                 10.0
+AUTOCONFIG/ac_state<1>.D                                                 10.0
 AUTOCONFIG/cdtv_configured.CE        10.0                                    
-AUTOCONFIG/ctl_configured.CE                     10.0  10.0                  
-AUTOCONFIG/ctrl_base<0>.CE                       10.0  10.0                  
-AUTOCONFIG/ctrl_base<1>.CE                       10.0  10.0                  
-AUTOCONFIG/ctrl_base<2>.CE                       10.0  10.0                  
-AUTOCONFIG/ctrl_base<3>.CE                       10.0  10.0                  
-AUTOCONFIG/ide_base<0>.CE                        10.0  10.0                  
-AUTOCONFIG/ide_base<1>.CE                        10.0  10.0                  
-AUTOCONFIG/ide_base<2>.CE                        10.0  10.0                  
-AUTOCONFIG/ide_base<3>.CE                        10.0  10.0                  
-AUTOCONFIG/ide_configured.CE                     10.0  10.0                  
-AUTOCONFIG/ram_configured.CE                     10.0  10.0                  
+AUTOCONFIG/ctl_configured.CE                                             10.0
+AUTOCONFIG/ctrl_base<0>.CE                                               10.0
+AUTOCONFIG/ctrl_base<1>.CE                                               10.0
+AUTOCONFIG/ctrl_base<2>.CE                                               10.0
+AUTOCONFIG/ctrl_base<3>.CE                                               10.0
+AUTOCONFIG/dtack.D                                                           
+AUTOCONFIG/ide_base<0>.CE                                                17.7
+AUTOCONFIG/ide_base<1>.CE                                                17.7
+AUTOCONFIG/ide_base<2>.CE                                                17.7
+AUTOCONFIG/ide_base<3>.CE                                                17.7
+AUTOCONFIG/ide_configured.CE                                             17.7
+AUTOCONFIG/ram_configured.CE                                             10.0
 BA<0>.CE                                                                     
 BA<1>.CE                                                                     
 CAS_n.D                                                                      
 CKE.CE                                                                       
 CKE.D                                                                        
-ControlReg/dtack.D                                           10.0  11.0  11.0
-ControlReg/flash_progbank.D                                  11.0  11.0  11.0
+ControlReg/DOUT<1>.D                                                         
+ControlReg/DOUT<3>.D                                                         
+ControlReg/OVL.CE                    10.0                                    
+ControlReg/dtack.D                                                           
+ControlReg/flash_progbank.D                                                  
+ControlReg/otherram_en.D                                                     
 DQMH.D                                                                       
 DQML.D                                                                       
 IDE/ds_delay<0>.D                                                            
 IDE/ds_delay<1>.D                                                            
 IDE/ds_delay<2>.D                                                            
+IDE/ide_dtack.D                                                              
+IDE/ide_enable.D                                                             
 IOW_n.D                                                                      
 LDS_n_sync<1>.D                                                              
 MA<0>.D                                                                      
@@ -331,10 +347,10 @@ MA<7>.D
 MA<8>.D                                                                      
 MA<9>.D                                                                      
 MEMW_n.D                                                                     
-OVL.CE                               10.0                                    
 RAMCS_n.D                                                                    
 RAS_n.D                                                                      
 RW_sync<1>.D                                                                 
+SDRAM/dtack.D                                                                
 SDRAM/init_done.CE                                                           
 SDRAM/init_refreshed.CE                                                      
 SDRAM/ram_state_FSM_FFd1.D                                                   
@@ -346,23 +362,9 @@ SDRAM/refreshing.D
 SDRAM/timer_tRFC<0>.D                                                        
 SDRAM/timer_tRFC<1>.D                                                        
 UDS_n_sync<1>.D                                                              
-autoconf_dtack.D                                                             
-autoconfig_dout<0>.CE                                                        
-autoconfig_dout<0>.D                             11.0  11.0                  
-autoconfig_dout<1>.CE                                                        
-autoconfig_dout<1>.D                             11.0  11.0                  
-autoconfig_dout<2>.CE                                                        
-autoconfig_dout<2>.D                             10.0  10.0                  
-autoconfig_dout<3>.CE                                                        
-autoconfig_dout<3>.D                             11.0  11.0                  
-ctrl_dout<1>.D                                               10.0  11.0  11.0
-ctrl_dout<3>.D                                               10.0  11.0  11.0
-dtack.D                              11.0                    11.0  11.4  11.4
-ide_dtack.D                                                                  
-otherram_enabled.D                                           11.4  11.4  11.4
-ram_dtack.D                                                                  
+dtack.D                              10.0                                    
 z2_state_FSM_FFd1.D                  10.0                                    
-z2_state_FSM_FFd2.D                        11.8              20.1  20.1  20.1
+z2_state_FSM_FFd2.D                        10.0                              
 
 --------------------------------------------------------------------------------
                           Clock to Setup (tCYC) (nsec)
@@ -379,54 +381,69 @@ z2_state_FSM_FFd2.D                        11.8              20.1  20.1  20.1
         \                         I     I     I     I     I     I     I     I
          \                        G     G     G     G     G     G     G     G
           \                       /     /     /     /     /     /     /     /
-           \                      c     c     i     i     i     i     i     r
-            \                     t     t     d     d     d     d     d     a
-             \                    r     r     e     e     e     e     e     m
-              \                   l     l     _     _     _     _     _     _
-               \                  _     _     b     b     b     b     c     c
-                \                 b     b     a     a     a     a     o     o
-                 \                a     a     s     s     s     s     n     n
-                  \               s     s     e     e     e     e     f     f
-                   \              e     e     <     <     <     <     i     i
-                    \             <     <     0     1     2     3     g     g
-                     \            2     3     >     >     >     >     u     u
-                      \           >     >     .     .     .     .     r     r
-                       \          .     .     Q     Q     Q     Q     e     e
-                        \         Q     Q                             d     d
-                         \                                            .     .
-                          \                                           Q     Q
+           \                      a     c     c     c     c     c     d     i
+            \                     c     t     t     t     t     t     t     d
+             \                    _     l     r     r     r     r     a     e
+              \                   s     _     l     l     l     l     c     _
+               \                  t     c     _     _     _     _     k     b
+                \                 a     o     b     b     b     b     .     a
+                 \                t     n     a     a     a     a     Q     s
+                  \               e     f     s     s     s     s           e
+                   \              <     i     e     e     e     e           <
+                    \             1     g     <     <     <     <           0
+                     \            >     u     0     1     2     3           >
+                      \           .     r     >     >     >     >           .
+                       \          Q     e     .     .     .     .           Q
+                        \               d     Q     Q     Q     Q            
+                         \              .                                    
+                          \             Q                                    
                            \                                                 
                             \                                                
   To                         \------------------------------------------------
 
 AS_n_sync<1>.D                                                               
 AS_n_sync<2>.D                                                               
-AUTOCONFIG/ac_state<0>.D                                                     
-AUTOCONFIG/ac_state<1>.D                                                     
+AUTOCONFIG/DOUT<0>.CE                                              10.0      
+AUTOCONFIG/DOUT<0>.D           11.0                                          
+AUTOCONFIG/DOUT<1>.CE                                              10.0      
+AUTOCONFIG/DOUT<1>.D           11.0                                          
+AUTOCONFIG/DOUT<2>.CE                                              10.0      
+AUTOCONFIG/DOUT<2>.D           18.7                                          
+AUTOCONFIG/DOUT<3>.CE                                              10.0      
+AUTOCONFIG/DOUT<3>.D           18.7                                          
+AUTOCONFIG/ac_state<0>.D                                           17.7      
+AUTOCONFIG/ac_state<1>.D       10.0                                17.7      
 AUTOCONFIG/cdtv_configured.CE                                                
-AUTOCONFIG/ctl_configured.CE                                                 
-AUTOCONFIG/ctrl_base<0>.CE                                                   
-AUTOCONFIG/ctrl_base<1>.CE                                                   
-AUTOCONFIG/ctrl_base<2>.CE                                                   
-AUTOCONFIG/ctrl_base<3>.CE                                                   
-AUTOCONFIG/ide_base<0>.CE                                                    
-AUTOCONFIG/ide_base<1>.CE                                                    
-AUTOCONFIG/ide_base<2>.CE                                                    
-AUTOCONFIG/ide_base<3>.CE                                                    
-AUTOCONFIG/ide_configured.CE                                                 
-AUTOCONFIG/ram_configured.CE                                                 
+AUTOCONFIG/ctl_configured.CE   10.0                                10.0      
+AUTOCONFIG/ctrl_base<0>.CE     10.0                                10.0      
+AUTOCONFIG/ctrl_base<1>.CE     10.0                                10.0      
+AUTOCONFIG/ctrl_base<2>.CE     10.0                                10.0      
+AUTOCONFIG/ctrl_base<3>.CE     10.0                                10.0      
+AUTOCONFIG/dtack.D                                                 10.0      
+AUTOCONFIG/ide_base<0>.CE      17.7                                10.0      
+AUTOCONFIG/ide_base<1>.CE      17.7                                10.0      
+AUTOCONFIG/ide_base<2>.CE      17.7                                10.0      
+AUTOCONFIG/ide_base<3>.CE      17.7                                10.0      
+AUTOCONFIG/ide_configured.CE   17.7                                10.0      
+AUTOCONFIG/ram_configured.CE   10.0                                10.0      
 BA<0>.CE                                                                     
 BA<1>.CE                                                                     
 CAS_n.D                                                                      
 CKE.CE                                                                       
 CKE.D                                                                        
-ControlReg/dtack.D             11.0  11.4                                    
-ControlReg/flash_progbank.D    11.0  10.0                                    
+ControlReg/DOUT<1>.D                 33.1  25.4  33.1  33.1  40.8            
+ControlReg/DOUT<3>.D                 33.1  25.4  33.1  33.1  40.8            
+ControlReg/OVL.CE                                                            
+ControlReg/dtack.D                   25.4  17.7  25.4  25.4  33.1            
+ControlReg/flash_progbank.D          33.1  25.4  33.1  33.1  40.8            
+ControlReg/otherram_en.D             33.1  25.4  33.1  33.1  40.8            
 DQMH.D                                                                       
 DQML.D                                                                       
 IDE/ds_delay<0>.D                                                            
 IDE/ds_delay<1>.D                                                            
 IDE/ds_delay<2>.D                                                            
+IDE/ide_dtack.D                                                          25.4
+IDE/ide_enable.D                                                         25.4
 IOW_n.D                                                                      
 LDS_n_sync<1>.D                                                              
 MA<0>.D                                                                      
@@ -442,76 +459,70 @@ MA<7>.D
 MA<8>.D                                                                      
 MA<9>.D                                                                      
 MEMW_n.D                                                                     
-OVL.CE                                                                       
 RAMCS_n.D                                                                    
 RAS_n.D                                                                      
 RW_sync<1>.D                                                                 
+SDRAM/dtack.D                                                                
 SDRAM/init_done.CE                                                           
 SDRAM/init_refreshed.CE                                                      
-SDRAM/ram_state_FSM_FFd1.D                                               11.0
-SDRAM/ram_state_FSM_FFd2.D                                               11.8
-SDRAM/ram_state_FSM_FFd3.D                                               10.0
-SDRAM/ram_state_FSM_FFd4.D                                               11.0
+SDRAM/ram_state_FSM_FFd1.D                                                   
+SDRAM/ram_state_FSM_FFd2.D                                                   
+SDRAM/ram_state_FSM_FFd3.D                                                   
+SDRAM/ram_state_FSM_FFd4.D                                                   
 SDRAM/refresh_request<1>.D                                                   
 SDRAM/refreshing.D                                                           
 SDRAM/timer_tRFC<0>.D                                                        
 SDRAM/timer_tRFC<1>.D                                                        
 UDS_n_sync<1>.D                                                              
-autoconf_dtack.D                                                             
-autoconfig_dout<0>.CE                                                        
-autoconfig_dout<0>.D                                                         
-autoconfig_dout<1>.CE                                                        
-autoconfig_dout<1>.D                                                         
-autoconfig_dout<2>.CE                                                        
-autoconfig_dout<2>.D                                                         
-autoconfig_dout<3>.CE                                                        
-autoconfig_dout<3>.D                                                         
-ctrl_dout<1>.D                 11.4  11.4                                    
-ctrl_dout<3>.D                 11.4  11.4                                    
-dtack.D                        11.4  11.4                                    
-ide_dtack.D                                11.0  11.4  11.0  11.0  10.0      
-otherram_enabled.D             11.0  11.0                                    
-ram_dtack.D                                                                  
+dtack.D                              26.4  18.7  26.4  26.4  34.1  11.0      
 z2_state_FSM_FFd1.D                                                          
-z2_state_FSM_FFd2.D            20.1  20.3  11.8  19.5  19.5  19.5  11.8  11.0
+z2_state_FSM_FFd2.D                  33.1  25.4  33.1  33.1  40.8  10.0  33.1
 
 --------------------------------------------------------------------------------
                           Clock to Setup (tCYC) (nsec)
                                 (Clock: MEMCLK)
 
-\ From                            C     C     D     D     I     I     I     L
- \                                o     o     Q     Q     D     D     D     D
-  \                               n     n     M     M     E     E     E     S
-   \                              t     t     H     L     /     /     /     _
-    \                             r     r     .     .     d     d     d     n
-     \                            o     o     Q     Q     s     s     s     _
-      \                           l     l                 _     _     _     s
-       \                          R     R                 d     d     d     y
-        \                         e     e                 e     e     e     n
-         \                        g     g                 l     l     l     c
-          \                       /     /                 a     a     a     <
-           \                      d     f                 y     y     y     0
-            \                     t     l                 <     <     <     >
-             \                    a     a                 0     1     2     .
-              \                   c     s                 >     >     >     Q
-               \                  k     h                 .     .     .      
-                \                 .     _                 Q     Q     Q      
-                 \                Q     p                                    
-                  \                     r                                    
-                   \                    o                                    
-                    \                   g                                    
-                     \                  b                                    
-                      \                 a                                    
-                       \                n                                    
-                        \               k                                    
-                         \              .                                    
-                          \             Q                                    
+\ From                            A     A     A     A     A     C     C     C
+ \                                U     U     U     U     U     o     o     o
+  \                               T     T     T     T     T     n     n     n
+   \                              O     O     O     O     O     t     t     t
+    \                             C     C     C     C     C     r     r     r
+     \                            O     O     O     O     O     o     o     o
+      \                           N     N     N     N     N     l     l     l
+       \                          F     F     F     F     F     R     R     R
+        \                         I     I     I     I     I     e     e     e
+         \                        G     G     G     G     G     g     g     g
+          \                       /     /     /     /     /     /     /     /
+           \                      i     i     i     i     r     D     D     O
+            \                     d     d     d     d     a     O     O     V
+             \                    e     e     e     e     m     U     U     L
+              \                   _     _     _     _     _     T     T     .
+               \                  b     b     b     c     c     <     <     Q
+                \                 a     a     a     o     o     1     3      
+                 \                s     s     s     n     n     >     >      
+                  \               e     e     e     f     f     .     .      
+                   \              <     <     <     i     i     Q     Q      
+                    \             1     2     3     g     g                  
+                     \            >     >     >     u     u                  
+                      \           .     .     .     r     r                  
+                       \          Q     Q     Q     e     e                  
+                        \                           d     d                  
+                         \                          .     .                  
+                          \                         Q     Q                  
                            \                                                 
                             \                                                
   To                         \------------------------------------------------
 
 AS_n_sync<1>.D                                                               
 AS_n_sync<2>.D                                                               
+AUTOCONFIG/DOUT<0>.CE                                                        
+AUTOCONFIG/DOUT<0>.D                                                         
+AUTOCONFIG/DOUT<1>.CE                                                        
+AUTOCONFIG/DOUT<1>.D                                                         
+AUTOCONFIG/DOUT<2>.CE                                                        
+AUTOCONFIG/DOUT<2>.D                                                         
+AUTOCONFIG/DOUT<3>.CE                                                        
+AUTOCONFIG/DOUT<3>.D                                                         
 AUTOCONFIG/ac_state<0>.D                                                     
 AUTOCONFIG/ac_state<1>.D                                                     
 AUTOCONFIG/cdtv_configured.CE                                                
@@ -520,6 +531,7 @@ AUTOCONFIG/ctrl_base<0>.CE
 AUTOCONFIG/ctrl_base<1>.CE                                                   
 AUTOCONFIG/ctrl_base<2>.CE                                                   
 AUTOCONFIG/ctrl_base<3>.CE                                                   
+AUTOCONFIG/dtack.D                                                           
 AUTOCONFIG/ide_base<0>.CE                                                    
 AUTOCONFIG/ide_base<1>.CE                                                    
 AUTOCONFIG/ide_base<2>.CE                                                    
@@ -531,15 +543,21 @@ BA<1>.CE
 CAS_n.D                                                                      
 CKE.CE                                                                       
 CKE.D                                                                        
-ControlReg/dtack.D             11.4                                          
-ControlReg/flash_progbank.D    11.4  10.0                                    
-DQMH.D                                     11.0                              
-DQML.D                                           11.0                        
+ControlReg/DOUT<1>.D                                         10.0            
+ControlReg/DOUT<3>.D                                               10.0      
+ControlReg/OVL.CE                                                            
+ControlReg/dtack.D                                                           
+ControlReg/flash_progbank.D                                                  
+ControlReg/otherram_en.D                                                     
+DQMH.D                                                                       
+DQML.D                                                                       
 IDE/ds_delay<0>.D                                                            
-IDE/ds_delay<1>.D                                      10.0                  
-IDE/ds_delay<2>.D                                            10.0            
-IOW_n.D                                                            11.0      
-LDS_n_sync<1>.D                                                          10.0
+IDE/ds_delay<1>.D                                                            
+IDE/ds_delay<2>.D                                                            
+IDE/ide_dtack.D                25.4  17.7  33.1  25.4                        
+IDE/ide_enable.D               25.4  17.7  33.1  25.4                        
+IOW_n.D                                                                      
+LDS_n_sync<1>.D                                                              
 MA<0>.D                                                                      
 MA<10>.D                                                                     
 MA<11>.D                                                                     
@@ -553,59 +571,157 @@ MA<7>.D
 MA<8>.D                                                                      
 MA<9>.D                                                                      
 MEMW_n.D                                                                     
-OVL.CE                                                                       
 RAMCS_n.D                                                                    
 RAS_n.D                                                                      
 RW_sync<1>.D                                                                 
+SDRAM/dtack.D                                                                
 SDRAM/init_done.CE                                                           
 SDRAM/init_refreshed.CE                                                      
-SDRAM/ram_state_FSM_FFd1.D                                                   
-SDRAM/ram_state_FSM_FFd2.D                                                   
-SDRAM/ram_state_FSM_FFd3.D                                                   
-SDRAM/ram_state_FSM_FFd4.D                                                   
+SDRAM/ram_state_FSM_FFd1.D                             18.7                  
+SDRAM/ram_state_FSM_FFd2.D                             18.7                  
+SDRAM/ram_state_FSM_FFd3.D                             17.7                  
+SDRAM/ram_state_FSM_FFd4.D                             18.7                  
 SDRAM/refresh_request<1>.D                                                   
 SDRAM/refreshing.D                                                           
 SDRAM/timer_tRFC<0>.D                                                        
 SDRAM/timer_tRFC<1>.D                                                        
 UDS_n_sync<1>.D                                                              
-autoconf_dtack.D                                                             
-autoconfig_dout<0>.CE                                                        
-autoconfig_dout<0>.D                                                         
-autoconfig_dout<1>.CE                                                        
-autoconfig_dout<1>.D                                                         
-autoconfig_dout<2>.CE                                                        
-autoconfig_dout<2>.D                                                         
-autoconfig_dout<3>.CE                                                        
-autoconfig_dout<3>.D                                                         
-ctrl_dout<1>.D                 11.0                                          
-ctrl_dout<3>.D                 11.0                                          
-dtack.D                                                                      
-ide_dtack.D                                                                  
-otherram_enabled.D             12.2                                          
-ram_dtack.D                                                                  
+dtack.D                                                                  18.7
 z2_state_FSM_FFd1.D                                                          
-z2_state_FSM_FFd2.D                                                          
+z2_state_FSM_FFd2.D            33.1  25.4  40.8  33.1  25.4              25.4
 
 --------------------------------------------------------------------------------
                           Clock to Setup (tCYC) (nsec)
                                 (Clock: MEMCLK)
 
-\ From                            L     M     M     M     M     M     M     M
- \                                D     A     A     A     A     A     A     A
-  \                               S     <     <     <     <     <     <     <
-   \                              _     0     1     1     1     2     3     4
-    \                             n     >     0     1     >     >     >     >
-     \                            _     .     >     >     .     .     .     .
-      \                           s     Q     .     .     Q     Q     Q     Q
-       \                          y           Q     Q                        
-        \                         n                                          
-         \                        c                                          
-          \                       <                                          
-           \                      1                                          
-            \                     >                                          
-             \                    .                                          
-              \                   Q                                          
-               \                                                             
+\ From                            C     C     C     D     D     I     I     I
+ \                                o     o     o     Q     Q     D     D     D
+  \                               n     n     n     M     M     E     E     E
+   \                              t     t     t     H     L     /     /     /
+    \                             r     r     r     .     .     d     d     d
+     \                            o     o     o     Q     Q     s     s     s
+      \                           l     l     l                 _     _     _
+       \                          R     R     R                 d     d     d
+        \                         e     e     e                 e     e     e
+         \                        g     g     g                 l     l     l
+          \                       /     /     /                 a     a     a
+           \                      d     f     o                 y     y     y
+            \                     t     l     t                 <     <     <
+             \                    a     a     h                 0     1     2
+              \                   c     s     e                 >     >     >
+               \                  k     h     r                 .     .     .
+                \                 .     _     r                 Q     Q     Q
+                 \                Q     p     a                              
+                  \                     r     m                              
+                   \                    o     _                              
+                    \                   g     e                              
+                     \                  b     n                              
+                      \                 a     .                              
+                       \                n     Q                              
+                        \               k                                    
+                         \              .                                    
+                          \             Q                                    
+                           \                                                 
+                            \                                                
+  To                         \------------------------------------------------
+
+AS_n_sync<1>.D                                                               
+AS_n_sync<2>.D                                                               
+AUTOCONFIG/DOUT<0>.CE                                                        
+AUTOCONFIG/DOUT<0>.D                                                         
+AUTOCONFIG/DOUT<1>.CE                                                        
+AUTOCONFIG/DOUT<1>.D                                                         
+AUTOCONFIG/DOUT<2>.CE                                                        
+AUTOCONFIG/DOUT<2>.D                                                         
+AUTOCONFIG/DOUT<3>.CE                                                        
+AUTOCONFIG/DOUT<3>.D                                                         
+AUTOCONFIG/ac_state<0>.D                                                     
+AUTOCONFIG/ac_state<1>.D                                                     
+AUTOCONFIG/cdtv_configured.CE                                                
+AUTOCONFIG/ctl_configured.CE                                                 
+AUTOCONFIG/ctrl_base<0>.CE                                                   
+AUTOCONFIG/ctrl_base<1>.CE                                                   
+AUTOCONFIG/ctrl_base<2>.CE                                                   
+AUTOCONFIG/ctrl_base<3>.CE                                                   
+AUTOCONFIG/dtack.D                                                           
+AUTOCONFIG/ide_base<0>.CE                                                    
+AUTOCONFIG/ide_base<1>.CE                                                    
+AUTOCONFIG/ide_base<2>.CE                                                    
+AUTOCONFIG/ide_base<3>.CE                                                    
+AUTOCONFIG/ide_configured.CE                                                 
+AUTOCONFIG/ram_configured.CE                                                 
+BA<0>.CE                                                                     
+BA<1>.CE                                                                     
+CAS_n.D                                                                      
+CKE.CE                                                                       
+CKE.D                                                                        
+ControlReg/DOUT<1>.D           17.7        10.0                              
+ControlReg/DOUT<3>.D           17.7                                          
+ControlReg/OVL.CE                                                            
+ControlReg/dtack.D             10.0                                          
+ControlReg/flash_progbank.D    17.7  10.0                                    
+ControlReg/otherram_en.D       17.7        10.0                              
+DQMH.D                                           10.0                        
+DQML.D                                                 10.0                  
+IDE/ds_delay<0>.D                                                            
+IDE/ds_delay<1>.D                                            10.0            
+IDE/ds_delay<2>.D                                                  10.0      
+IDE/ide_dtack.D                                                              
+IDE/ide_enable.D                                                             
+IOW_n.D                                                                  10.0
+LDS_n_sync<1>.D                                                              
+MA<0>.D                                                                      
+MA<10>.D                                                                     
+MA<11>.D                                                                     
+MA<1>.D                                                                      
+MA<2>.D                                                                      
+MA<3>.D                                                                      
+MA<4>.D                                                                      
+MA<5>.D                                                                      
+MA<6>.D                                                                      
+MA<7>.D                                                                      
+MA<8>.D                                                                      
+MA<9>.D                                                                      
+MEMW_n.D                                                                     
+RAMCS_n.D                                                                    
+RAS_n.D                                                                      
+RW_sync<1>.D                                                                 
+SDRAM/dtack.D                                                                
+SDRAM/init_done.CE                                                           
+SDRAM/init_refreshed.CE                                                      
+SDRAM/ram_state_FSM_FFd1.D                 18.7                              
+SDRAM/ram_state_FSM_FFd2.D                 18.7                              
+SDRAM/ram_state_FSM_FFd3.D                 17.7                              
+SDRAM/ram_state_FSM_FFd4.D                 18.7                              
+SDRAM/refresh_request<1>.D                                                   
+SDRAM/refreshing.D                                                           
+SDRAM/timer_tRFC<0>.D                                                        
+SDRAM/timer_tRFC<1>.D                                                        
+UDS_n_sync<1>.D                                                              
+dtack.D                                    18.7                              
+z2_state_FSM_FFd1.D                                                          
+z2_state_FSM_FFd2.D                        25.4                              
+
+--------------------------------------------------------------------------------
+                          Clock to Setup (tCYC) (nsec)
+                                (Clock: MEMCLK)
+
+\ From                            I     I     L     L     M     M     M     M
+ \                                D     D     D     D     A     A     A     A
+  \                               E     E     S     S     <     <     <     <
+   \                              /     /     _     _     0     1     1     1
+    \                             i     i     n     n     >     0     1     >
+     \                            d     d     _     _     .     >     >     .
+      \                           e     e     s     s     Q     .     .     Q
+       \                          _     _     y     y           Q     Q      
+        \                         d     e     n     n                        
+         \                        t     n     c     c                        
+          \                       a     a     <     <                        
+           \                      c     b     0     1                        
+            \                     k     l     >     >                        
+             \                    .     e     .     .                        
+              \                   Q     .     Q     Q                        
+               \                        Q                                    
                 \                                                            
                  \                                                           
                   \                                                          
@@ -623,6 +739,14 @@ z2_state_FSM_FFd2.D
 
 AS_n_sync<1>.D                                                               
 AS_n_sync<2>.D                                                               
+AUTOCONFIG/DOUT<0>.CE                                                        
+AUTOCONFIG/DOUT<0>.D                                                         
+AUTOCONFIG/DOUT<1>.CE                                                        
+AUTOCONFIG/DOUT<1>.D                                                         
+AUTOCONFIG/DOUT<2>.CE                                                        
+AUTOCONFIG/DOUT<2>.D                                                         
+AUTOCONFIG/DOUT<3>.CE                                                        
+AUTOCONFIG/DOUT<3>.D                                                         
 AUTOCONFIG/ac_state<0>.D                                                     
 AUTOCONFIG/ac_state<1>.D                                                     
 AUTOCONFIG/cdtv_configured.CE                                                
@@ -631,6 +755,7 @@ AUTOCONFIG/ctrl_base<0>.CE
 AUTOCONFIG/ctrl_base<1>.CE                                                   
 AUTOCONFIG/ctrl_base<2>.CE                                                   
 AUTOCONFIG/ctrl_base<3>.CE                                                   
+AUTOCONFIG/dtack.D                                                           
 AUTOCONFIG/ide_base<0>.CE                                                    
 AUTOCONFIG/ide_base<1>.CE                                                    
 AUTOCONFIG/ide_base<2>.CE                                                    
@@ -642,32 +767,38 @@ BA<1>.CE
 CAS_n.D                                                                      
 CKE.CE                                                                       
 CKE.D                                                                        
+ControlReg/DOUT<1>.D                                                         
+ControlReg/DOUT<3>.D                                                         
+ControlReg/OVL.CE                                                            
 ControlReg/dtack.D                                                           
 ControlReg/flash_progbank.D                                                  
+ControlReg/otherram_en.D                                                     
 DQMH.D                                                                       
-DQML.D                         10.0                                          
-IDE/ds_delay<0>.D              10.0                                          
+DQML.D                                           10.0                        
+IDE/ds_delay<0>.D                                10.0                        
 IDE/ds_delay<1>.D                                                            
 IDE/ds_delay<2>.D                                                            
+IDE/ide_dtack.D                                                              
+IDE/ide_enable.D                     10.0                                    
 IOW_n.D                                                                      
-LDS_n_sync<1>.D                                                              
-MA<0>.D                              11.0                                    
-MA<10>.D                                   10.0                              
-MA<11>.D                                         10.0                        
-MA<1>.D                                                10.0                  
-MA<2>.D                                                      11.0            
-MA<3>.D                                                            10.0      
-MA<4>.D                                                                  10.0
+LDS_n_sync<1>.D                            10.0                              
+MA<0>.D                                                10.0                  
+MA<10>.D                                                     10.0            
+MA<11>.D                                                           10.0      
+MA<1>.D                                                                  10.0
+MA<2>.D                                                                      
+MA<3>.D                                                                      
+MA<4>.D                                                                      
 MA<5>.D                                                                      
 MA<6>.D                                                                      
 MA<7>.D                                                                      
 MA<8>.D                                                                      
 MA<9>.D                                                                      
 MEMW_n.D                                                                     
-OVL.CE                                                                       
 RAMCS_n.D                                                                    
 RAS_n.D                                                                      
 RW_sync<1>.D                                                                 
+SDRAM/dtack.D                                                                
 SDRAM/init_done.CE                                                           
 SDRAM/init_refreshed.CE                                                      
 SDRAM/ram_state_FSM_FFd1.D                                                   
@@ -679,40 +810,26 @@ SDRAM/refreshing.D
 SDRAM/timer_tRFC<0>.D                                                        
 SDRAM/timer_tRFC<1>.D                                                        
 UDS_n_sync<1>.D                                                              
-autoconf_dtack.D                                                             
-autoconfig_dout<0>.CE                                                        
-autoconfig_dout<0>.D                                                         
-autoconfig_dout<1>.CE                                                        
-autoconfig_dout<1>.D                                                         
-autoconfig_dout<2>.CE                                                        
-autoconfig_dout<2>.D                                                         
-autoconfig_dout<3>.CE                                                        
-autoconfig_dout<3>.D                                                         
-ctrl_dout<1>.D                                                               
-ctrl_dout<3>.D                                                               
-dtack.D                                                                      
-ide_dtack.D                                                                  
-otherram_enabled.D                                                           
-ram_dtack.D                                                                  
-z2_state_FSM_FFd1.D            10.0                                          
-z2_state_FSM_FFd2.D                                                          
+dtack.D                        11.0                                          
+z2_state_FSM_FFd1.D                              10.0                        
+z2_state_FSM_FFd2.D            10.0                                          
 
 --------------------------------------------------------------------------------
                           Clock to Setup (tCYC) (nsec)
                                 (Clock: MEMCLK)
 
-\ From                            M     M     M     M     M     O     R     R
- \                                A     A     A     A     A     V     A     W
-  \                               <     <     <     <     <     L     M     _
-   \                              5     6     7     8     9     .     C     s
-    \                             >     >     >     >     >     Q     S     y
-     \                            .     .     .     .     .           _     n
-      \                           Q     Q     Q     Q     Q           n     c
-       \                                                              .     <
-        \                                                             Q     0
-         \                                                                  >
-          \                                                                 .
-           \                                                                Q
+\ From                            M     M     M     M     M     M     M     M
+ \                                A     A     A     A     A     A     A     A
+  \                               <     <     <     <     <     <     <     <
+   \                              2     3     4     5     6     7     8     9
+    \                             >     >     >     >     >     >     >     >
+     \                            .     .     .     .     .     .     .     .
+      \                           Q     Q     Q     Q     Q     Q     Q     Q
+       \                                                                     
+        \                                                                    
+         \                                                                   
+          \                                                                  
+           \                                                                 
             \                                                                
              \                                                               
               \                                                              
@@ -734,6 +851,14 @@ z2_state_FSM_FFd2.D
 
 AS_n_sync<1>.D                                                               
 AS_n_sync<2>.D                                                               
+AUTOCONFIG/DOUT<0>.CE                                                        
+AUTOCONFIG/DOUT<0>.D                                                         
+AUTOCONFIG/DOUT<1>.CE                                                        
+AUTOCONFIG/DOUT<1>.D                                                         
+AUTOCONFIG/DOUT<2>.CE                                                        
+AUTOCONFIG/DOUT<2>.D                                                         
+AUTOCONFIG/DOUT<3>.CE                                                        
+AUTOCONFIG/DOUT<3>.D                                                         
 AUTOCONFIG/ac_state<0>.D                                                     
 AUTOCONFIG/ac_state<1>.D                                                     
 AUTOCONFIG/cdtv_configured.CE                                                
@@ -742,6 +867,7 @@ AUTOCONFIG/ctrl_base<0>.CE
 AUTOCONFIG/ctrl_base<1>.CE                                                   
 AUTOCONFIG/ctrl_base<2>.CE                                                   
 AUTOCONFIG/ctrl_base<3>.CE                                                   
+AUTOCONFIG/dtack.D                                                           
 AUTOCONFIG/ide_base<0>.CE                                                    
 AUTOCONFIG/ide_base<1>.CE                                                    
 AUTOCONFIG/ide_base<2>.CE                                                    
@@ -753,32 +879,38 @@ BA<1>.CE
 CAS_n.D                                                                      
 CKE.CE                                                                       
 CKE.D                                                                        
+ControlReg/DOUT<1>.D                                                         
+ControlReg/DOUT<3>.D                                                         
+ControlReg/OVL.CE                                                            
 ControlReg/dtack.D                                                           
 ControlReg/flash_progbank.D                                                  
+ControlReg/otherram_en.D                                                     
 DQMH.D                                                                       
 DQML.D                                                                       
 IDE/ds_delay<0>.D                                                            
 IDE/ds_delay<1>.D                                                            
 IDE/ds_delay<2>.D                                                            
+IDE/ide_dtack.D                                                              
+IDE/ide_enable.D                                                             
 IOW_n.D                                                                      
 LDS_n_sync<1>.D                                                              
 MA<0>.D                                                                      
 MA<10>.D                                                                     
 MA<11>.D                                                                     
 MA<1>.D                                                                      
-MA<2>.D                                                                      
-MA<3>.D                                                                      
-MA<4>.D                                                                      
-MA<5>.D                        11.0                                          
-MA<6>.D                              10.0                                    
-MA<7>.D                                    11.0                              
-MA<8>.D                                          10.0                        
-MA<9>.D                                                10.0                  
+MA<2>.D                        10.0                                          
+MA<3>.D                              10.0                                    
+MA<4>.D                                    10.0                              
+MA<5>.D                                          10.0                        
+MA<6>.D                                                10.0                  
+MA<7>.D                                                      10.0            
+MA<8>.D                                                            10.0      
+MA<9>.D                                                                  10.0
 MEMW_n.D                                                                     
-OVL.CE                                                                       
-RAMCS_n.D                                                          10.0      
+RAMCS_n.D                                                                    
 RAS_n.D                                                                      
-RW_sync<1>.D                                                             10.0
+RW_sync<1>.D                                                                 
+SDRAM/dtack.D                                                                
 SDRAM/init_done.CE                                                           
 SDRAM/init_refreshed.CE                                                      
 SDRAM/ram_state_FSM_FFd1.D                                                   
@@ -790,54 +922,40 @@ SDRAM/refreshing.D
 SDRAM/timer_tRFC<0>.D                                                        
 SDRAM/timer_tRFC<1>.D                                                        
 UDS_n_sync<1>.D                                                              
-autoconf_dtack.D                                                             
-autoconfig_dout<0>.CE                                                        
-autoconfig_dout<0>.D                                                         
-autoconfig_dout<1>.CE                                                        
-autoconfig_dout<1>.D                                                         
-autoconfig_dout<2>.CE                                                        
-autoconfig_dout<2>.D                                                         
-autoconfig_dout<3>.CE                                                        
-autoconfig_dout<3>.D                                                         
-ctrl_dout<1>.D                                                               
-ctrl_dout<3>.D                                                               
-dtack.D                                                      11.0            
-ide_dtack.D                                                                  
-otherram_enabled.D                                                           
-ram_dtack.D                                                                  
+dtack.D                                                                      
 z2_state_FSM_FFd1.D                                                          
-z2_state_FSM_FFd2.D                                          18.7            
+z2_state_FSM_FFd2.D                                                          
 
 --------------------------------------------------------------------------------
                           Clock to Setup (tCYC) (nsec)
                                 (Clock: MEMCLK)
 
-\ From                            R     S     S     S     S     S     S     S
- \                                W     D     D     D     D     D     D     D
-  \                               _     R     R     R     R     R     R     R
-   \                              s     A     A     A     A     A     A     A
-    \                             y     M     M     M     M     M     M     M
-     \                            n     /     /     /     /     /     /     /
-      \                           c     i     i     r     r     r     r     r
-       \                          <     n     n     a     a     a     a     e
-        \                         1     i     i     m     m     m     m     f
-         \                        >     t     t     _     _     _     _     r
-          \                       .     _     _     s     s     s     s     e
-           \                      Q     d     r     t     t     t     t     s
-            \                           o     e     a     a     a     a     h
-             \                          n     f     t     t     t     t     _
-              \                         e     r     e     e     e     e     r
-               \                        .     e     _     _     _     _     e
-                \                       Q     s     F     F     F     F     q
-                 \                            h     S     S     S     S     u
-                  \                           e     M     M     M     M     e
-                   \                          d     _     _     _     _     s
-                    \                         .     F     F     F     F     t
-                     \                        Q     F     F     F     F     <
-                      \                             d     d     d     d     0
-                       \                            1     2     3     4     >
-                        \                           .     .     .     .     .
-                         \                          Q     Q     Q     Q     Q
+\ From                            R     R     R     S     S     S     S     S
+ \                                A     W     W     D     D     D     D     D
+  \                               M     _     _     R     R     R     R     R
+   \                              C     s     s     A     A     A     A     A
+    \                             S     y     y     M     M     M     M     M
+     \                            _     n     n     /     /     /     /     /
+      \                           n     c     c     d     i     i     r     r
+       \                          .     <     <     t     n     n     a     a
+        \                         Q     0     1     a     i     i     m     m
+         \                              >     >     c     t     t     _     _
+          \                             .     .     k     _     _     s     s
+           \                            Q     Q     .     d     r     t     t
+            \                                       Q     o     e     a     a
+             \                                            n     f     t     t
+              \                                           e     r     e     e
+               \                                          .     e     _     _
+                \                                         Q     s     F     F
+                 \                                              h     S     S
+                  \                                             e     M     M
+                   \                                            d     _     _
+                    \                                           .     F     F
+                     \                                          Q     F     F
+                      \                                               d     d
+                       \                                              1     2
+                        \                                             .     .
+                         \                                            Q     Q
                           \                                                  
                            \                                                 
                             \                                                
@@ -845,221 +963,111 @@ z2_state_FSM_FFd2.D                                          18.7
 
 AS_n_sync<1>.D                                                               
 AS_n_sync<2>.D                                                               
-AUTOCONFIG/ac_state<0>.D       11.0                                          
-AUTOCONFIG/ac_state<1>.D       10.0                                          
-AUTOCONFIG/cdtv_configured.CE  10.0                                          
-AUTOCONFIG/ctl_configured.CE   10.0                                          
-AUTOCONFIG/ctrl_base<0>.CE     10.0                                          
-AUTOCONFIG/ctrl_base<1>.CE     10.0                                          
-AUTOCONFIG/ctrl_base<2>.CE     10.0                                          
-AUTOCONFIG/ctrl_base<3>.CE     10.0                                          
-AUTOCONFIG/ide_base<0>.CE      10.0                                          
-AUTOCONFIG/ide_base<1>.CE      10.0                                          
-AUTOCONFIG/ide_base<2>.CE      10.0                                          
-AUTOCONFIG/ide_base<3>.CE      10.0                                          
-AUTOCONFIG/ide_configured.CE   10.0                                          
-AUTOCONFIG/ram_configured.CE   10.0                                          
-BA<0>.CE                                         10.0  10.0  10.0            
-BA<1>.CE                                         10.0  10.0  10.0            
-CAS_n.D                                          11.0  11.0  11.0  11.0      
-CKE.CE                                           10.0  10.0        10.0      
+AUTOCONFIG/DOUT<0>.CE                      10.0                              
+AUTOCONFIG/DOUT<0>.D                                                         
+AUTOCONFIG/DOUT<1>.CE                      10.0                              
+AUTOCONFIG/DOUT<1>.D                                                         
+AUTOCONFIG/DOUT<2>.CE                      10.0                              
+AUTOCONFIG/DOUT<2>.D                                                         
+AUTOCONFIG/DOUT<3>.CE                      10.0                              
+AUTOCONFIG/DOUT<3>.D                                                         
+AUTOCONFIG/ac_state<0>.D                   17.7                              
+AUTOCONFIG/ac_state<1>.D                   17.7                              
+AUTOCONFIG/cdtv_configured.CE              10.0                              
+AUTOCONFIG/ctl_configured.CE               10.0                              
+AUTOCONFIG/ctrl_base<0>.CE                 10.0                              
+AUTOCONFIG/ctrl_base<1>.CE                 10.0                              
+AUTOCONFIG/ctrl_base<2>.CE                 10.0                              
+AUTOCONFIG/ctrl_base<3>.CE                 10.0                              
+AUTOCONFIG/dtack.D                                                           
+AUTOCONFIG/ide_base<0>.CE                  10.0                              
+AUTOCONFIG/ide_base<1>.CE                  10.0                              
+AUTOCONFIG/ide_base<2>.CE                  10.0                              
+AUTOCONFIG/ide_base<3>.CE                  10.0                              
+AUTOCONFIG/ide_configured.CE               10.0                              
+AUTOCONFIG/ram_configured.CE               10.0                              
+BA<0>.CE                                                           10.0  10.0
+BA<1>.CE                                                           10.0  10.0
+CAS_n.D                                                            10.0  10.0
+CKE.CE                                                             10.0  10.0
 CKE.D                                                                        
+ControlReg/DOUT<1>.D                       17.7                              
+ControlReg/DOUT<3>.D                       17.7                              
+ControlReg/OVL.CE                          10.0                              
 ControlReg/dtack.D                                                           
-ControlReg/flash_progbank.D    11.4                                          
-DQMH.D                                           11.0  11.0  11.0  11.0      
-DQML.D                                           11.0  11.0  10.0  11.0      
+ControlReg/flash_progbank.D                17.7                              
+ControlReg/otherram_en.D                   17.7                              
+DQMH.D                                                             11.0  11.0
+DQML.D                                                             11.0  11.0
 IDE/ds_delay<0>.D                                                            
 IDE/ds_delay<1>.D                                                            
 IDE/ds_delay<2>.D                                                            
+IDE/ide_dtack.D                                                              
+IDE/ide_enable.D                                                             
 IOW_n.D                                                                      
 LDS_n_sync<1>.D                                                              
-MA<0>.D                                          11.0  11.0  11.0  11.0      
-MA<10>.D                                         11.0  11.0  11.0  11.0      
-MA<11>.D                                         10.0  10.0  10.0  10.0      
-MA<1>.D                                          11.0  11.0  11.0  10.0      
-MA<2>.D                                          11.0  11.0  11.0  11.0      
-MA<3>.D                                          11.0  11.0  11.0  10.0      
-MA<4>.D                                          11.0  11.0  11.0  10.0      
-MA<5>.D                                          11.0  11.0  11.0  11.0      
-MA<6>.D                                          11.0  11.0  11.0  10.0      
-MA<7>.D                                          11.0  11.0  11.0  11.0      
-MA<8>.D                                          11.0  11.0  11.0  10.0      
-MA<9>.D                                          10.0  10.0  10.0  10.0      
-MEMW_n.D                                         10.0  10.0  10.0  10.0      
-OVL.CE                         10.0                                          
-RAMCS_n.D                                        10.0  10.0  10.0  10.0      
-RAS_n.D                                          11.0  11.0  11.0  11.0      
-RW_sync<1>.D                                                                 
-SDRAM/init_done.CE                               10.0  10.0  10.0  10.0      
-SDRAM/init_refreshed.CE              10.0  10.0  10.0  10.0  10.0  10.0      
-SDRAM/ram_state_FSM_FFd1.D                       11.0  11.0  10.0  11.0      
-SDRAM/ram_state_FSM_FFd2.D     11.0  11.0        11.8  11.8  11.8  11.8      
-SDRAM/ram_state_FSM_FFd3.D           10.0  10.0  11.0  11.0  11.0  11.0      
-SDRAM/ram_state_FSM_FFd4.D     11.0  11.0        11.4  11.4  11.4  11.0      
-SDRAM/refresh_request<1>.D                                               10.0
-SDRAM/refreshing.D                               10.0  10.0  10.0  10.0      
-SDRAM/timer_tRFC<0>.D                            11.0  11.0  11.0  11.0      
-SDRAM/timer_tRFC<1>.D                            10.0  10.0  10.0  10.0      
-UDS_n_sync<1>.D                                                              
-autoconf_dtack.D                                                             
-autoconfig_dout<0>.CE          10.0                                          
-autoconfig_dout<0>.D                                                         
-autoconfig_dout<1>.CE          10.0                                          
-autoconfig_dout<1>.D                                                         
-autoconfig_dout<2>.CE          10.0                                          
-autoconfig_dout<2>.D                                                         
-autoconfig_dout<3>.CE          10.0                                          
-autoconfig_dout<3>.D                                                         
-ctrl_dout<1>.D                 10.0                                          
-ctrl_dout<3>.D                 10.0                                          
-dtack.D                        10.0                                          
-ide_dtack.D                                                                  
-otherram_enabled.D             12.2                                          
-ram_dtack.D                    10.0              11.0  11.0  10.0  11.0      
-z2_state_FSM_FFd1.D                                                          
-z2_state_FSM_FFd2.D            18.7                                          
-
---------------------------------------------------------------------------------
-                          Clock to Setup (tCYC) (nsec)
-                                (Clock: MEMCLK)
-
-\ From                            S     S     S     S     U     U     a     a
- \                                D     D     D     D     D     D     u     u
-  \                               R     R     R     R     S     S     t     t
-   \                              A     A     A     A     _     _     o     o
-    \                             M     M     M     M     n     n     c     c
-     \                            /     /     /     /     _     _     o     o
-      \                           r     r     t     t     s     s     n     n
-       \                          e     e     i     i     y     y     f     f
-        \                         f     f     m     m     n     n     _     i
-         \                        r     r     e     e     c     c     d     g
-          \                       e     e     r     r     <     <     t     _
-           \                      s     s     _     _     0     1     a     d
-            \                     h     h     t     t     >     >     c     o
-             \                    _     i     R     R     .     .     k     u
-              \                   r     n     F     F     Q     Q     .     t
-               \                  e     g     C     C                 Q     <
-                \                 q     .     <     <                       0
-                 \                u     Q     0     1                       >
-                  \               e           >     >                       .
-                   \              s           .     .                       Q
-                    \             t           Q     Q                        
-                     \            <                                          
-                      \           1                                          
-                       \          >                                          
-                        \         .                                          
-                         \        Q                                          
-                          \                                                  
-                           \                                                 
-                            \                                                
-  To                         \------------------------------------------------
-
-AS_n_sync<1>.D                                                               
-AS_n_sync<2>.D                                                               
-AUTOCONFIG/ac_state<0>.D                                           11.0      
-AUTOCONFIG/ac_state<1>.D                                           10.0      
-AUTOCONFIG/cdtv_configured.CE                                                
-AUTOCONFIG/ctl_configured.CE                                       10.0      
-AUTOCONFIG/ctrl_base<0>.CE                                         10.0      
-AUTOCONFIG/ctrl_base<1>.CE                                         10.0      
-AUTOCONFIG/ctrl_base<2>.CE                                         10.0      
-AUTOCONFIG/ctrl_base<3>.CE                                         10.0      
-AUTOCONFIG/ide_base<0>.CE                                          10.0      
-AUTOCONFIG/ide_base<1>.CE                                          10.0      
-AUTOCONFIG/ide_base<2>.CE                                          10.0      
-AUTOCONFIG/ide_base<3>.CE                                          10.0      
-AUTOCONFIG/ide_configured.CE                                       10.0      
-AUTOCONFIG/ram_configured.CE                                       10.0      
-BA<0>.CE                                                                     
-BA<1>.CE                                                                     
-CAS_n.D                                                                      
-CKE.CE                                                                       
-CKE.D                                                                        
-ControlReg/dtack.D                                                           
-ControlReg/flash_progbank.D                                                  
-DQMH.D                                                       11.0            
-DQML.D                                                                       
-IDE/ds_delay<0>.D                                            10.0            
-IDE/ds_delay<1>.D                                                            
-IDE/ds_delay<2>.D                                                            
-IOW_n.D                                                                      
-LDS_n_sync<1>.D                                                              
-MA<0>.D                                                                      
-MA<10>.D                                                                     
-MA<11>.D                                                                     
-MA<1>.D                                                                      
-MA<2>.D                                                                      
-MA<3>.D                                                                      
-MA<4>.D                                                                      
-MA<5>.D                                                                      
-MA<6>.D                                                                      
-MA<7>.D                                                                      
-MA<8>.D                                                                      
-MA<9>.D                                                                      
-MEMW_n.D                                                                     
-OVL.CE                                                                       
-RAMCS_n.D                                                                    
-RAS_n.D                                                                      
-RW_sync<1>.D                                                                 
-SDRAM/init_done.CE                                                           
-SDRAM/init_refreshed.CE                    10.0  10.0                        
-SDRAM/ram_state_FSM_FFd1.D     11.0                                          
-SDRAM/ram_state_FSM_FFd2.D     11.8        11.0  11.0                        
-SDRAM/ram_state_FSM_FFd3.D     11.0        10.0  10.0                        
-SDRAM/ram_state_FSM_FFd4.D     10.0        11.0  11.0                        
+MA<0>.D                                                            18.7  18.7
+MA<10>.D                                                           17.7  17.7
+MA<11>.D                                                           17.7  17.7
+MA<1>.D                                                            17.7  17.7
+MA<2>.D                                                            17.7  17.7
+MA<3>.D                                                            17.7  17.7
+MA<4>.D                                                            17.7  17.7
+MA<5>.D                                                            17.7  17.7
+MA<6>.D                                                            17.7  17.7
+MA<7>.D                                                            17.7  17.7
+MA<8>.D                                                            17.7  17.7
+MA<9>.D                                                            17.7  17.7
+MEMW_n.D                                                           10.0  10.0
+RAMCS_n.D                      10.0                                17.7  17.7
+RAS_n.D                                                            17.7  17.7
+RW_sync<1>.D                         10.0                                    
+SDRAM/dtack.D                              10.0  10.0              10.0  10.0
+SDRAM/init_done.CE                                                 10.0  10.0
+SDRAM/init_refreshed.CE                                10.0  10.0  17.7  17.7
+SDRAM/ram_state_FSM_FFd1.D                                         18.7  18.7
+SDRAM/ram_state_FSM_FFd2.D                 10.0        11.0        11.0  11.0
+SDRAM/ram_state_FSM_FFd3.D                             10.0  10.0  10.0  10.0
+SDRAM/ram_state_FSM_FFd4.D                 11.0        11.0        11.0  11.0
 SDRAM/refresh_request<1>.D                                                   
-SDRAM/refreshing.D                   10.0                                    
-SDRAM/timer_tRFC<0>.D                      11.0  10.0                        
-SDRAM/timer_tRFC<1>.D                      10.0  10.0                        
-UDS_n_sync<1>.D                                        10.0                  
-autoconf_dtack.D                                                   11.0      
-autoconfig_dout<0>.CE                                              10.0      
-autoconfig_dout<0>.D                                                     11.0
-autoconfig_dout<1>.CE                                              10.0      
-autoconfig_dout<1>.D                                                         
-autoconfig_dout<2>.CE                                              10.0      
-autoconfig_dout<2>.D                                                         
-autoconfig_dout<3>.CE                                              10.0      
-autoconfig_dout<3>.D                                                         
-ctrl_dout<1>.D                                                               
-ctrl_dout<3>.D                                                               
-dtack.D                                                            11.4      
-ide_dtack.D                                                                  
-otherram_enabled.D                                                           
-ram_dtack.D                                                                  
-z2_state_FSM_FFd1.D                                          10.0            
-z2_state_FSM_FFd2.D                                                11.0      
+SDRAM/refreshing.D                                                 17.7  17.7
+SDRAM/timer_tRFC<0>.D                                              17.7  17.7
+SDRAM/timer_tRFC<1>.D                                              17.7  17.7
+UDS_n_sync<1>.D                                                              
+dtack.D                                    18.7  11.0                        
+z2_state_FSM_FFd1.D                                                          
+z2_state_FSM_FFd2.D                        25.4  10.0                        
 
 --------------------------------------------------------------------------------
                           Clock to Setup (tCYC) (nsec)
                                 (Clock: MEMCLK)
 
-\ From                            a     a     a     c     c     d     f     i
- \                                u     u     u     t     t     t     l     d
-  \                               t     t     t     r     r     a     a     e
-   \                              o     o     o     l     l     c     s     _
-    \                             c     c     c     _     _     k     h     d
-     \                            o     o     o     d     d     .     _     t
-      \                           n     n     n     o     o     Q     e     a
-       \                          f     f     f     u     u           n     c
-        \                         i     i     i     t     t           a     k
-         \                        g     g     g     <     <           b     .
-          \                       _     _     _     1     3           l     Q
-           \                      d     d     d     >     >           e      
-            \                     o     o     o     .     .           d      
-             \                    u     u     u     Q     Q           .      
-              \                   t     t     t                       Q      
-               \                  <     <     <                              
-                \                 1     2     3                              
-                 \                >     >     >                              
-                  \               .     .     .                              
-                   \              Q     Q     Q                              
-                    \                                                        
-                     \                                                       
-                      \                                                      
-                       \                                                     
-                        \                                                    
-                         \                                                   
+\ From                            S     S     S     S     S     S     S     U
+ \                                D     D     D     D     D     D     D     D
+  \                               R     R     R     R     R     R     R     S
+   \                              A     A     A     A     A     A     A     _
+    \                             M     M     M     M     M     M     M     n
+     \                            /     /     /     /     /     /     /     _
+      \                           r     r     r     r     r     t     t     s
+       \                          a     a     e     e     e     i     i     y
+        \                         m     m     f     f     f     m     m     n
+         \                        _     _     r     r     r     e     e     c
+          \                       s     s     e     e     e     r     r     <
+           \                      t     t     s     s     s     _     _     0
+            \                     a     a     h     h     h     t     t     >
+             \                    t     t     _     _     i     R     R     .
+              \                   e     e     r     r     n     F     F     Q
+               \                  _     _     e     e     g     C     C      
+                \                 F     F     q     q     .     <     <      
+                 \                S     S     u     u     Q     0     1      
+                  \               M     M     e     e           >     >      
+                   \              _     _     s     s           .     .      
+                    \             F     F     t     t           Q     Q      
+                     \            F     F     <     <                        
+                      \           d     d     0     1                        
+                       \          3     4     >     >                        
+                        \         .     .     .     .                        
+                         \        Q     Q     Q     Q                        
                           \                                                  
                            \                                                 
                             \                                                
@@ -1067,6 +1075,14 @@ z2_state_FSM_FFd2.D                                                11.0
 
 AS_n_sync<1>.D                                                               
 AS_n_sync<2>.D                                                               
+AUTOCONFIG/DOUT<0>.CE                                                        
+AUTOCONFIG/DOUT<0>.D                                                         
+AUTOCONFIG/DOUT<1>.CE                                                        
+AUTOCONFIG/DOUT<1>.D                                                         
+AUTOCONFIG/DOUT<2>.CE                                                        
+AUTOCONFIG/DOUT<2>.D                                                         
+AUTOCONFIG/DOUT<3>.CE                                                        
+AUTOCONFIG/DOUT<3>.D                                                         
 AUTOCONFIG/ac_state<0>.D                                                     
 AUTOCONFIG/ac_state<1>.D                                                     
 AUTOCONFIG/cdtv_configured.CE                                                
@@ -1075,182 +1091,176 @@ AUTOCONFIG/ctrl_base<0>.CE
 AUTOCONFIG/ctrl_base<1>.CE                                                   
 AUTOCONFIG/ctrl_base<2>.CE                                                   
 AUTOCONFIG/ctrl_base<3>.CE                                                   
+AUTOCONFIG/dtack.D                                                           
 AUTOCONFIG/ide_base<0>.CE                                                    
 AUTOCONFIG/ide_base<1>.CE                                                    
 AUTOCONFIG/ide_base<2>.CE                                                    
 AUTOCONFIG/ide_base<3>.CE                                                    
 AUTOCONFIG/ide_configured.CE                                                 
 AUTOCONFIG/ram_configured.CE                                                 
-BA<0>.CE                                                                     
-BA<1>.CE                                                                     
-CAS_n.D                                                                      
-CKE.CE                                                                       
+BA<0>.CE                       10.0                                          
+BA<1>.CE                       10.0                                          
+CAS_n.D                        10.0  10.0                                    
+CKE.CE                               10.0                                    
 CKE.D                                                                        
+ControlReg/DOUT<1>.D                                                         
+ControlReg/DOUT<3>.D                                                         
+ControlReg/OVL.CE                                                            
 ControlReg/dtack.D                                                           
 ControlReg/flash_progbank.D                                                  
-DQMH.D                                                                       
-DQML.D                                                                       
+ControlReg/otherram_en.D                                                     
+DQMH.D                         10.0  11.0                                    
+DQML.D                         10.0  11.0                                    
 IDE/ds_delay<0>.D                                                            
 IDE/ds_delay<1>.D                                                            
 IDE/ds_delay<2>.D                                                            
+IDE/ide_dtack.D                                                              
+IDE/ide_enable.D                                                             
 IOW_n.D                                                                      
 LDS_n_sync<1>.D                                                              
-MA<0>.D                                                                      
-MA<10>.D                                                                     
-MA<11>.D                                                                     
-MA<1>.D                                                                      
-MA<2>.D                                                                      
-MA<3>.D                                                                      
-MA<4>.D                                                                      
-MA<5>.D                                                                      
-MA<6>.D                                                                      
-MA<7>.D                                                                      
-MA<8>.D                                                                      
-MA<9>.D                                                                      
-MEMW_n.D                                                                     
-OVL.CE                                                                       
-RAMCS_n.D                                                                    
-RAS_n.D                                                                      
+MA<0>.D                        17.7  18.7                                    
+MA<10>.D                       11.0  17.7                                    
+MA<11>.D                       17.7  17.7                                    
+MA<1>.D                        17.7  17.7                                    
+MA<2>.D                        17.7  17.7                                    
+MA<3>.D                        17.7  17.7                                    
+MA<4>.D                        17.7  17.7                                    
+MA<5>.D                        17.7  17.7                                    
+MA<6>.D                        17.7  17.7                                    
+MA<7>.D                        17.7  17.7                                    
+MA<8>.D                        17.7  17.7                                    
+MA<9>.D                        17.7  17.7                                    
+MEMW_n.D                       10.0  10.0                                    
+RAMCS_n.D                      17.7  17.7                                    
+RAS_n.D                        10.0  17.7                                    
 RW_sync<1>.D                                                                 
-SDRAM/init_done.CE                                                           
-SDRAM/init_refreshed.CE                                                      
-SDRAM/ram_state_FSM_FFd1.D                                                   
-SDRAM/ram_state_FSM_FFd2.D                                                   
-SDRAM/ram_state_FSM_FFd3.D                                                   
-SDRAM/ram_state_FSM_FFd4.D                                                   
-SDRAM/refresh_request<1>.D                                                   
-SDRAM/refreshing.D                                                           
-SDRAM/timer_tRFC<0>.D                                                        
-SDRAM/timer_tRFC<1>.D                                                        
-UDS_n_sync<1>.D                                                              
-autoconf_dtack.D                                                             
-autoconfig_dout<0>.CE                                                        
-autoconfig_dout<0>.D                                                         
-autoconfig_dout<1>.CE                                                        
-autoconfig_dout<1>.D           11.0                                          
-autoconfig_dout<2>.CE                                                        
-autoconfig_dout<2>.D                 10.0                                    
-autoconfig_dout<3>.CE                                                        
-autoconfig_dout<3>.D                       11.0                              
-ctrl_dout<1>.D                                   11.4                        
-ctrl_dout<3>.D                                         11.4        11.4      
-dtack.D                                                      11.4        11.4
-ide_dtack.D                                                                  
-otherram_enabled.D                                                           
-ram_dtack.D                                                                  
+SDRAM/dtack.D                  10.0  10.0                                    
+SDRAM/init_done.CE             10.0  10.0                                    
+SDRAM/init_refreshed.CE        17.7  10.0                    10.0  10.0      
+SDRAM/ram_state_FSM_FFd1.D     18.7  11.0        11.0                        
+SDRAM/ram_state_FSM_FFd2.D     11.0  11.0        11.0        11.0  11.0      
+SDRAM/ram_state_FSM_FFd3.D     10.0  10.0        10.0        10.0  10.0      
+SDRAM/ram_state_FSM_FFd4.D     11.0  11.0        10.0        11.0  11.0      
+SDRAM/refresh_request<1>.D                 10.0                              
+SDRAM/refreshing.D             17.7  17.7              10.0                  
+SDRAM/timer_tRFC<0>.D          17.7  17.7                    10.0  10.0      
+SDRAM/timer_tRFC<1>.D          17.7  17.7                    10.0  10.0      
+UDS_n_sync<1>.D                                                          10.0
+dtack.D                                                                      
 z2_state_FSM_FFd1.D                                                          
-z2_state_FSM_FFd2.D                                                      11.0
+z2_state_FSM_FFd2.D                                                          
 
 --------------------------------------------------------------------------------
                           Clock to Setup (tCYC) (nsec)
                                 (Clock: MEMCLK)
 
-\ From                            o     r     z     z
- \                                t     a     2     2
-  \                               h     m     _     _
-   \                              e     _     s     s
-    \                             r     d     t     t
-     \                            r     t     a     a
-      \                           a     a     t     t
-       \                          m     c     e     e
-        \                         _     k     _     _
-         \                        e     .     F     F
-          \                       n     Q     S     S
-           \                      a           M     M
-            \                     b           _     _
-             \                    l           F     F
-              \                   e           F     F
-               \                  d           d     d
-                \                 .           1     2
-                 \                Q           .     .
-                  \                           Q     Q
-                   \                                 
-                    \                                
-                     \                               
-                      \                              
-                       \                             
-                        \                            
-                         \                           
-                          \                          
-                           \                         
-                            \                        
-  To                         \------------------------
+\ From                            U     d     f     z     z
+ \                                D     t     l     2     2
+  \                               S     a     a     _     _
+   \                              _     c     s     s     s
+    \                             n     k     h     t     t
+     \                            _     .     _     a     a
+      \                           s     Q     e     t     t
+       \                          y           n     e     e
+        \                         n           a     _     _
+         \                        c           b     F     F
+          \                       <           l     S     S
+           \                      1           e     M     M
+            \                     >           d     _     _
+             \                    .           .     F     F
+              \                   Q           Q     F     F
+               \                                    d     d
+                \                                   1     2
+                 \                                  .     .
+                  \                                 Q     Q
+                   \                                       
+                    \                                      
+                     \                                     
+                      \                                    
+                       \                                   
+                        \                                  
+                         \                                 
+                          \                                
+                           \                               
+                            \                              
+  To                         \------------------------------
 
-AS_n_sync<1>.D                                       
-AS_n_sync<2>.D                                       
-AUTOCONFIG/ac_state<0>.D                   11.0  11.0
-AUTOCONFIG/ac_state<1>.D                   10.0  10.0
-AUTOCONFIG/cdtv_configured.CE                        
-AUTOCONFIG/ctl_configured.CE               10.0  10.0
-AUTOCONFIG/ctrl_base<0>.CE                 10.0  10.0
-AUTOCONFIG/ctrl_base<1>.CE                 10.0  10.0
-AUTOCONFIG/ctrl_base<2>.CE                 10.0  10.0
-AUTOCONFIG/ctrl_base<3>.CE                 10.0  10.0
-AUTOCONFIG/ide_base<0>.CE                  10.0  10.0
-AUTOCONFIG/ide_base<1>.CE                  10.0  10.0
-AUTOCONFIG/ide_base<2>.CE                  10.0  10.0
-AUTOCONFIG/ide_base<3>.CE                  10.0  10.0
-AUTOCONFIG/ide_configured.CE               10.0  10.0
-AUTOCONFIG/ram_configured.CE               10.0  10.0
-BA<0>.CE                                             
-BA<1>.CE                                             
-CAS_n.D                                              
-CKE.CE                                               
-CKE.D                                      10.0  10.0
-ControlReg/dtack.D                         11.0  11.0
-ControlReg/flash_progbank.D                11.4  11.4
-DQMH.D                                               
-DQML.D                                               
-IDE/ds_delay<0>.D                                    
-IDE/ds_delay<1>.D                                    
-IDE/ds_delay<2>.D                                    
-IOW_n.D                                              
-LDS_n_sync<1>.D                                      
-MA<0>.D                                              
-MA<10>.D                                             
-MA<11>.D                                             
-MA<1>.D                                              
-MA<2>.D                                              
-MA<3>.D                                              
-MA<4>.D                                              
-MA<5>.D                                              
-MA<6>.D                                              
-MA<7>.D                                              
-MA<8>.D                                              
-MA<9>.D                                              
-MEMW_n.D                                             
-OVL.CE                                               
-RAMCS_n.D                                            
-RAS_n.D                                              
-RW_sync<1>.D                                         
-SDRAM/init_done.CE                                   
-SDRAM/init_refreshed.CE                              
-SDRAM/ram_state_FSM_FFd1.D     11.0        10.0  11.0
-SDRAM/ram_state_FSM_FFd2.D     11.4        11.0  11.0
-SDRAM/ram_state_FSM_FFd3.D     11.0        10.0  11.0
-SDRAM/ram_state_FSM_FFd4.D     11.0        11.0  11.4
-SDRAM/refresh_request<1>.D                           
-SDRAM/refreshing.D                                   
-SDRAM/timer_tRFC<0>.D                                
-SDRAM/timer_tRFC<1>.D                                
-UDS_n_sync<1>.D                                      
-autoconf_dtack.D                           11.0  11.0
-autoconfig_dout<0>.CE                      10.0  10.0
-autoconfig_dout<0>.D                                 
-autoconfig_dout<1>.CE                      10.0  10.0
-autoconfig_dout<1>.D                                 
-autoconfig_dout<2>.CE                      10.0  10.0
-autoconfig_dout<2>.D                                 
-autoconfig_dout<3>.CE                      10.0  10.0
-autoconfig_dout<3>.D                                 
-ctrl_dout<1>.D                 11.4        11.0  11.0
-ctrl_dout<3>.D                             11.0  11.0
-dtack.D                        10.0  11.4  11.0  11.0
-ide_dtack.D                                          
-otherram_enabled.D             11.0        12.2  11.8
-ram_dtack.D                          11.0  11.0  11.0
-z2_state_FSM_FFd1.D                        10.0  10.0
-z2_state_FSM_FFd2.D            18.7  11.0  12.6  12.6
+AS_n_sync<1>.D                                             
+AS_n_sync<2>.D                                             
+AUTOCONFIG/DOUT<0>.CE                            10.0  10.0
+AUTOCONFIG/DOUT<0>.D                                       
+AUTOCONFIG/DOUT<1>.CE                            10.0  10.0
+AUTOCONFIG/DOUT<1>.D                                       
+AUTOCONFIG/DOUT<2>.CE                            10.0  10.0
+AUTOCONFIG/DOUT<2>.D                                       
+AUTOCONFIG/DOUT<3>.CE                            10.0  10.0
+AUTOCONFIG/DOUT<3>.D                                       
+AUTOCONFIG/ac_state<0>.D                         17.7  17.7
+AUTOCONFIG/ac_state<1>.D                         17.7  17.7
+AUTOCONFIG/cdtv_configured.CE                              
+AUTOCONFIG/ctl_configured.CE                     10.0  10.0
+AUTOCONFIG/ctrl_base<0>.CE                       10.0  10.0
+AUTOCONFIG/ctrl_base<1>.CE                       10.0  10.0
+AUTOCONFIG/ctrl_base<2>.CE                       10.0  10.0
+AUTOCONFIG/ctrl_base<3>.CE                       10.0  10.0
+AUTOCONFIG/dtack.D                               10.0  10.0
+AUTOCONFIG/ide_base<0>.CE                        10.0  10.0
+AUTOCONFIG/ide_base<1>.CE                        10.0  10.0
+AUTOCONFIG/ide_base<2>.CE                        10.0  10.0
+AUTOCONFIG/ide_base<3>.CE                        10.0  10.0
+AUTOCONFIG/ide_configured.CE                     10.0  10.0
+AUTOCONFIG/ram_configured.CE                     10.0  10.0
+BA<0>.CE                                                   
+BA<1>.CE                                                   
+CAS_n.D                                                    
+CKE.CE                                                     
+CKE.D                                            10.0  10.0
+ControlReg/DOUT<1>.D                             17.7  17.7
+ControlReg/DOUT<3>.D                       10.0  17.7  17.7
+ControlReg/OVL.CE                                          
+ControlReg/dtack.D                               10.0  10.0
+ControlReg/flash_progbank.D                      17.7  17.7
+ControlReg/otherram_en.D                         17.7  17.7
+DQMH.D                         10.0                        
+DQML.D                                                     
+IDE/ds_delay<0>.D              10.0                        
+IDE/ds_delay<1>.D                                          
+IDE/ds_delay<2>.D                                          
+IDE/ide_dtack.D                                            
+IDE/ide_enable.D                                           
+IOW_n.D                                                    
+LDS_n_sync<1>.D                                            
+MA<0>.D                                                    
+MA<10>.D                                                   
+MA<11>.D                                                   
+MA<1>.D                                                    
+MA<2>.D                                                    
+MA<3>.D                                                    
+MA<4>.D                                                    
+MA<5>.D                                                    
+MA<6>.D                                                    
+MA<7>.D                                                    
+MA<8>.D                                                    
+MA<9>.D                                                    
+MEMW_n.D                                                   
+RAMCS_n.D                                                  
+RAS_n.D                                                    
+RW_sync<1>.D                                               
+SDRAM/dtack.D                                    10.0  10.0
+SDRAM/init_done.CE                                         
+SDRAM/init_refreshed.CE                                    
+SDRAM/ram_state_FSM_FFd1.D                       10.0  11.0
+SDRAM/ram_state_FSM_FFd2.D                       10.0  11.0
+SDRAM/ram_state_FSM_FFd3.D                       10.0  10.0
+SDRAM/ram_state_FSM_FFd4.D                       11.0  11.0
+SDRAM/refresh_request<1>.D                                 
+SDRAM/refreshing.D                                         
+SDRAM/timer_tRFC<0>.D                                      
+SDRAM/timer_tRFC<1>.D                                      
+UDS_n_sync<1>.D                                            
+dtack.D                              11.0        10.0  10.0
+z2_state_FSM_FFd1.D            10.0              10.0  10.0
+z2_state_FSM_FFd2.D                              10.0  10.0
 
 Path Type Definition: 
 

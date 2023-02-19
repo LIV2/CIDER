@@ -109,20 +109,20 @@ begin
         8'h00: 
           begin
             case (ac_state)
-              ac_ram:  DOUT <= 2'b10; // Memory / Link to free mem pool
-              ac_ide:  DOUT <= 2'b01; // IO / Read from autoboot rom
-              ac_ctl:  DOUT <= 2'b00; // IO
+              ac_ram:  DOUT <= 4'b1110; // Memory / Link to free mem pool
+              ac_ide:  DOUT <= 4'b1101; // IO / Read from autoboot rom
+              ac_ctl:  DOUT <= 4'b1100; // IO
             endcase
           end
         8'h01:   DOUT <= {3'b000, ac_state == ac_ram ? 1'b0 :  1'b1};  // Size: 8MB : 64KB
-        8'h02:   DOUT <= ~prod_id[7:4]; // Product number
-        8'h03:   DOUT <= ~{prod_id[3:2], ac_state}; // Product number
+        8'h02:   DOUT <= ~(ac_state == ac_ide ? 4'b0000 : prod_id[7:4]); // Product number
+        8'h03:   DOUT <= ~(ac_state == ac_ide ? 4'b0110 : {prod_id[3:2], ac_state}); // Product number
         8'h04:   DOUT <= ~{ac_state == ac_ram ? 1 : 1'b0, 3'b000};  // Bit 1: Add to Z2 RAM space if set
         8'h05:   DOUT <= ~4'b0000;
-        8'h08:   DOUT <= ~mfg_id[15:12]; // Manufacturer ID
-        8'h09:   DOUT <= ~mfg_id[11:8];  // Manufacturer ID
-        8'h0A:   DOUT <= ~mfg_id[7:4];   // Manufacturer ID
-        8'h0B:   DOUT <= ~mfg_id[3:0];   // Manufacturer ID
+        8'h08:   DOUT <= ~(ac_state == ac_ide ? 4'h0 : mfg_id[15:12]); // Manufacturer ID
+        8'h09:   DOUT <= ~(ac_state == ac_ide ? 4'h8 : mfg_id[11:8]);  // Manufacturer ID
+        8'h0A:   DOUT <= ~(ac_state == ac_ide ? 4'h2 : mfg_id[7:4]);   // Manufacturer ID
+        8'h0B:   DOUT <= ~(ac_state == ac_ide ? 4'hc : mfg_id[3:0]);   // Manufacturer ID
         8'h0C:   DOUT <= ~serial[31:28]; // Serial number
         8'h0D:   DOUT <= ~serial[27:24]; // Serial number
         8'h0E:   DOUT <= ~serial[23:20]; // Serial number
@@ -131,12 +131,10 @@ begin
         8'h11:   DOUT <= ~serial[11:8];  // Serial number
         8'h12:   DOUT <= ~serial[7:4];   // Serial number
         8'h13:   DOUT <= ~serial[3:0];   // Serial number
-        8'h14:   DOUT <= ~4'h8;          // ROM Offset high byte high nibble
-        /* These ones taken care of by the default case :)
-        8'h15:   DOUT <= ~4'h0;         // ORM Offset high byte low nibble
-        8'h16:   DOUT <= ~4'h0;         // ORM Offset low byte high nibble
-        8'h17:   DOUT <= ~4'h0;         // ORM Offset low byte low nibble
-        */
+        8'h14:   DOUT <= ~4'h0;          // ROM Offset high byte high nibble
+        8'h15:   DOUT <= ~4'h0;          // ROM Offset high byte low nibble
+        8'h16:   DOUT <= ~4'h0;          // ROM Offset low byte high nibble
+        8'h17:   DOUT <= ~4'h8;          // ROM Offset low byte low nibble
         8'h20:   DOUT <= 4'b0;
         8'h21:   DOUT <= 4'b0;
         default: DOUT <= 4'hF;
@@ -179,7 +177,7 @@ assign otherram_access = bonus_access && OTHER_EN;
 
 assign ranger_access   = (ADDR[23:16] >= 8'hC0) && (ADDR[23:16] <= 8'hD7) && RANGER_EN;
 
-assign ram_access      = (ADDR[23:20] >= 4'h2 || ADDR[23:20] <= 4'h9) && ram_configured ||
+assign ram_access      = (ADDR[23:20] >= 4'h2 && ADDR[23:20] <= 4'h9) && ram_configured ||
                          otherram_access ||
                          ranger_access;
 

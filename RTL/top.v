@@ -206,7 +206,9 @@ IDE IDE (
   .IDECS1_n (IDECS1_n),
   .IDECS2_n (IDECS2_n),
   .ide_access (ide_access),
-  .ide_enabled (IDEEN_n),
+  .ide_enabled (~IDEEN_n),
+  .RESET_n (RESET_n),
+  .IDEBUF_OE (IDEBUF_OE),
   .IDE_ROMEN (IDE_ROMEN)
 );
 
@@ -240,7 +242,5 @@ assign OVR_1_n = OVR;
 assign OVR_2_n = OVR;
 
 assign DTACK_n = ((ram_access || ide_access || flash_access) && !AS_n && dtack) ? 1'b0 : 1'bZ;
-
-assign IDEBUF_OE = !(ide_access && !AS_n && RESET_n);
 
 endmodule
