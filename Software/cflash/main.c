@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
                 break;
 
               case OP_ERASE_BANK:
-                erase_bank(config->programBank);
+                erase_bank(config->programBank,config->programSlot);
                 break;
 
               case OP_ERASE_CHIP:
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
 
               case OP_PROGRAM:
                 if (config->source == SOURCE_ROM) {
-                  erase_bank(config->programBank);
+                  erase_bank(config->programBank,config->programSlot);
                   printf("Copying Kickstart ROM to bank %d\n",(int)config->programBank >> 19);
                   copyBufToFlash((void *)0xF80000,config->programBank,ROM_512K,config->skipVerify);
                 } else {
@@ -122,9 +122,9 @@ int main(int argc, char *argv[])
                           config->programBank &= ~(ODD_BANK); // Force alignment of 1MB ROM to Bank 0 or 2
                           printf("WARN: Cannot write 1MB ROM to odd banks, forcing alignment to bank %d.\n", (int)config->programBank >> 19);
                         }
-                        erase_bank(config->programBank + ROM_512K);
+                        erase_bank(config->programBank + ROM_512K,config->programSlot);
                       }
-                      erase_bank(config->programBank);
+                      erase_bank(config->programBank,config->programSlot);
                       copyFileToFlash(config->ks_filename,config->programBank,romSize,config->skipVerify);
                     } else {
                       printf("Bad file size, 256K/512K/1M ROM required.\n");
@@ -250,11 +250,14 @@ int main(int argc, char *argv[])
  *
  * @brief Erase a bank
  * @param bank Address of the bank to erase
+ * @param slot Slot the bank is in that you wish to erase
 */
-void erase_bank(ULONG bank) {
+void erase_bank(ULONG bank,UBYTE slot) {
   bank >>= 19;
 
-  printf("Erasing bank %d\n", (int)bank);
+  printf("Erasing slot %d bank %d\n", (int)slot, (int)bank);
+  bank |= (slot << 1);
+  selectSlot(slot);
   kick_flash_erase_bank(bank);
 }
 
