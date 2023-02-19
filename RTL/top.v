@@ -71,6 +71,7 @@ wire ram_dtack;
 wire autoconf_dtack;
 
 reg dtack;
+reg ranger_enabled;
 reg flash_enabled;
 reg flash_bank;
 
@@ -79,15 +80,11 @@ wire ide_access;
 
 wire otherram_enabled;
 
-localparam RAM_FAST_RANGER_OTHER = 2'b11,
-           RAM_FAST_RANGER       = 2'b10,
-           RAM_FAST              = 2'b01,
-           RAM_DISABLED          = 2'b00;
-
 always @(posedge MEMCLK) begin
   if (!RESET_n) begin
-    flash_bank <= FLASH_BANK_SEL;
-    flash_enabled <= ~FLASH_EN_n;
+    flash_bank     <= FLASH_BANK_SEL;
+    flash_enabled  <= ~FLASH_EN_n;
+    ranger_enabled <= ~RANGER_EN_n;
   end
 end
 
@@ -156,7 +153,7 @@ Autoconfig AUTOCONFIG (
   .RESET_n (RESET_n),
   .ram_access (ram_access),
   .RAM_EN (~RAM_EN_n),
-  .RANGER_EN (~RANGER_EN_n),
+  .RANGER_EN (ranger_enabled),
   .OTHER_EN (otherram_enabled),
   .ide_enabled (~IDEEN_n),
   .autoconfig_cycle (autoconfig_cycle),
