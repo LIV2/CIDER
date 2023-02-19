@@ -35,6 +35,7 @@ typedef enum {
 
 struct Config {
   ULONG          programBank;
+  UBYTE          programSlot;
   operation_type op;
   source_type    source;
   bool           skipVerify;

@@ -31,5 +31,5 @@ void erase_chip();
 bool verifyBank(ULONG *, ULONG, ULONG);
 bool verifyFile(char *, ULONG);
 APTR readFileToBuf(char *);
-void selectBank(ULONG);
+void selectSlot(UBYTE);
 #endif

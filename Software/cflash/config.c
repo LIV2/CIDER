@@ -43,6 +43,7 @@ struct Config* configure(int argc, char *argv[]) {
   config->source      = SOURCE_NONE;
   config->skipVerify  = false;
   config->programBank = FLASH_BANK_1;
+  config->programSlot = 0;
 
   for (int i=1; i<argc; i++) {
     if (argv[i][0] == '-') {
@@ -117,12 +118,26 @@ struct Config* configure(int argc, char *argv[]) {
           config->programBank = FLASH_BANK_1;
           break;
 
-        case '2':
-          config->programBank = FLASH_BANK_2;
-          break;
+        case 's':
+          if (i+1 < argc) {
+            switch (argv[i+1][0]) {
+              case '0':
+                config->programSlot = 0;
+                break;
+              
+              case '1':
+                config->programSlot = 1;
+                break;
+              
+              default:
+                error = true;
+                printf("Invalid slot selected.\n");
+                break;
+            }
+  
+            i++;
+          }
 
-        case '3':
-          config->programBank = FLASH_BANK_3;
           break;
 
         case 'v':
@@ -162,7 +177,7 @@ struct Config* configure(int argc, char *argv[]) {
  * @brief Print the usage information
 */
 void usage() {
-    printf("\nUsage: cflash [-fieEvV] [-c|-f <kickstart rom>] [-0|1] \n\n");
+    printf("\nUsage: cflash [-fieEvV] [-c|-f <kickstart rom>] [-0|1]  -s [0|1]\n\n");
     printf("       -c                  -  Copy ROM to Flash.\n");
     printf("       -f <kickstart file> -  Kickstart to Flash or verify.\n");
     printf("       -i                  -  Print Flash device id.\n");
@@ -173,6 +188,5 @@ void usage() {
     printf("       -V                  -  Skip verification after programming.\n");
     printf("       -0                  -  Select bank 0 - 1st $FO Extended ROM.\n");
     printf("       -1                  -  Select bank 1 - 1st $F8 Kickstart ROM.\n");
-    printf("       -2                  -  Select bank 2 - 2nd $FO Extended ROM.\n");
-    printf("       -3                  -  Select bank 3 - 2nd $F8 Kickstart ROM.\n");
+    printf("       -s [0|1]            -  Select kickstart slot to work on.\n");
 }

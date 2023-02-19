@@ -26,7 +26,5 @@
 
 #define FLASH_BANK_0  0x000000
 #define FLASH_BANK_1  0x080000
-#define FLASH_BANK_2  0x100000
-#define FLASH_BANK_3  0x180000
 
 #endif

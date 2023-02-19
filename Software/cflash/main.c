@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 
         controlRegister = cd->cd_BoardAddr;
 
-        selectBank(config->programBank);
+        selectSlot(config->programSlot);
 
 
         if (!(*controlRegister & BONUSEN_BIT)) {
@@ -467,14 +467,13 @@ bool verifyFile(char *filename, ULONG bank) {
 }
 
 /**
- * selectBank
+ * selectSlot
  *
  * @brief Set the high/low 1MB bank of the Flash chip
- * @param bank Bank address to select
+ * @param slot Slot to select
 */
-void selectBank(ULONG bank) {
-  bank = bank >> 19;
-  if (bank > 1) {
+void selectSlot(UBYTE slot) {
+  if (slot == 1) {
     *controlRegister = SET_BANKBIT;
   } else {
     *controlRegister = CLR_BANKBIT;
