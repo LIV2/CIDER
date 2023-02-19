@@ -25,7 +25,7 @@ module Autoconfig (
     input RANGER_EN,
     input OTHER_EN,
     input maprom_en,
-    input mapext_en,
+    input ide_enabled,
     input OVL,
     input [1:0] z2_state,
     output ram_access,
@@ -48,7 +48,7 @@ module Autoconfig (
 // Autoconfig
 localparam [15:0] mfg_id  = 16'h07DB;
 localparam [7:0]  prod_id = `PRODID;
-localparam [31:0] serial = `SERIAL;
+localparam [31:0] serial  = `SERIAL;
 
 reg ram_configured;
 reg ide_configured;
@@ -109,15 +109,15 @@ begin
         8'h00: 
           begin
             case (ac_state)
-              ac_ram:  DOUT <= 4'b1110; // Memory / Link to free mem pool
-              ac_ide:  DOUT <= 4'b1101; // IO / Read from autoboot rom
-              ac_ctl:  DOUT <= 4'b1100; // IO
+              ac_ram:  DOUT <= 4'b1110;               // Memory / Link to free mem pool
+              ac_ide:  DOUT <= {3'b110, ide_enabled}; // IO / Read from autoboot rom
+              ac_ctl:  DOUT <= 4'b1100;               // IO
             endcase
           end
-        8'h01:   DOUT <= {3'b000, ac_state == ac_ram ? 1'b0 :  1'b1};  // Size: 8MB : 64KB
-        8'h02:   DOUT <= ~(ac_state == ac_ide ? 4'b0000 : prod_id[7:4]); // Product number
+        8'h01:   DOUT <= {3'b000, ac_state == ac_ram ? 1'b0 :  1'b1};                // Size: 8MB : 64KB
+        8'h02:   DOUT <= ~(ac_state == ac_ide ? 4'b0000 : prod_id[7:4]);             // Product number
         8'h03:   DOUT <= ~(ac_state == ac_ide ? 4'b0110 : {prod_id[3:2], ac_state}); // Product number
-        8'h04:   DOUT <= ~{ac_state == ac_ram ? 1 : 1'b0, 3'b000};  // Bit 1: Add to Z2 RAM space if set
+        8'h04:   DOUT <= ~{ac_state == ac_ram ? 1 : 1'b0, 3'b000};                   // Bit 1: Add to Z2 RAM space if set
         8'h05:   DOUT <= ~4'b0000;
         8'h08:   DOUT <= ~(ac_state == ac_ide ? 4'h0 : mfg_id[15:12]); // Manufacturer ID
         8'h09:   DOUT <= ~(ac_state == ac_ide ? 4'h8 : mfg_id[11:8]);  // Manufacturer ID
@@ -169,7 +169,7 @@ assign bonus_access    = (ADDR[23:16] >= 8'hA0) && (ADDR[23:16] <= 8'hBD);
 
 assign rom_access      = (ADDR[23:19] == {4'hF,1'b1}) && maprom_en ||
                          (ADDR[23:20] == 4'b0000) && OVL && RW && maprom_en;
-assign ext_access      = (ADDR[23:19] == {4'hF,1'b0}) && mapext_en;
+assign ext_access      = (ADDR[23:19] == {4'hF,1'b0}) && maprom_en;
 
 assign flash_access    = ((rom_access || ext_access) || (bonus_access && !OTHER_EN));
 

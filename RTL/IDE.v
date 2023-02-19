@@ -25,7 +25,7 @@ module IDE(
     input CLK,
     input ide_access,
     input IORDY,
-    input ide_enabled,
+    input ide_enable,
     input RESET_n,
     output DTACK,
     output reg IOR_n,
@@ -39,14 +39,14 @@ module IDE(
 wire ds = !UDS_n || !LDS_n;
 
 reg ide_dtack;
-reg ide_enable;
+reg ide_enabled;
 
-assign IDECS1_n = !(ide_access && ADDR[15:14] == 2'b00 && !ADDR[12]) || !ide_enable;
-assign IDECS2_n = !(ide_access && ADDR[15:14] == 2'b00 && !ADDR[13]) || !ide_enable;
+assign IDECS1_n = !(ide_access && ADDR[15:14] == 2'b00 && !ADDR[12]) || !ide_enabled;
+assign IDECS2_n = !(ide_access && ADDR[15:14] == 2'b00 && !ADDR[13]) || !ide_enabled;
 
-assign IDE_ROMEN = !(ide_access && !ide_enable);
+assign IDE_ROMEN = !(ide_access && !ide_enabled);
 
-assign IDEBUF_OE = !(ide_access && ide_enable && !AS_n);
+assign IDEBUF_OE = !(ide_access && ide_enabled && !AS_n);
 
 reg [2:0] ds_delay;
 
@@ -70,9 +70,9 @@ end
 
 always @(posedge CLK or negedge RESET_n) begin
   if (!RESET_n) begin
-    ide_enable <= 0;
+    ide_enabled <= 0;
   end else begin
-    if (ide_access && ide_enabled && !RW) ide_enable <=1;
+    if (ide_access && ide_enable && !RW) ide_enabled <= 1;
   end
 end
 assign DTACK = ide_dtack;
