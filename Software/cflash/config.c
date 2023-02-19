@@ -137,7 +137,7 @@ struct Config* configure(int argc, char *argv[]) {
     }
   }
 
-  if (config->op == OP_NONE) {
+  if (config->op == OP_NONE && config->flash_ide_rom == false) {
     if (config->source == SOURCE_NONE) {
       error = true;
     } else {

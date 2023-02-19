@@ -24,7 +24,7 @@
 #include "kick_flash_constants.h"
 #include "constants.h"
 
-void *flashbase = (void *)FLASHBASE;
+ULONG flashbase = FLASHBASE;
 void *controlBase = NULL;
 
 enum {
@@ -151,6 +151,7 @@ void kick_flash_erase_block(ULONG address) {
   kick_flash_unlock_sdp();
   *(UWORD *)(flashbase + address) = CMD_ERASE_BLOCK;
 
+  kick_flash_poll(address);
 }
 
 /** kick_flash_erase_bank

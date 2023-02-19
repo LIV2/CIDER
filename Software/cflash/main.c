@@ -34,8 +34,9 @@
 
 #define MANUF_ID       2011
 #define PROD_ID        74
-#define IDE_PROD_ID    73
-#define IDE_ROM_OFFSET 0x8000
+#define IDE_MANUF_ID   0x082C
+#define IDE_PROD_ID    6
+#define IDE_ROM_OFFSET 0x0
 
 struct Library *DosBase;
 struct ExecBase *SysBase;
@@ -134,7 +135,7 @@ int main(int argc, char *argv[])
                 break;
 
                 case OP_NONE:
-                  usage();
+                  if (config->flash_ide_rom == false) usage();
                   break;
             }
           }
@@ -151,7 +152,7 @@ int main(int argc, char *argv[])
       if (config->flash_ide_rom == true) {
 
         struct ConfigDev *ide_configDev;
-        if ((ide_configDev = FindConfigDev(NULL,MANUF_ID,IDE_PROD_ID))) {
+        if ((ide_configDev = FindConfigDev(NULL,IDE_MANUF_ID,IDE_PROD_ID))) {
 
           UBYTE manufId,devId;
           if (ide_flash_init(&manufId,&devId,ide_configDev->cd_BoardAddr)) {
@@ -161,6 +162,9 @@ int main(int argc, char *argv[])
 
               APTR buffer = readFileToBuf(config->ide_rom_filename);
               if (buffer) {
+
+                UBYTE *sourcePtr = NULL;
+                UBYTE *destPtr = ide_configDev->cd_BoardAddr;
 
                 printf("Erasing IDE Flash...\n");
                 ide_flash_erase_chip();
@@ -180,8 +184,30 @@ int main(int argc, char *argv[])
                     fflush(stdout);
                     lastProgress = progress;
                   }
+                  sourcePtr = ((void *)buffer + i);
+                  ide_flash_writeByte(i+IDE_ROM_OFFSET,*sourcePtr);
 
-                  ide_flash_writeByte(i+IDE_ROM_OFFSET,*(UBYTE *)(buffer+i));
+                }
+
+                fprintf(stdout,"\n");
+                fflush(stdout);
+
+                fprintf(stdout,"Vefifying IDE ROM:     ");
+                for (int i=0; i<romSize; i++) {
+
+                  progress = (i*100)/romSize;
+
+                  if (lastProgress != progress) {
+                    fprintf(stdout,"\b\b\b\b%3d%%",progress);
+                    fflush(stdout);
+                    lastProgress = progress;
+                  }
+                  sourcePtr = ((void *)buffer + i);
+                  destPtr = ((void *)ide_configDev->cd_BoardAddr + (i << 1));
+                  if (*sourcePtr != *destPtr) {
+                        printf("\nVerification failed at %06x - Expected %02X but read %02X\n",(int)destPtr,*sourcePtr,*destPtr);
+                        return false;
+                      }
 
                 }
 

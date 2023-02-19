@@ -24,7 +24,7 @@
 #include "ide_flash.h"
 #include "ide_flash_constants.h"
 
-void *ide_flashBase;
+ULONG ide_flashBase;
 
 /** ide_flash_writeByte
  *
@@ -33,8 +33,8 @@ void *ide_flashBase;
  * @param data The data to be written
 */
 void ide_flash_writeByte(UWORD address, UBYTE data) {
-  address <<= 1;
   address &= (FLASH_SIZE-1);
+  address <<= 1;
   ide_flash_unlock_sdp();
   ide_flash_command(CMD_BYTE_PROGRAM);
   *(UBYTE *)(ide_flashBase + address) = data;
@@ -84,8 +84,8 @@ void ide_flash_erase_chip() {
  * @param address Address to poll
 */
 void ide_flash_poll(UWORD address) {
-  address <<= 1;
   address &= (FLASH_SIZE-1);
+  address <<= 1;
   volatile UBYTE *read1 = ((void *)ide_flashBase + address);
   volatile UBYTE *read2 = ((void *)ide_flashBase + address);
   while (((*read1 & 1<<6) != (*read2 & 1<<6))) {;;}
@@ -104,7 +104,7 @@ bool ide_flash_init(UBYTE *manuf, UBYTE *devid, ULONG *flashBase) {
   UBYTE manufId;
   UBYTE deviceId;
   
-  ide_flashBase = flashBase;
+  ide_flashBase = (ULONG)flashBase;
 
   ide_flash_unlock_sdp();
   ide_flash_command(CMD_ID_ENTRY);
