@@ -244,39 +244,46 @@ void disableBonusRam() {
  * @returns success
 */
 bool addBonusRam(ULONG bonusRamSize, char *boardName, struct Config *config) {
-  struct MemHeader *FastNode = cd->cd_BoardAddr;
-  if (config->mergeFastAndBonus == true && FastNode->mh_Upper == (void *)BONUSRAM_START) {
-    // Try to expand the Fast RAM pool to include the Bonus RAM
+  if (config->mergeFastAndBonus == true) {
+    // Try to expand the Fast RAM block to include the Bonus RAM
     // 
     // Maybe not a smart idea to modify the memory & chunk lists like this - but this is why it's not the default option!
     //
-    if (config->verbose) printf("Merging Fast ram & Bonus ram pools\n");
-    Forbid();
 
-    struct MemChunk *CurChunk = FastNode->mh_First;
+    struct MemHeader *Node = NULL;
 
-    // Find the last free memory chunk
-    while (CurChunk->mc_Next != NULL) {
-      CurChunk = CurChunk->mc_Next;
+    // Search for a memory block bordering Bonus RAM
+    for (Node = (struct MemHeader *)MemList->lh_Head; (Next = (struct MemHeader *)Node->mh_Node.ln_Succ) != NULL; Node = Next) {
+      if (Node->mh_Upper == (void *)BONUSRAM_START) {
+        if (config->verbose) printf("Merging Fast ram & Bonus ram pools\n");
+        Forbid();
+
+        struct MemChunk *CurChunk = Node->mh_First;
+
+        // Find the last free memory chunk
+        while (CurChunk->mc_Next != NULL) {
+          CurChunk = CurChunk->mc_Next;
+        }
+        // Does the last chunk end where Bonus Ram begins?
+        if ((ULONG)(void *)(CurChunk + CurChunk->mc_Bytes) == BONUSRAM_START) {
+          // Yes, expand the chunk to include Bonus Ram
+          CurChunk->mc_Bytes += bonusRamSize;
+        } else {
+          // No, Add a new chunk
+          struct MemChunk *NewChunk = (void *)BONUSRAM_START;
+          NewChunk->mc_Bytes = bonusRamSize;
+          NewChunk->mc_Next = NULL;
+          CurChunk->mc_Next = NewChunk;
+        }
+
+        // Expand the node to fill Bonus Ram
+        Node->mh_Upper = (void*)(BONUSRAM_START + bonusRamSize);
+        Node->mh_Free += bonusRamSize;
+
+        Permit();
+        return true;
+      }
     }
-    // Does the last chunk end where Bonus Ram begins?
-    if ((ULONG)(void *)(CurChunk + CurChunk->mc_Bytes) == BONUSRAM_START) {
-      // Yes, expand the chunk to include Bonus Ram
-      CurChunk->mc_Bytes += bonusRamSize;
-    } else {
-      // No, Add a new chunk
-      struct MemChunk *NewChunk = (void *)BONUSRAM_START;
-      NewChunk->mc_Bytes = bonusRamSize;
-      NewChunk->mc_Next = NULL;
-      CurChunk->mc_Next = NewChunk;
-    }
-
-    // Expand the node to fill Bonus Ram
-    FastNode->mh_Upper = (void*)(BONUSRAM_START + bonusRamSize);
-    FastNode->mh_Free += bonusRamSize;
-
-    Permit();
-    return true;
   }
 
   for (Node = (struct MemHeader *)MemList->lh_Head; (Next = (struct MemHeader *)Node->mh_Node.ln_Succ) != NULL; Node = Next) {
@@ -287,6 +294,6 @@ bool addBonusRam(ULONG bonusRamSize, char *boardName, struct Config *config) {
       return false;
     }
   }
-  AddMemList(bonusRamSize,MEMF_FAST,(LONG)config->fastPriority-2,(APTR)BONUSRAM_START,(STRPTR)boardName);
+  AddMemList(bonusRamSize,MEMF_FAST,(LONG)config->fastPriority,(APTR)BONUSRAM_START,(STRPTR)boardName);
   return true;
 }
