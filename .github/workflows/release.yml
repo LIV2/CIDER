@@ -22,31 +22,50 @@ jobs:
       - name: Build Addram
         run: make
         working-directory: Software/addram
-      - uses: actions/upload-artifact@master
-        with:
-          name: addram
-          path: Software/addram/addram
 
       - name: Build bootrom
         run: make
         working-directory: Software/bootrom
-      - uses: actions/upload-artifact@master
-        with:
-          name: bootrom
-          path: Software/bootrom/bootrom
 
       - name: Build cflash
         run: make
         working-directory: Software/cflash
+
       - uses: actions/upload-artifact@master
         with:
-          name: cflash
-          path: Software/cflash/cflash
+          name: software
+          path: |
+            Software/addram/addram
+            Software/bootrom/bootrom
+            Software/cflash/cflash
+
+  kicad_outputs:
+    runs-on: ubuntu-latest
+    container: setsoft/kicad_auto:ki6.0.7_Debian
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Generate outputs
+        run: kibot -c kibot/release.kibot.yaml
+        working-directory: Kicad
+      - uses: actions/upload-artifact@master
+        with:
+          name: Gerbers
+          path: Gerbers/*
+      - uses: actions/upload-artifact@master
+        with:
+          name: kicad
+          path: |
+            Docs/*.pdf
+            Docs/*.html
+            Docs/*.png
+            Gerbers/*.csv
 
   draft_release:
     runs-on: ubuntu-latest
     needs:
       - make_software
+      - kicad_outputs
 
     steps:
       - name: Checkout
@@ -56,15 +75,13 @@ jobs:
           path: artifacts
       - name: Zip Gerbers
         run: zip -r Gerbers.zip Gerbers
+        working-directory: artifacts
       - name: release
         uses: softprops/action-gh-release@v1
         with:
           draft: true
           files: |
-            Docs/Schematic.pdf
-            Docs/*-ibom.html
-            Gerbers.zip
-            Gerbers/*_bom_jlc.csv
-            Gerbers/*_cpl_jlc.csv
             Binary/*.jed
-            artifacts/*/*
+            artifacts/Gerbers.zip
+            artifacts/software/**/*
+            artifacts/kicad/**/*

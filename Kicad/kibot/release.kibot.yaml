@@ -106,21 +106,6 @@ outputs:
       include_nets: true
       dark_mode: true
 
-  - name: 3dImage
-    type: render_3d
-    comment: "3D Render"
-    run_by_default: true
-    options:
-      ray_tracing: false
-      output: ../Docs/PCB.png
-      zoom: 8
-      view: top
-      no_tht: true
-      orthographic: true
-      download: false
-      width: 1300
-      height: 530
-
   - name: Image
     type: pcbdraw
     comment: "Draw PCB"
