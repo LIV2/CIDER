@@ -14,7 +14,7 @@ on:
 jobs:
   make_software:
     runs-on: ubuntu-latest
-    container: stefanreinauer/amiga-gcc
+    container: liv2/amiga-gcc-amitools
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -31,13 +31,24 @@ jobs:
         run: make
         working-directory: Software/cflash
 
+      - name: Package software
+        run: |
+          export TMPDIR=/tmp/cider_wd
+          export ARTIFACTDIR=${PWD}/artifacts
+          mkdir -p ${TMPDIR}
+          mkdir -p ${ARTIFACTDIR}
+          rm -rf ${TMPDIR}/*
+          cp Software/addram/addram ${TMPDIR}
+          cp Software/bootrom/bootrom ${TMPDIR}
+          cp Software/cflash/cflash ${TMPDIR}
+          cd ${TMPDIR}
+          xdftool ${ARTIFACTDIR}/CIDER-Software.adf format CIDER + write addram + write bootrom + write cflash
+          lha -c ${ARTIFACTDIR}/CIDER-Software.lha *
+
       - uses: actions/upload-artifact@master
         with:
           name: software
-          path: |
-            Software/addram/addram
-            Software/bootrom/bootrom
-            Software/cflash/cflash
+          path: artifacts/*
 
   kicad_outputs:
     runs-on: ubuntu-latest
