@@ -186,7 +186,7 @@ void usage() {
     printf("       -E                  -  Erase chip.\n");
     printf("       -v                  -  Verify bank against file or ROM\n");
     printf("       -V                  -  Skip verification after programming.\n");
-    printf("       -0                  -  Select bank 0 - 1st $FO Extended ROM.\n");
-    printf("       -1                  -  Select bank 1 - 1st $F8 Kickstart ROM.\n");
+    printf("       -0                  -  Select bank 0 - $FO Extended ROM.\n");
+    printf("       -1                  -  Select bank 1 - $F8 Kickstart ROM.\n");
     printf("       -s [0|1]            -  Select kickstart slot to work on.\n");
 }
