@@ -8,7 +8,7 @@ A tool to program the Kickstart and IDE Flash of the CIDER board.
            -c                  -  Copy physical ROM to Flash.
            -f <kickstart file> -  Kickstart file to Flash or verify.
            -i                  -  Print Flash device id.
-           -I <ide rom file    -  Flash IDE ROM.
+           -I <ide rom file>   -  Flash IDE ROM.
            -e                  -  Erase bank.
            -E                  -  Erase chip.
            -v                  -  Verify bank against file or ROM
