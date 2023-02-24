@@ -4,9 +4,9 @@
     include lvo/exec_lib.i
 
 
-VERSION   = 0
-REVISION  = 1
-ROMOFFSET = $2000
+VERSION      = 1
+REVISION     = 1
+DRIVEROFFSET = $2000
 
 *******  DiagStart  **************************************************
 DiagStart
@@ -62,11 +62,62 @@ DiagEntry
         move.l  a1,RT_NAME(a4)
         lea.l   IdString(pc),a1
         move.l  a1,RT_IDSTRING(a4)
+        lea.l   Init(pc),a1
+        move.l  a1,RT_INIT(a4)
+        move.l  a0,BoardBase-Romtag(a4)       ; Save board base for later
+        move.l  a3,MyConfigDev-Romtag(a4)     ; Save ConfigDev for later
 
-        move.l  #ROMOFFSET,d0
+        movem.l (sp)+,d2-d7/a2-a6
+        moveq.l #1,d0
+        rts
+
+*******  BootEntry  **************************************************
+**********************************************************************
+
+BootEntry
+        lea     DosName(PC),a1          ; 'dos.library',0
+        jsr     _LVOFindResident(a6)    ; find the DOS resident tag
+        tst.l   d0
+        beq.s   .BadBoot
+        move.l  d0,a0                   ; in order to bootstrap
+        move.l  RT_INIT(A0),a0          ; set vector to DOS INIT
+        jsr     (a0)                    ; and initialize DOS
+.BadBoot
+        rts
+
+**********************************************************************
+*   Chainloader
+*   This module will:
+*     - Load a driver from ROM.
+*     - Initialize it
+*     - Mount the drive(s)
+**********************************************************************
+Romtag
+        dc.w    RTC_MATCHWORD      ; UWORD RT_MATCHWORD
+        dc.l    0                  ; APTR  RT_MATCHTAG
+        dc.l    0                  ; APTR  RT_ENDSKIP
+        dc.b    RTF_COLDSTART      ; UBYTE RT_FLAGS
+        dc.b    VERSION            ; UBYTE RT_VERSION
+        dc.b    0                  ; UBYTE RT_TYPE
+        dc.b    0                  ; BYTE  RT_PRI
+        dc.l    0                  ; APTR  RT_NAME
+        dc.l    0                  ; APTR  RT_IDSTRING
+        dc.l    0                  ; APTR  RT_INIT
+
+BoardBase:   dc.l 0
+MyConfigDev: dc.l 0
+
+Init:   movem.l d2-d7/a2-a6,-(sp)
+
+        move.l  MyConfigDev(PC),a1
+        move.w  cd_Rom+er_InitDiagVec(a1),d1  ; Get rom offset
+        ror.l   #8,d1                         ; Divide by 8 for Z2 Nibble-wide
+        move.l  #DRIVEROFFSET,d0              ; Add to Driver offset
+        add.l   d1,d0
+
+        move.l  BoardBase(PC),a0
         bsr     _relocate
         tst.l   d0
-
         bne.s   .ok
 .err
         *******  Show checkered purple failure screen **************************
@@ -85,62 +136,41 @@ DiagEntry
         moveq.l #0,d0
         movem.l (sp)+,d2-d7/a2-a6
         rts
-.ok
-        move.l  #$1000,d3
 
-        move.l  d0,a2
-.findrt cmpi.w  #$4AFC,(a2)
+* Search for the driver Romtag
+* 
+* Some drivers (Like OktaPus.device) have extra code in front of the Romtag structure so we will search a bit until we find it
+.ok     
+        move.l  #$1000,d3            ; Search the first 4096 words for a Romtag
+        move.l  d0,a1
+.findrt cmpi.w  #$4AFC,(a1)
+        bne.s   .not_rt
+        cmp.l   RT_MATCHTAG(a1),a1   ; Check that the RT_MATCHTAG is correct
         beq.s   .found
-        addq.l  #2,a2
+.not_rt addq.l  #2,a1
         dbra    d3,.findrt
         bra.s   .err
 
-.found  lea.l   Romtag(pc),a4                ; find Romtag in memory
-        move.l  RT_INIT(a2),d0
-        move.l  d0,RT_INIT(a4)
-
-        moveq.l #1,d0           ; indicate "success"
+* Found the driver, initialize it
+.found  
+        moveq.l  #0,d1
+        jsr      _LVOInitResident(A6)
+        tst.l    d0
+        beq.s    .err
 .done
+        moveq.l #0,d0             ; Report "failure" as the chainloader romtag is no longer needed
         movem.l (sp)+,d2-d7/a2-a6
         rts
-
-*******  BootEntry  **************************************************
-**********************************************************************
-
-BootEntry
-        lea     DosName(PC),a1          ; 'dos.library',0
-        jsr     _LVOFindResident(a6)    ; find the DOS resident tag
-        tst.l   d0
-        beq.s   .BadBoot
-        move.l  d0,a0                   ; in order to bootstrap
-        move.l  RT_INIT(A0),a0          ; set vector to DOS INIT
-        jsr     (a0)                    ; and initialize DOS
-.BadBoot
-        rts
-
-*******  Resident Structure  *****************************************
-**********************************************************************
-Romtag
-        dc.w    RTC_MATCHWORD      ; UWORD RT_MATCHWORD
-        dc.l    0                  ; APTR  RT_MATCHTAG
-        dc.l    0                  ; APTR  RT_ENDSKIP
-        dc.b    RTF_COLDSTART      ; UBYTE RT_FLAGS
-        dc.b    VERSION            ; UBYTE RT_VERSION
-        dc.b    0                  ; UBYTE RT_TYPE
-        dc.b    0                  ; BYTE  RT_PRI
-        dc.l    0                  ; APTR  RT_NAME
-        dc.l    0                  ; APTR  RT_IDSTRING
-        dc.l    0                  ; APTR  RT_INIT
 
 *******  Strings referenced in Diag Copy area  **************************
 *************************************************************************
 DevName
-        dc.b    'Oktagon',0                 ; Name string
+        dc.b    'Chainloader',0                 ; Name string
         align 1
 IdString
-        dc.b    'Oktagon',0
+        dc.b    'Chainloader',0
 DosName
-        dc.b    'dos.library',0                    ; DOS library name
+        dc.b    'dos.library',0                 ; DOS library name
         align 1     ; word align
 
     include reloc.S
