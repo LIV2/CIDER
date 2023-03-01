@@ -19,6 +19,11 @@ Also included in the release are the placement and bom files needed for JLCPCB's
 
 Program the CPLD using this [jed file](https://github.com/LIV2/CIDER/raw/main/Binary/CIDER.jed) - You can find instructions on how to do that [here](https://linuxjedi.co.uk/2020/12/01/programming-xilinx-jtag-from-a-raspberry-pi/)
 
+IDE ROM can be programmed by disabling IDE and booting from the latest CIDER-IDE-Update.adf [here](https://github.com/LIV2/CIDER-Software/releases).
+
+## Software
+Various software tools for CIDER are available in the [CIDER-Software](https://github.com/LIV2/CIDER-Software) repository, you can find disk images and .lha files under the Releases section.
+
 
 ## License
 [![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
