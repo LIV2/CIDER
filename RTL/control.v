@@ -55,14 +55,15 @@ always @(posedge CLK or negedge RESET_n)
         if (z2_state == Z2_DATA && !dtack && ctrl_access) begin
             if (!RW) begin
                 if (DIN[12]) begin
-                    flash_progbank  <= flash_progbank | DIN[14];
+                    flash_progbank  <= flash_progbank | DIN[15];
                     otherram_en     <= otherram_en    | DIN[13];
                 end else begin
-                    flash_progbank  <= flash_progbank & ~DIN[14];
+                    flash_progbank  <= flash_progbank & ~DIN[15];
                     otherram_en     <= otherram_en    & ~DIN[13];
                 end
             end else begin
-                DOUT[3] <= flash_enabled;
+                DOUT[3] <= flash_bank;
+                DOUT[2] <= flash_enabled;
                 DOUT[1] <= otherram_en;
             end
             dtack <= 1;

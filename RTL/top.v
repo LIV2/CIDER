@@ -227,7 +227,7 @@ ControlReg ControlReg (
   .OVL (OVL)
 );
 
-assign DBUS[15:12] = (autoconfig_cycle || ctrl_access) && RW && !UDS_n && RESET_n ? (autoconfig_cycle) ? autoconfig_dout : ctrl_dout : 'bZ;
+assign DBUS[15:12] = (autoconfig_cycle || ctrl_access) && RW && !UDS_n && RESET_n ? (autoconfig_cycle) ? autoconfig_dout : {ctrl_dout[3:1], 'bx} : 'bZ;
 
 assign RAMOE_n = !(ram_access && !AS_n && RESET_n);
 
