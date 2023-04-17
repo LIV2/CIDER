@@ -41,8 +41,8 @@ wire ds = !UDS_n || !LDS_n;
 reg ide_dtack;
 reg ide_enabled;
 
-assign IDECS1_n = !(ide_access && ADDR[15:14] == 2'b00 && !ADDR[12]) || !ide_enabled;
-assign IDECS2_n = !(ide_access && ADDR[15:14] == 2'b00 && !ADDR[13]) || !ide_enabled;
+assign IDECS1_n = !(ide_access && ADDR[12]) || !ide_enabled;
+assign IDECS2_n = !(ide_access && ADDR[13]) || !ide_enabled;
 
 assign IDE_ROMEN = !(ide_access && !ide_enabled);
 
