@@ -62,7 +62,7 @@ always @(posedge CLK or negedge RESET_n)
                     otherram_en     <= otherram_en    & ~DIN[13];
                 end
             end else begin
-                DOUT[3] <= flash_bank;
+                //DOUT[3] <= flash_bank;
                 DOUT[2] <= flash_enabled;
                 DOUT[1] <= otherram_en;
             end
