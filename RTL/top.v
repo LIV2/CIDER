@@ -155,6 +155,7 @@ Autoconfig AUTOCONFIG (
   .RAM_EN (~RAM_EN_n),
   .RANGER_EN (ranger_enabled),
   .OTHER_EN (otherram_enabled),
+  .mapram_en (mapram_en),
   .ide_enabled (~IDEEN_n),
   .autoconfig_cycle (autoconfig_cycle),
   .DOUT (autoconfig_dout),
@@ -224,7 +225,8 @@ ControlReg ControlReg (
   .flash_a18  (FLASH_A18),
   .flash_a19  (FLASH_A19),
   .flash_bank (flash_bank),
-  .OVL (OVL)
+  .OVL (OVL),
+  .mapram_en (mapram_en)
 );
 
 assign DBUS[15:12] = (autoconfig_cycle || ctrl_access) && RW && !UDS_n && RESET_n ? (autoconfig_cycle) ? autoconfig_dout : ctrl_dout[3:0] : 'bZ;

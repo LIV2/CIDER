@@ -1,13 +1,12 @@
 PROJECT=CIDER
 PART=XC95144XL-10-TQ100
 WORKDIR=tmp
-SERIAL=0
 PRODID=72
-DEFINES=makedefines SERIAL=32'h${SERIAL} PRODID=${PRODID}
+DEFINES=makedefines PRODID=${PRODID}
 
 CABLE=usb21
 
-CPLDFITFLAGS=-loc on -slew slow -init low -terminate keeper -optimize speed -keepio 
+CPLDFITFLAGS=-loc on -slew slow -init low -terminate keeper -optimize speed -keepio -ignoretspec
 
 .PHONY:	all clean timing
 
