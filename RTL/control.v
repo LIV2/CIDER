@@ -29,6 +29,7 @@
     output flash_a19,
     output [3:0] DOUT,
     output reg otherram_en,
+    output reg mapram_en,
     output reg OVL
 );
 
@@ -37,7 +38,7 @@
 reg dtack;
 reg flash_progbank;
 
-assign flash_a19 = (flash_enabled) ? flash_bank : flash_progbank;
+assign flash_a19 = (flash_enabled && !mapram_en) ? flash_bank : flash_progbank;
 
 // Force Flash to Kick rather than Ext rom during early boot access.
 assign flash_a18 = (OVL && !ADDR[23]) ? 1'b1 : ADDR[19];
@@ -50,6 +51,7 @@ assign DOUT[0] = 0;
 always @(posedge CLK or negedge RESET_n)
     if (!RESET_n) begin
         flash_progbank  <= 0;
+        mapram_en       <= 0;
         otherram_en     <= 0;
         OVL             <= 1;
         dtack           <= 0;
@@ -61,6 +63,7 @@ always @(posedge CLK or negedge RESET_n)
             if (!RW) begin
                 if (DIN[12]) begin
                     flash_progbank  <= flash_progbank | DIN[15];
+                    mapram_en       <= mapram_en      | DIN[14];
                     otherram_en     <= otherram_en    | DIN[13];
                 end else begin
                     flash_progbank  <= flash_progbank & ~DIN[15];

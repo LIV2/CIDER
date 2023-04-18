@@ -25,6 +25,7 @@ module Autoconfig (
     input RANGER_EN,
     input OTHER_EN,
     input maprom_en,
+    input mapram_en,
     input ide_enabled,
     input OVL,
     input [1:0] z2_state,
@@ -41,14 +42,13 @@ module Autoconfig (
 
 `define maprom
 `ifndef makedefines
-`define SERIAL 32'd421
 `define PRODID 8'd72
 `endif
 
 // Autoconfig
 localparam [15:0] mfg_id  = 16'h07DB;
 localparam [7:0]  prod_id = `PRODID;
-localparam [31:0] serial  = `SERIAL;
+localparam [31:0] serial  = 32'd1;
 
 reg ram_configured;
 reg ide_configured;
@@ -167,17 +167,18 @@ assign ide_access      = (ADDR[23:16] == {4'hE, ide_base} && ide_configured);
 
 assign bonus_access    = (ADDR[23:16] >= 8'hA0) && (ADDR[23:16] <= 8'hBD);
 
-assign rom_access      = (ADDR[23:19] == {4'hF,1'b1}) && maprom_en ||
-                         (ADDR[23:20] == 4'b0000) && OVL && RW && maprom_en;
-assign ext_access      = (ADDR[23:19] == {4'hF,1'b0}) && maprom_en;
+assign mapram_access   = (ADDR[23:20] == 4'hF) && (!RW ^ mapram_en);
+assign rom_access      = (ADDR[23:20] == 4'hF) && RW && !mapram_en;
+assign boot_rom_access = (ADDR[23:20] == 4'b0000) && OVL;
 
-assign flash_access    = ((rom_access || ext_access) || (bonus_access && !OTHER_EN));
+assign flash_access    = (((rom_access || boot_rom_access) && maprom_en) || (bonus_access && !OTHER_EN));
 
 assign otherram_access = bonus_access && OTHER_EN;
 
 assign ranger_access   = (ADDR[23:16] >= 8'hC0) && (ADDR[23:16] <= 8'hD7) && RANGER_EN;
 
 assign ram_access      = (ADDR[23:20] >= 4'h2 && ADDR[23:20] <= 4'h9) && ram_configured ||
+                         mapram_access ||
                          otherram_access ||
                          ranger_access;
 
