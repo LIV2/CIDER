@@ -41,12 +41,12 @@ wire ds = !UDS_n || !LDS_n;
 reg ide_dtack;
 reg ide_enabled;
 
-assign IDECS1_n = !(ide_access && ADDR[12]) || !ide_enabled;
-assign IDECS2_n = !(ide_access && ADDR[13]) || !ide_enabled;
+assign IDECS1_n = !(ide_access && ADDR[12] && !ADDR[16]) || !ide_enabled;
+assign IDECS2_n = !(ide_access && ADDR[13] && !ADDR[16]) || !ide_enabled;
 
-assign IDE_ROMEN = !(ide_access && !ide_enabled);
+assign IDE_ROMEN = !(ide_access && (!ide_enabled || ADDR[16]));
 
-assign IDEBUF_OE = !(ide_access && ide_enabled && !AS_n);
+assign IDEBUF_OE = !(ide_access && ide_enabled && !ADDR[16] && !AS_n);
 
 reg [2:0] ds_delay;
 

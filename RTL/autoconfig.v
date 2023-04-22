@@ -54,7 +54,7 @@ reg ram_configured;
 reg ide_configured;
 reg ctl_configured;
 
-reg [3:0] ide_base;
+reg [2:0] ide_base;
 reg [3:0] ctrl_base;
 reg cdtv_configured;
 reg cfgin;
@@ -63,8 +63,8 @@ reg cfgout;
 reg [1:0] ac_state;
 
 localparam ac_ram  = 2'b00,
-           ac_ide  = 2'b01,
-           ac_ctl  = 2'b10,
+           ac_ctl  = 2'b01,
+           ac_ide  = 2'b10,
            ac_done = 2'b11;
 
 assign autoconfig_cycle = (ADDR[23:16] == 8'hE8) && cfgin && !cfgout;
@@ -96,9 +96,10 @@ always @(posedge CLK or negedge RESET_n)
 begin
   if (!RESET_n) begin
     DOUT           <= 'b0;
-    ac_state       <= (RAM_EN) ? ac_ram : ac_ide;
+    ac_state       <= (RAM_EN) ? ac_ram : ac_ctl;
     dtack          <= 0;
-    ide_base       <= 4'h0;
+    ide_base       <= 3'b0;
+    ctrl_base      <= 3'b0;
     ide_configured <= 0;
     ram_configured <= 0;
     ctl_configured <= 0;
@@ -114,8 +115,8 @@ begin
               ac_ctl:  DOUT <= 4'b1100;               // IO
             endcase
           end
-        8'h01:   DOUT <= {3'b000, ac_state == ac_ram ? 1'b0 :  1'b1};                // Size: 8MB : 64KB
-        8'h02:   DOUT <= ~(ac_state == ac_ide ? 4'b0000 : prod_id[7:4]);             // Product number
+        8'h01:   DOUT <= {2'b00,ac_state};           // Size: 8MB, 64K, 128K
+        8'h02:   DOUT <= ~(prodid[ac_state][7:4]);                                   // Product number
         8'h03:   DOUT <= ~(ac_state == ac_ide ? 4'b0110 : {prod_id[3:2], ac_state}); // Product number
         8'h04:   DOUT <= ~{ac_state == ac_ram ? 1 : 1'b0, 3'b000};                   // Bit 1: Add to Z2 RAM space if set
         8'h05:   DOUT <= ~4'b0000;
@@ -151,7 +152,7 @@ begin
       end else if (ADDR[8:1] == 8'h25) begin
           if (ac_state == ac_ide) begin
             ide_configured <= 1'b1;
-            ide_base <= DIN;
+            ide_base <= DIN[3:1];
           end else if (ac_state == ac_ctl) begin
             ctl_configured <= 1'b1;
             ctrl_base <= DIN;
@@ -163,7 +164,7 @@ begin
   end
 end
 
-assign ide_access      = (ADDR[23:16] == {4'hE, ide_base} && ide_configured);
+assign ide_access      = (ADDR[23:17] == {4'hE, ide_base} && ide_configured);
 
 assign bonus_access    = (ADDR[23:16] >= 8'hA0) && (ADDR[23:16] <= 8'hBD);
 
