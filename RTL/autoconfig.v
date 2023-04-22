@@ -69,10 +69,19 @@ localparam ac_ram  = 2'b00,
            ac_done = 2'b11;
 
 wire [7:0] prodid [0:2];
-
 assign prodid[ac_ram] = 8'h72;
 assign prodid[ac_ide] = 8'h6;
 assign prodid[ac_ctl] = 8'd74;
+
+wire [15:0] manufid [0:2];
+assign manufid[ac_ram] = 16'd2011;
+assign manufid[ac_ide] = 16'h082c;
+assign manufid[ac_ctl] = 16'd2011;
+
+wire [3:0] boardSize [0:2];
+assign boardSize[ac_ram] = 4'b0000;
+assign boardSize[ac_ide] = 4'b0010;
+assign boardSize[ac_ctl] = 4'b0001;
 
 assign autoconfig_cycle = (ADDR[23:16] == 8'hE8) && cfgin && !cfgout;
 
@@ -103,7 +112,7 @@ always @(posedge CLK or negedge RESET_n)
 begin
   if (!RESET_n) begin
     DOUT           <= 'b0;
-    ac_state       <= (RAM_EN) ? ac_ram : ac_ctl;
+    ac_state       <= (RAM_EN) ? ac_ram : (ac_ram + 1);
     dtack          <= 0;
     ide_base       <= 3'b0;
     ctrl_base      <= 3'b0;
@@ -117,32 +126,32 @@ begin
         8'h00: 
           begin
             case (ac_state)
-              ac_ram:  DOUT <= 4'b1110;               // Memory / Link to free mem pool
-              ac_ide:  DOUT <= {3'b110, ide_enabled}; // IO / Read from autoboot rom
-              ac_ctl:  DOUT <= 4'b1100;               // IO
+              ac_ram:  DOUT <= 4'b1110;                            // Memory / Link to free mem pool
+              ac_ide:  DOUT <= {3'b110, ide_enabled};              // IO / Read from autoboot rom
+              ac_ctl:  DOUT <= 4'b1100;                            // IO
             endcase
           end
-        8'h01:   DOUT <= {2'b00,ac_state};           // Size: 8MB, 64K, 128K
-        8'h02:   DOUT <= ~(prodid[ac_state][7:4]);                                   // Product number
-        8'h03:   DOUT <= ~(prodid[ac_state][3:0]);                                   // Product number
-        8'h04:   DOUT <= ~{ac_state == ac_ram ? 1 : 1'b0, 3'b000};                   // Bit 1: Add to Z2 RAM space if set
+        8'h01:   DOUT <= {boardSize[ac_state]};                    // Size: 8MB, 64K, 128K
+        8'h02:   DOUT <= ~(prodid[ac_state][7:4]);                 // Product number
+        8'h03:   DOUT <= ~(prodid[ac_state][3:0]);                 // Product number
+        8'h04:   DOUT <= ~{ac_state == ac_ram ? 1 : 1'b0, 3'b000}; // Bit 1: Add to Z2 RAM space if set
         8'h05:   DOUT <= ~4'b0000;
-        8'h08:   DOUT <= ~(mfg_id[15:12]); // Manufacturer ID
-        8'h09:   DOUT <= ~(mfg_id[11:8]);  // Manufacturer ID
-        8'h0A:   DOUT <= ~(mfg_id[7:4]);   // Manufacturer ID
-        8'h0B:   DOUT <= ~(mfg_id[3:0]);   // Manufacturer ID
-        8'h0C:   DOUT <= ~serial[31:28]; // Serial number
-        8'h0D:   DOUT <= ~serial[27:24]; // Serial number
-        8'h0E:   DOUT <= ~serial[23:20]; // Serial number
-        8'h0F:   DOUT <= ~serial[19:16]; // Serial number
-        8'h10:   DOUT <= ~serial[15:12]; // Serial number
-        8'h11:   DOUT <= ~serial[11:8];  // Serial number
-        8'h12:   DOUT <= ~serial[7:4];   // Serial number
-        8'h13:   DOUT <= ~serial[3:0];   // Serial number
-        8'h14:   DOUT <= ~4'h0;          // ROM Offset high byte high nibble
-        8'h15:   DOUT <= ~4'h0;          // ROM Offset high byte low nibble
-        8'h16:   DOUT <= ~4'h0;          // ROM Offset low byte high nibble
-        8'h17:   DOUT <= ~4'h8;          // ROM Offset low byte low nibble
+        8'h08:   DOUT <= ~(manufid[ac_state][15:12]);              // Manufacturer ID
+        8'h09:   DOUT <= ~(manufid[ac_state][11:8]);               // Manufacturer ID
+        8'h0A:   DOUT <= ~(manufid[ac_state][7:4]);                // Manufacturer ID
+        8'h0B:   DOUT <= ~(manufid[ac_state][3:0]);                // Manufacturer ID
+        8'h0C:   DOUT <= ~serial[31:28];                           // Serial number
+        8'h0D:   DOUT <= ~serial[27:24];                           // Serial number
+        8'h0E:   DOUT <= ~serial[23:20];                           // Serial number
+        8'h0F:   DOUT <= ~serial[19:16];                           // Serial number
+        8'h10:   DOUT <= ~serial[15:12];                           // Serial number
+        8'h11:   DOUT <= ~serial[11:8];                            // Serial number
+        8'h12:   DOUT <= ~serial[7:4];                             // Serial number
+        8'h13:   DOUT <= ~serial[3:0];                             // Serial number
+        8'h14:   DOUT <= ~4'h0;                                    // ROM Offset high byte high nibble
+        8'h15:   DOUT <= ~4'h0;                                    // ROM Offset high byte low nibble
+        8'h16:   DOUT <= ~4'h0;                                    // ROM Offset low byte high nibble
+        8'h17:   DOUT <= ~4'h8;                                    // ROM Offset low byte low nibble
         8'h20:   DOUT <= 4'b0;
         8'h21:   DOUT <= 4'b0;
         default: DOUT <= 4'hF;
