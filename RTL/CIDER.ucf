@@ -36,6 +36,7 @@ NET "DQMH"  LOC = "P19"  ;
 NET "DQML"  LOC = "P17"  ;
 NET "DTACK_n"  LOC = "P56"  ;
 NET "ECLK"  LOC = "P71"  ;
+NET "EXTEN_n"  LOC = "P10"  ;
 NET "FLASH_A18"  LOC = "P9"  ;
 NET "FLASH_A19"  LOC = "P96"  ;
 NET "FLASH_BANK_SEL"  LOC = "P8"  ;

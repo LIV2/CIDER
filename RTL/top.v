@@ -28,6 +28,7 @@ module CIDER(
     output DTACK_n,
     output OVR_1_n,
     output OVR_2_n,
+    output EXTEN_n,
 // IDE stuff
     input IDEEN_n,
     input IORDY,
@@ -74,6 +75,8 @@ reg dtack;
 reg ranger_enabled;
 reg flash_enabled;
 reg flash_bank;
+
+assign EXTEN_n = flash_enabled;
 
 wire ram_access;
 wire ide_access;
