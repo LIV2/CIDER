@@ -44,7 +44,7 @@ assign flash_a19 = (flash_enabled && !mapram_en) ? flash_bank : flash_progbank;
 assign flash_a18 = (OVL && !ADDR[23]) ? 1'b1 : ADDR[19];
 
 assign DOUT[3] = flash_bank;
-assign DOUT[2] = flash_enabled;
+assign DOUT[2] = flash_enabled & !mapram_en;
 assign DOUT[1] = otherram_en;
 assign DOUT[0] = 0;
 
