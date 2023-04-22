@@ -23,6 +23,7 @@ module Autoconfig (
     input RESET_n,
     input RAM_EN,
     input RANGER_EN,
+    input ext_en,
     input OTHER_EN,
     input maprom_en,
     input mapram_en,
@@ -46,7 +47,7 @@ module Autoconfig (
 `endif
 
 // Autoconfig
-localparam [15:0] mfg_id  = 16'h07DB;
+localparam [15:0] mfg_id  = 16'd2011;
 localparam [7:0]  prod_id = `PRODID;
 localparam [31:0] serial  = 32'd1;
 
@@ -66,6 +67,12 @@ localparam ac_ram  = 2'b00,
            ac_ctl  = 2'b01,
            ac_ide  = 2'b10,
            ac_done = 2'b11;
+
+wire [7:0] prodid [0:2];
+
+assign prodid[ac_ram] = 8'h72;
+assign prodid[ac_ide] = 8'h6;
+assign prodid[ac_ctl] = 8'd74;
 
 assign autoconfig_cycle = (ADDR[23:16] == 8'hE8) && cfgin && !cfgout;
 
@@ -117,13 +124,13 @@ begin
           end
         8'h01:   DOUT <= {2'b00,ac_state};           // Size: 8MB, 64K, 128K
         8'h02:   DOUT <= ~(prodid[ac_state][7:4]);                                   // Product number
-        8'h03:   DOUT <= ~(ac_state == ac_ide ? 4'b0110 : {prod_id[3:2], ac_state}); // Product number
+        8'h03:   DOUT <= ~(prodid[ac_state][3:0]);                                   // Product number
         8'h04:   DOUT <= ~{ac_state == ac_ram ? 1 : 1'b0, 3'b000};                   // Bit 1: Add to Z2 RAM space if set
         8'h05:   DOUT <= ~4'b0000;
-        8'h08:   DOUT <= ~(ac_state == ac_ide ? 4'h0 : mfg_id[15:12]); // Manufacturer ID
-        8'h09:   DOUT <= ~(ac_state == ac_ide ? 4'h8 : mfg_id[11:8]);  // Manufacturer ID
-        8'h0A:   DOUT <= ~(ac_state == ac_ide ? 4'h2 : mfg_id[7:4]);   // Manufacturer ID
-        8'h0B:   DOUT <= ~(ac_state == ac_ide ? 4'hc : mfg_id[3:0]);   // Manufacturer ID
+        8'h08:   DOUT <= ~(mfg_id[15:12]); // Manufacturer ID
+        8'h09:   DOUT <= ~(mfg_id[11:8]);  // Manufacturer ID
+        8'h0A:   DOUT <= ~(mfg_id[7:4]);   // Manufacturer ID
+        8'h0B:   DOUT <= ~(mfg_id[3:0]);   // Manufacturer ID
         8'h0C:   DOUT <= ~serial[31:28]; // Serial number
         8'h0D:   DOUT <= ~serial[27:24]; // Serial number
         8'h0E:   DOUT <= ~serial[23:20]; // Serial number
@@ -169,7 +176,7 @@ assign ide_access      = (ADDR[23:17] == {4'hE, ide_base} && ide_configured);
 assign bonus_access    = (ADDR[23:16] >= 8'hA0) && (ADDR[23:16] <= 8'hBD);
 
 assign mapram_access   = (ADDR[23:20] == 4'hF) && (!RW ^ mapram_en);
-assign rom_access      = (ADDR[23:20] == 4'hF) && RW && !mapram_en;
+assign rom_access      = (ADDR[23:20] == 4'hF) && (ADDR[19] || ext_en) && RW && !mapram_en;
 assign boot_rom_access = (ADDR[23:20] == 4'b0000) && OVL;
 
 assign flash_access    = (((rom_access || boot_rom_access) && maprom_en) || (bonus_access && !OTHER_EN));

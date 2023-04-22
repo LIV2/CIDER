@@ -28,6 +28,7 @@ module CIDER(
     output DTACK_n,
     output OVR_1_n,
     output OVR_2_n,
+    input  EXTDIS,
     output EXTEN_n,
 // IDE stuff
     input IDEEN_n,
@@ -75,6 +76,7 @@ reg dtack;
 reg ranger_enabled;
 reg flash_enabled;
 reg flash_bank;
+reg ext_en;
 
 assign EXTEN_n = flash_enabled;
 
@@ -85,6 +87,7 @@ wire otherram_enabled;
 
 always @(posedge MEMCLK) begin
   if (!RESET_n) begin
+    ext_en         <= EXTDIS;
     flash_bank     <= FLASH_BANK_SEL;
     flash_enabled  <= ~FLASH_EN_n;
     ranger_enabled <= ~RANGER_EN_n;
@@ -158,6 +161,7 @@ Autoconfig AUTOCONFIG (
   .RAM_EN (~RAM_EN_n),
   .RANGER_EN (ranger_enabled),
   .OTHER_EN (otherram_enabled),
+  .ext_en (ext_en),
   .mapram_en (mapram_en),
   .ide_enabled (~IDEEN_n),
   .autoconfig_cycle (autoconfig_cycle),
