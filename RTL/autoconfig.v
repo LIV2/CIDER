@@ -116,7 +116,7 @@ begin
             endcase
           end
         8'h01:   DOUT <= {2'b00,ac_state};           // Size: 8MB, 64K, 128K
-        8'h02:   DOUT <= ~(prodid[ac_state][7:4]);                                   // Product number
+        8'h02:   DOUT <= ~(ac_state == ac_ide ? 4'b0000 : prod_id[7:4]);                                   // Product number
         8'h03:   DOUT <= ~(ac_state == ac_ide ? 4'b0110 : {prod_id[3:2], ac_state}); // Product number
         8'h04:   DOUT <= ~{ac_state == ac_ram ? 1 : 1'b0, 3'b000};                   // Bit 1: Add to Z2 RAM space if set
         8'h05:   DOUT <= ~4'b0000;
