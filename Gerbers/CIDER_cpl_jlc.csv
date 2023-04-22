@@ -1,6 +1,6 @@
 Designator,Val,Package,Mid X,Mid Y,Rotation,Layer
 "C1","0.1u","C_0603_1608Metric",48.2391,24.4191,180.0000,top
-"C2","47u","CP_EIA-3216-18_Kemet-A",14.4036,2.1316,0.0000,top
+"C2","47u","CP_EIA-3216-18_Kemet-A",13.6623,2.1316,0.0000,top
 "C3","0.1u","C_0603_1608Metric",48.1483,34.0672,135.0000,top
 "C4","0.1u","C_0603_1608Metric",52.1615,38.0804,135.0000,top
 "C5","47u","CP_EIA-3216-18_Kemet-A",39.7809,31.3533,0.0000,top
@@ -53,4 +53,5 @@ Designator,Val,Package,Mid X,Mid Y,Rotation,Layer
 "U8","MT48LC8M16A2P","TSOP-II-54_22.2x10.16mm_P0.8mm",59.1312,9.2710,0.0000,top
 "U9","29F160","TSOP-I-48_18.4x12mm_P0.5mm",26.0840,38.5312,0.0000,top
 "U10","SST39SF010","TSOP-I-32_11.8x8mm_P0.5mm",26.0840,25.3492,180.0000,top
+"U11","74CBT1G384","SOT-23-5",19.0500,1.9812,0.0000,top
 "X1","50MHz","Oscillator_SMD_Abracon_ASE-4Pin_3.2x2.5mm_HandSoldering",49.3606,21.0409,-90.0000,top

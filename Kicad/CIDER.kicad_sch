@@ -824,6 +824,9 @@
     (path "/56208f6c-5bb1-4cf5-b245-158039d3a48a/9ff05fab-792e-4354-b3f3-98a2cc1d598c"
       (reference "J4") (unit 1) (value "Conn_02x22_Odd_Even") (footprint "Connector_PinHeader_2.00mm:PinHeader_2x22_P2.00mm_Vertical")
     )
+    (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/86a03db8-fe75-4e8b-a488-41ec82cff894"
+      (reference "J5") (unit 1) (value "To JP15") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Horizontal")
+    )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/47e0888e-7a5c-4cd3-b13a-9d13abc1c1fd"
       (reference "R1") (unit 1) (value "33") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
@@ -904,6 +907,9 @@
     )
     (path "/d38593d3-05da-4175-a3d2-50fbeb925878/cb4ff43b-6728-429d-a411-3b085b367e2d"
       (reference "U10") (unit 1) (value "SST39SF010") (footprint "Package_SO:TSOP-I-32_11.8x8mm_P0.5mm")
+    )
+    (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/658542fc-6ab9-4804-b345-4bdb31e8e5d0"
+      (reference "U11") (unit 1) (value "74CBT1G384") (footprint "Package_TO_SOT_SMD:SOT-23-5")
     )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/bc556f7d-16ae-469b-81be-29d3de163642"
       (reference "X1") (unit 1) (value "50MHz") (footprint "Oscillator:Oscillator_SMD_Abracon_ASE-4Pin_3.2x2.5mm_HandSoldering")

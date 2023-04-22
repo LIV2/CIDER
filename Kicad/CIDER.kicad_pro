@@ -1,5 +1,6 @@
 {
   "board": {
+    "3dviewports": [],
     "design_settings": {
       "defaults": {
         "board_outline_line_width": 0.09999999999999999,
@@ -139,7 +140,8 @@
       "zones_allow_external_fillets": false,
       "zones_use_no_outline": true
     },
-    "layer_presets": []
+    "layer_presets": [],
+    "viewports": []
   },
   "boards": [],
   "cvpcb": {
@@ -387,10 +389,7 @@
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
         "name": "Power",
-        "nets": [
-          "+3.3V",
-          "GND"
-        ],
+        "nets": [],
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.1778,
@@ -408,46 +407,7 @@
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
         "name": "Ram_Tight",
-        "nets": [
-          "/Amiga+CPLD/BA0",
-          "/Amiga+CPLD/BA1",
-          "/Amiga+CPLD/CKE",
-          "/Amiga+CPLD/DQMH",
-          "/Amiga+CPLD/DQML",
-          "/Amiga+CPLD/MA0",
-          "/Amiga+CPLD/MA1",
-          "/Amiga+CPLD/MA10",
-          "/Amiga+CPLD/MA11",
-          "/Amiga+CPLD/MA2",
-          "/Amiga+CPLD/MA3",
-          "/Amiga+CPLD/MA4",
-          "/Amiga+CPLD/MA5",
-          "/Amiga+CPLD/MA6",
-          "/Amiga+CPLD/MA7",
-          "/Amiga+CPLD/MA8",
-          "/Amiga+CPLD/MA9",
-          "/Amiga+CPLD/RAM_~{W}",
-          "/Amiga+CPLD/~{CAS}",
-          "/Amiga+CPLD/~{RAMCS}",
-          "/Amiga+CPLD/~{RAS}",
-          "/RAM/R_D0",
-          "/RAM/R_D1",
-          "/RAM/R_D10",
-          "/RAM/R_D11",
-          "/RAM/R_D12",
-          "/RAM/R_D13",
-          "/RAM/R_D14",
-          "/RAM/R_D15",
-          "/RAM/R_D2",
-          "/RAM/R_D3",
-          "/RAM/R_D4",
-          "/RAM/R_D5",
-          "/RAM/R_D6",
-          "/RAM/R_D7",
-          "/RAM/R_D8",
-          "/RAM/R_D9",
-          "unconnected-(U8-Pad40)"
-        ],
+        "nets": [],
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.1524,
@@ -459,7 +419,170 @@
     "meta": {
       "version": 2
     },
-    "net_colors": null
+    "net_colors": null,
+    "netclass_assignments": null,
+    "netclass_patterns": [
+      {
+        "netclass": "Power",
+        "pattern": "+3.3V"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "GND"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/BA0"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/BA1"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/CKE"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/DQMH"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/DQML"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA0"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA1"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA10"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA11"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA2"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA3"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA4"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA5"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA6"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA7"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA8"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/MA9"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/RAM_~{W}"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/~{CAS}"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/~{RAMCS}"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/Amiga+CPLD/~{RAS}"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D0"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D1"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D10"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D11"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D12"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D13"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D14"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D15"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D2"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D3"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D4"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D5"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D6"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D7"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D8"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "/RAM/R_D9"
+      },
+      {
+        "netclass": "Ram_Tight",
+        "pattern": "unconnected-(U8-Pad40)"
+      }
+    ]
   },
   "pcbnew": {
     "last_paths": {
