@@ -19,7 +19,7 @@ Compatible with kickstart 1.3 and up.
 * Plug into the diag port in your CDTV
 * Boot from the CIDER-IDE-Update.adf [here](https://github.com/LIV2/CIDER-Software/releases) to install the IDE ROM
 * Download the software tools from the [CIDER-Software](https://github.com/LIV2/cider-software/releases) release page
-* Consult the software [documentation](https://github.com/LIV2/CIDER-Software/blob/main/iderom/README.md)
+* Consult the software [documentation](https://github.com/LIV2/CIDER-Software/blob/main/README.md)
 
 ## Switch settings
 
