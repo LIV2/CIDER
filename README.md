@@ -49,6 +49,9 @@ Various software tools for CIDER are available in the [CIDER-Software](https://g
 * **CDTV doesn't boot from IDE:** The original CDTV bootstrap does not boot from hard disks by default, only the builtin scsi.device, floppy or cdrom.  
 To boot from the HDD I recommend making use of the 2.35 Extended rom from [CDTV Land](https://cdtvland.com/os235/)
 
+## Acknowledgements
+The addition of the Kickstart Flash was inspired by [jbilander](https://github.com/jbilander)'s awesome [Spitfire 2000](https://github.com/jbilander/SF2000)
+
 ## License
 [![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
