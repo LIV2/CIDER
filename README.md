@@ -50,7 +50,8 @@ Various software tools for CIDER are available in the [CIDER-Software](https://g
 To boot from the HDD I recommend making use of the 2.35 Extended rom from [CDTV Land](https://cdtvland.com/os235/)
 
 ## Acknowledgements
-The addition of the Kickstart Flash was inspired by [jbilander](https://github.com/jbilander)'s awesome [Spitfire 2000](https://github.com/jbilander/SF2000)
+The addition of the Kickstart Flash was inspired by [jbilander](https://github.com/jbilander)'s awesome [Spitfire 2000](https://github.com/jbilander/SF2000)  
+Thank you to [Eriond](https://github.com/eriond) for providing the 3D Model of the KEL connector! 
 
 ## License
 [![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
