@@ -103,4 +103,9 @@
   (pad "78" thru_hole circle (at 23.495 2.8575) (size 1.5 1.5) (drill 0.8) (layers *.Cu *.Mask) (tstamp 855d056a-4fe5-4c53-9abb-c9219b7da802))
   (pad "79" thru_hole circle (at 24.765 -2.8575) (size 1.5 1.5) (drill 0.8) (layers *.Cu *.Mask) (tstamp cfa1e290-cde5-45ea-b5cb-8aef540864c7))
   (pad "80" thru_hole circle (at 24.765 0.9525) (size 1.5 1.5) (drill 0.8) (layers *.Cu *.Mask) (tstamp e91c2f79-b35c-4982-98fa-8c0125031f6b))
+  (model "${KIPRJMOD}/Libraries/KEL-8800-080-170SF.pretty/KEL_8801-080-170S-F.stp"
+    (offset (xyz 0 0 0))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
 )
