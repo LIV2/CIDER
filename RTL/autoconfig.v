@@ -182,11 +182,11 @@ end
 
 assign ide_access      = (ADDR[23:17] == {4'hE, ide_base} && ide_configured);
 
-assign bonus_access    = (ADDR[23:16] >= 8'hA0) && (ADDR[23:16] <= 8'hBD);
-
-assign mapram_access   = (ADDR[23:20] == 4'hF) && (!RW ^ mapram_en);
-assign rom_access      = (ADDR[23:20] == 4'hF) && (ADDR[19] || ext_en) && RW && !mapram_en;
-assign boot_rom_access = (ADDR[23:20] == 4'b0000) && OVL;
+assign bonus_access    = (ADDR[23:16] >= 8'hA0) && (ADDR[23:16] <= 8'hBD); // A00000-BDFFFF Bonus RAM
+assign mapram_access   = (ADDR[23:20] == 4'hF) && (!RW ^ mapram_en);       // F00000-FFFFFF Writes when MapRAM disabled or Reads when MapRAM enabled
+assign rom_access      = (ADDR[23:20] == 4'hF) &&                          // F80000-FFFFFF
+                         (ADDR[19] || ext_en) && RW && !mapram_en;         // F00000-F7FFFF (If A500 mode disabled)
+assign boot_rom_access = (ADDR[23:20] == 4'b0000) && OVL;                  // 000000-0FFFFF When OVL = 1
 
 assign flash_access    = (((rom_access || boot_rom_access) && maprom_en) || (bonus_access && !OTHER_EN));
 
