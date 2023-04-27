@@ -48,7 +48,6 @@ module Autoconfig (
 
 // Autoconfig
 localparam [15:0] mfg_id  = 16'd2011;
-localparam [7:0]  prod_id = `PRODID;
 localparam [31:0] serial  = 32'd1;
 
 reg ram_configured;

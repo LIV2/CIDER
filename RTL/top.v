@@ -78,8 +78,11 @@ reg flash_enabled;
 reg flash_bank;
 reg ext_en;
 
+`ifndef PROTO_A
 assign EXTEN_n = flash_enabled || A500;
-
+`else
+assign EXTEN_n = flash_enabled;
+`endif
 wire ram_access;
 wire ide_access;
 
@@ -87,7 +90,9 @@ wire otherram_enabled;
 
 always @(posedge MEMCLK) begin
   if (!RESET_n) begin
+`ifndef PROTO_A
     ext_en         <= ~A500;
+`endif
     flash_bank     <= FLASH_BANK_SEL;
     flash_enabled  <= ~FLASH_EN_n;
     ranger_enabled <= ~RANGER_EN_n;
