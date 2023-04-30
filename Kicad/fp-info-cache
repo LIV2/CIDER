@@ -1,4 +1,4 @@
-19811678034265463
+19813360875416276
 Amiga
 A2000-Coprocessor
 
@@ -55530,6 +55530,13 @@ L_Toroid Vertical series Radial pin pitch 31.80mm  length 67.6mm width 36.1mm Vi
 0
 2
 2
+JLC-Tooling
+jlc_assembly_toolinghole
+
+
+0
+0
+0
 Jumper
 SolderJumper-2_P1.3mm_Bridged2Bar_Pad1.0x1.5mm
 SMD Solder Jumper, 1x1.5mm Pads, 0.3mm gap, bridged with 2 copper strips

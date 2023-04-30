@@ -1,3 +1,4 @@
 (fp_lib_table
   (lib (name "KEL-8800-080-170SF")(type "KiCad")(uri "${KIPRJMOD}/Libraries/KEL-8800-080-170SF.pretty")(options "")(descr ""))
+  (lib (name "JLC-Tooling")(type "KiCad")(uri "${KIPRJMOD}/Libraries/JLC-Tooling.pretty")(options "")(descr ""))
 )
