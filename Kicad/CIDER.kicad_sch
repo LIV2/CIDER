@@ -903,7 +903,7 @@
       (reference "SW1") (unit 1) (value "SW_DIP_x04") (footprint "Button_Switch_SMD:SW_DIP_SPSTx04_Slide_Omron_A6H-4101_W6.15mm_P1.27mm")
     )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/057ba9f9-774c-45d0-a80f-82000cdfc20d"
-      (reference "U1") (unit 1) (value "AZ1117-3.3") (footprint "Package_TO_SOT_SMD:SOT-89-3")
+      (reference "U1") (unit 1) (value "AZ1117CR-3.3") (footprint "Package_TO_SOT_SMD:SOT-89-3")
     )
     (path "/b306c586-f0fb-4048-9e1c-70c4b12a13fa/5bc11567-3672-4c22-881f-d128b76181a0"
       (reference "U2") (unit 1) (value "XC95144XL-TQ100") (footprint "Package_QFP:TQFP-100_14x14mm_P0.5mm")
