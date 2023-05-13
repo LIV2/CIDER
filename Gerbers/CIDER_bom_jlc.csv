@@ -6,6 +6,7 @@
 "Polyfuse 500mA Hold","F1","Fuse_1206_3216Metric","C151162"
 "33","R1","R_0603_1608Metric","C23140"
 "220","R4","R_0603_1608Metric","C22962"
+"1K","R13,R14","R_0603_1608Metric","C21190"
 "10K","R2,R3,R5,R6,R7,R8,R9,R10,R11,R12","R_0603_1608Metric","C25804"
 "22","RN2,RN3,RN4,RN5","R_Array_Convex_4x0603","C107373"
 "10K","RN1","R_Array_Convex_4x0603","C110924"
