@@ -28,7 +28,7 @@ module CIDER(
     output DTACK_n,
     output OVR_1_n,
     output OVR_2_n,
-    input  A500,
+    input  A500_n,
     output EXTEN_n,
 // IDE stuff
     input IDEEN_n,
@@ -54,7 +54,7 @@ module CIDER(
     output [1:0] BA,
     output RAMOE_n,
 // FLASH Stuff
-    input FLASH_BANK_SEL,
+    input FLASH_BANK_SEL_n,
     input FLASH_EN_n,
     output FLASH_CE_n,
     output FLASH_A18,
@@ -78,7 +78,7 @@ reg flash_enabled;
 reg flash_bank;
 reg ext_en;
 
-assign EXTEN_n = flash_enabled || A500;
+assign EXTEN_n = flash_enabled || ~ext_en;
 
 wire ram_access;
 wire ide_access;
@@ -87,8 +87,8 @@ wire otherram_enabled;
 
 always @(posedge MEMCLK) begin
   if (!RESET_n) begin
-    ext_en         <= ~A500;
-    flash_bank     <= FLASH_BANK_SEL;
+    ext_en         <= A500_n;
+    flash_bank     <= ~FLASH_BANK_SEL_n;
     flash_enabled  <= ~FLASH_EN_n;
     ranger_enabled <= ~RANGER_EN_n;
   end
@@ -244,7 +244,7 @@ assign DBUS[15:12] = (autoconfig_cycle || ctrl_access) && RW && !UDS_n && RESET_
 
 assign RAMOE_n = !(ram_access && !AS_n && RESET_n);
 
-assign FLASH_CE_n = !(flash_access && !AS_n);
+assign FLASH_CE_n = ~flash_access;
 
 wire OVR = ((ram_access || ide_access || flash_access) && !AS_n) ? 1'b0 : 1'bZ;
 
