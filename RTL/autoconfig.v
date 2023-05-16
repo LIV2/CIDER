@@ -69,7 +69,7 @@ localparam ac_ram  = 2'b00,
            ac_done = 2'b11;
 
 wire [7:0] prodid [0:2];
-assign prodid[ac_ram] = 8'h72;
+assign prodid[ac_ram] = 8'd72;
 assign prodid[ac_ide] = 8'h6;
 assign prodid[ac_ctl] = 8'd74;
 
