@@ -47,8 +47,7 @@ module Autoconfig (
 `endif
 
 // Autoconfig
-localparam [15:0] mfg_id  = 16'd2011;
-localparam [7:0]  prod_id = `PRODID;
+localparam [15:0] mfg_id  = 16'd5194;
 localparam [31:0] serial  = 32'd1;
 
 reg ram_configured;
@@ -69,19 +68,14 @@ localparam ac_ram  = 2'b00,
            ac_done = 2'b11;
 
 wire [7:0] prodid [0:2];
-assign prodid[ac_ram] = 8'd72;
-assign prodid[ac_ide] = 8'h6;
-assign prodid[ac_ctl] = 8'd74;
-
-wire [15:0] manufid [0:2];
-assign manufid[ac_ram] = 16'd2011;
-assign manufid[ac_ide] = 16'h082c;
-assign manufid[ac_ctl] = 16'd2011;
+assign prodid[ac_ram] = 8'd4;
+assign prodid[ac_ide] = 8'h5;
+assign prodid[ac_ctl] = 8'd6;
 
 wire [3:0] boardSize [0:2];
-assign boardSize[ac_ram] = 4'b0000;
-assign boardSize[ac_ide] = 4'b0010;
-assign boardSize[ac_ctl] = 4'b0001;
+assign boardSize[ac_ram] = 4'b0000; // 8M
+assign boardSize[ac_ide] = 4'b0010; // 128K
+assign boardSize[ac_ctl] = 4'b0001; // 64K
 
 assign autoconfig_cycle = (ADDR[23:16] == 8'hE8) && cfgin && !cfgout;
 
@@ -136,10 +130,10 @@ begin
         8'h03:   DOUT <= ~(prodid[ac_state][3:0]);                 // Product number
         8'h04:   DOUT <= ~{ac_state == ac_ram ? 1 : 1'b0, 3'b000}; // Bit 1: Add to Z2 RAM space if set
         8'h05:   DOUT <= ~4'b0000;
-        8'h08:   DOUT <= ~(manufid[ac_state][15:12]);              // Manufacturer ID
-        8'h09:   DOUT <= ~(manufid[ac_state][11:8]);               // Manufacturer ID
-        8'h0A:   DOUT <= ~(manufid[ac_state][7:4]);                // Manufacturer ID
-        8'h0B:   DOUT <= ~(manufid[ac_state][3:0]);                // Manufacturer ID
+        8'h08:   DOUT <= ~mfg_id[15:12];              // Manufacturer ID
+        8'h09:   DOUT <= ~mfg_id[11:8];               // Manufacturer ID
+        8'h0A:   DOUT <= ~mfg_id[7:4];                // Manufacturer ID
+        8'h0B:   DOUT <= ~mfg_id[3:0];                // Manufacturer ID
         8'h0C:   DOUT <= ~serial[31:28];                           // Serial number
         8'h0D:   DOUT <= ~serial[27:24];                           // Serial number
         8'h0E:   DOUT <= ~serial[23:20];                           // Serial number

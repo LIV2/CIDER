@@ -5,11 +5,11 @@ Design:     CIDER
 Device:     XC95144XL-10-TQ100
 Speed File: Version 3.0
 Program:    Timing Report Generator:  version P.20131013
-Date:       Tue May 16 02:41:23 2023
+Date:       Mon Jun 12 09:31:30 2023
 
 Performance Summary:
 
-Pad to Pad (tPD)                          :         20.1ns (2 macrocell levels)
+Pad to Pad (tPD)                          :         20.5ns (2 macrocell levels)
 Pad 'ADDR<23>' to Pad 'DBUS<12>'                                  
 
 Clock net 'AS_n_sync<1>.Q' path delays:
@@ -20,9 +20,9 @@ Clock net 'AS_n_sync<1>.Q' path delays:
 
 Clock net 'ECLK' path delays:
 
-Clock to Setup (tCYC)                     :         11.0ns (1 macrocell levels)
-Clock to Q, net 'SDRAM/refresh_timer<0>.Q' to TFF Setup(D) at 'SDRAM/refresh_timer<1>.D'(Pterm Clock)
-Target FF drives output net 'SDRAM/refresh_timer<1>'
+Clock to Setup (tCYC)                     :         10.0ns (1 macrocell levels)
+Clock to Q, net 'SDRAM/refresh_timer<0>.Q' to TFF Setup(D) at 'SDRAM/refresh_timer<0>.D'(Pterm Clock)
+Target FF drives output net 'SDRAM/refresh_timer<0>'
 
                           Minimum Clock Period: 14.0ns
                      Maximum Internal Clock Speed: 71.4Mhz
@@ -33,16 +33,16 @@ Clock net 'MEMCLK' path delays:
 Clock Pad to Output Pad (tCO)             :         30.1ns (4 macrocell levels)
 Clock Pad 'MEMCLK' to Output Pad 'DBUS<12>'                               (GCK)
 
-Clock to Setup (tCYC)                     :         20.1ns (2 macrocell levels)
-Clock to Q, net 'mapram_en.Q' to DFF Setup(D) at 'z2_state_FSM_FFd2.D'        (GCK)
+Clock to Setup (tCYC)                     :         20.5ns (2 macrocell levels)
+Clock to Q, net 'AUTOCONFIG/ctrl_base<0>.Q' to DFF Setup(D) at 'z2_state_FSM_FFd2.D'        (GCK)
 Target FF drives output net 'z2_state_FSM_FFd2'
 
-Setup to Clock at the Pad (tSU)           :         16.6ns (1 macrocell levels)
+Setup to Clock at the Pad (tSU)           :         17.0ns (1 macrocell levels)
 Data signal 'ADDR<23>' to DFF D input Pin at 'z2_state_FSM_FFd2.D'
 Clock pad 'MEMCLK'                                                        (GCK)
 
-                          Minimum Clock Period: 20.1ns
-                     Maximum Internal Clock Speed: 49.7Mhz
+                          Minimum Clock Period: 20.5ns
+                     Maximum Internal Clock Speed: 48.7Mhz
                             (Limited by Cycle Time)
 
 --------------------------------------------------------------------------------
@@ -60,10 +60,10 @@ Clock pad 'MEMCLK'                                                        (GCK)
          \                                                                  
   To      \------------------------------------------------------------------
 
-DBUS<12>                20.1  20.1  20.1  20.1  20.1  20.1  20.1  20.1      
-DBUS<13>                20.1  20.1  20.1  20.1  20.1  20.1  20.1  20.1      
-DBUS<14>                20.1  20.1  20.1  20.1  20.1  20.1  20.1  20.1      
-DBUS<15>                20.1  20.1  20.1  20.1  20.1  20.1  20.1  20.1      
+DBUS<12>                20.5  20.5  20.5  20.5  20.5  20.5  20.5  20.5      
+DBUS<13>                20.5  20.5  20.5  20.5  20.5  20.5  20.5  20.5      
+DBUS<14>                20.5  20.5  20.5  20.5  20.5  20.5  20.5  20.5      
+DBUS<15>                20.5  20.5  20.5  20.5  20.5  20.5  20.5  20.5      
 DTACK_n                       20.1  20.1  20.1  20.1  20.1  20.1  20.1  11.0
 FLASH_A18                                 14.5                    14.5      
 FLASH_CE_n                    14.5  14.5  15.5  15.5  15.5  15.5  15.5      
@@ -133,7 +133,7 @@ DQML        10.3
 DTACK_n     23.6
 EXTEN_n     18.0
 FLASH_A18   18.0
-FLASH_A19   18.0
+FLASH_A19   19.0
 FLASH_CE_n  19.0
 IDEBUF_OE   19.0
 IDECS1_n    19.0
@@ -186,17 +186,17 @@ ADDR<10>           6.5
 ADDR<11>           7.5
 ADDR<12>           7.5
 ADDR<13>           7.5
-ADDR<14>           7.5
+ADDR<14>           6.5
 ADDR<15>           7.5
-ADDR<16>          16.6
-ADDR<17>          16.6
-ADDR<18>          16.6
-ADDR<19>          16.6
+ADDR<16>          17.0
+ADDR<17>          17.0
+ADDR<18>          17.0
+ADDR<19>          17.0
 ADDR<1>            7.5
-ADDR<20>          16.6
-ADDR<21>          16.6
-ADDR<22>          16.6
-ADDR<23>          16.6
+ADDR<20>          17.0
+ADDR<21>          17.0
+ADDR<22>          17.0
+ADDR<23>          17.0
 ADDR<2>            7.5
 ADDR<3>            7.5
 ADDR<4>            7.5
@@ -206,19 +206,19 @@ ADDR<7>            7.5
 ADDR<8>            7.5
 ADDR<9>            7.5
 AS_n               6.5
-DBUS<12>           7.9
-DBUS<13>           8.7
-DBUS<14>           7.9
-DBUS<15>           8.7
+DBUS<12>           8.3
+DBUS<13>           7.9
+DBUS<14>           8.3
+DBUS<15>           7.9
 FLASH_BANK_SEL_n   6.5
-FLASH_EN_n         7.5
-IDEEN_n            7.9
-IORDY              7.5
+FLASH_EN_n         6.5
+IDEEN_n            7.5
+IORDY              7.9
 LDS_n              6.5
 RAM_EN_n           7.5
 RANGER_EN_n        6.5
 RESET_n            6.5
-RW                 7.9
+RW                 7.5
 UDS_n              6.5
 
 --------------------------------------------------------------------------------
@@ -252,8 +252,8 @@ UDS_n              6.5
   To                    \------------------------
 
 SDRAM/refresh_timer<0>.D  10.0  10.0  10.0  10.0
-SDRAM/refresh_timer<1>.D  11.0  11.0  11.0  11.0
-SDRAM/refresh_timer<2>.D  11.0  11.0  11.0  10.0
+SDRAM/refresh_timer<1>.D  10.0  10.0  10.0  10.0
+SDRAM/refresh_timer<2>.D  10.0  10.0  10.0  10.0
 SDRAM/refresh_timer<3>.D  10.0  10.0  10.0  10.0
 
 --------------------------------------------------------------------------------
@@ -312,7 +312,7 @@ CAS_n.D
 CKE.CE                                                                       
 CKE.D                                                                        
 ControlReg/dtack.D                                           10.0  11.0  11.0
-ControlReg/flash_progbank.D                                  11.4  11.4  11.4
+ControlReg/flash_progbank.D                                  11.0  11.0  11.0
 DQMH.D                                                                       
 DQML.D                                                                       
 IDE/ds_delay<0>.D                                                            
@@ -351,20 +351,20 @@ SDRAM/timer_tRFC<1>.D
 UDS_n_sync<1>.D                                                              
 autoconf_dtack.D                                                             
 autoconfig_dout<0>.CE                                                        
-autoconfig_dout<0>.D                             11.0  11.0                  
+autoconfig_dout<0>.D                             10.0  11.0                  
 autoconfig_dout<1>.CE                                                        
 autoconfig_dout<1>.D                             11.0  11.0                  
 autoconfig_dout<2>.CE                                                        
 autoconfig_dout<2>.D                             11.0  11.0                  
 autoconfig_dout<3>.CE                                                        
 autoconfig_dout<3>.D                             11.0  11.0                  
-ctrl_dout<1>.D                                               11.4  11.4  11.4
+ctrl_dout<1>.D                                               11.0  11.0  11.0
 dtack.D                              11.0                    11.4  11.4  11.4
 ide_dtack.D                                                                  
-mapram_en.D                                                  11.4  11.4  11.4
+mapram_en.D                                                  11.8  11.8  11.8
 ram_dtack.D                                                                  
 z2_state_FSM_FFd1.D                  10.0                                    
-z2_state_FSM_FFd2.D                        11.0              20.1  20.1  20.1
+z2_state_FSM_FFd2.D                        11.0              20.5  20.5  20.5
 
 --------------------------------------------------------------------------------
                           Clock to Setup (tCYC) (nsec)
@@ -421,14 +421,14 @@ BA<1>.CE
 CAS_n.D                                                                      
 CKE.CE                                                                       
 CKE.D                                                                        
-ControlReg/dtack.D             11.4  11.4                                11.4
-ControlReg/flash_progbank.D    11.0  11.0                                12.2
+ControlReg/dtack.D             11.0  11.4                                11.4
+ControlReg/flash_progbank.D    11.0  10.0                                11.4
 DQMH.D                                                                       
 DQML.D                                                                       
 IDE/ds_delay<0>.D                                                            
 IDE/ds_delay<1>.D                                                            
 IDE/ds_delay<2>.D                                                            
-IDE/ide_enabled.D                          11.4  11.4  11.4  11.4            
+IDE/ide_enabled.D                          11.0  11.0  11.0  11.0            
 IOW_n.D                                                                      
 LDS_n_sync<1>.D                                                              
 MA<0>.D                                                                      
@@ -450,7 +450,7 @@ RAS_n.D
 RW_sync<1>.D                                                                 
 SDRAM/init_done.CE                                                           
 SDRAM/init_refreshed.CE                                                      
-SDRAM/ram_state_FSM_FFd1.D                                         11.0      
+SDRAM/ram_state_FSM_FFd1.D                                         11.4      
 SDRAM/ram_state_FSM_FFd2.D                                         11.0      
 SDRAM/ram_state_FSM_FFd3.D                                         11.0      
 SDRAM/ram_state_FSM_FFd4.D                                         11.0      
@@ -468,13 +468,13 @@ autoconfig_dout<2>.CE
 autoconfig_dout<2>.D                                                         
 autoconfig_dout<3>.CE                                                        
 autoconfig_dout<3>.D                                                         
-ctrl_dout<1>.D                 11.0  11.0                                12.2
+ctrl_dout<1>.D                 11.0  10.0                                11.4
 dtack.D                        11.4  11.8                                    
-ide_dtack.D                                11.0  11.0  11.0  11.0            
-mapram_en.D                    11.4  11.4                                11.4
+ide_dtack.D                                11.4  11.4  11.4  11.4            
+mapram_en.D                    11.8  11.8                                11.8
 ram_dtack.D                                                                  
 z2_state_FSM_FFd1.D                                                          
-z2_state_FSM_FFd2.D            20.1  20.1  19.7  19.7  19.7  19.7  19.7      
+z2_state_FSM_FFd2.D            20.5  20.5  19.7  19.7  19.7  19.7  19.7      
 
 --------------------------------------------------------------------------------
                           Clock to Setup (tCYC) (nsec)
@@ -538,7 +538,7 @@ DQML.D                                     11.0
 IDE/ds_delay<0>.D                                                            
 IDE/ds_delay<1>.D                                10.0                        
 IDE/ds_delay<2>.D                                      10.0                  
-IDE/ide_enabled.D                                                  11.4      
+IDE/ide_enabled.D                                                  11.0      
 IOW_n.D                                                      10.0            
 LDS_n_sync<1>.D                                                          10.0
 MA<0>.D                                                                      
@@ -654,10 +654,10 @@ LDS_n_sync<1>.D
 MA<0>.D                              10.0                                    
 MA<10>.D                                   10.0                              
 MA<11>.D                                         10.0                        
-MA<1>.D                                                10.0                  
+MA<1>.D                                                11.0                  
 MA<2>.D                                                      11.0            
-MA<3>.D                                                            11.0      
-MA<4>.D                                                                  11.0
+MA<3>.D                                                            10.0      
+MA<4>.D                                                                  10.0
 MA<5>.D                                                                      
 MA<6>.D                                                                      
 MA<7>.D                                                                      
@@ -862,7 +862,7 @@ CAS_n.D                                          10.0  10.0  10.0  10.0
 CKE.CE                                           10.0  10.0        10.0      
 CKE.D                                                                        
 ControlReg/dtack.D                                                           
-ControlReg/flash_progbank.D    12.2                                          
+ControlReg/flash_progbank.D    11.4                                          
 DQMH.D                                           10.0  11.0  10.0  11.0      
 DQML.D                                           11.0  11.0  11.0  11.0      
 IDE/ds_delay<0>.D                                                            
@@ -874,10 +874,10 @@ LDS_n_sync<1>.D
 MA<0>.D                                          11.0  11.0  11.0  10.0      
 MA<10>.D                                         11.0  11.0  11.0  11.0      
 MA<11>.D                                         10.0  10.0  10.0  10.0      
-MA<1>.D                                          11.0  11.0  11.0  10.0      
+MA<1>.D                                          11.0  11.0  11.0  11.0      
 MA<2>.D                                          11.0  11.0  11.0  11.0      
-MA<3>.D                                          11.0  11.0  11.0  11.0      
-MA<4>.D                                          11.0  11.0  11.0  11.0      
+MA<3>.D                                          11.0  11.0  11.0  10.0      
+MA<4>.D                                          11.0  11.0  11.0  10.0      
 MA<5>.D                                          11.0  11.0  11.0  11.0      
 MA<6>.D                                          11.0  11.0  11.0  10.0      
 MA<7>.D                                          11.0  11.0  11.0  11.0      
@@ -890,7 +890,7 @@ RAS_n.D                                          11.0  11.0  11.0  11.0
 RW_sync<1>.D                                                                 
 SDRAM/init_done.CE                               10.0  10.0  10.0  10.0      
 SDRAM/init_refreshed.CE              10.0  10.0  10.0  10.0  10.0  10.0      
-SDRAM/ram_state_FSM_FFd1.D     11.4              11.4  11.4  10.0  11.4      
+SDRAM/ram_state_FSM_FFd1.D     11.8              11.8  11.8  10.0  11.8      
 SDRAM/ram_state_FSM_FFd2.D     11.4  11.0        11.4  11.4  11.4  11.4      
 SDRAM/ram_state_FSM_FFd3.D     11.4  10.0  10.0  11.4  11.4  11.4  11.4      
 SDRAM/ram_state_FSM_FFd4.D     11.4  11.0        11.4  11.4  11.4  11.0      
@@ -908,11 +908,11 @@ autoconfig_dout<2>.CE          10.0
 autoconfig_dout<2>.D                                                         
 autoconfig_dout<3>.CE          10.0                                          
 autoconfig_dout<3>.D                                                         
-ctrl_dout<1>.D                 12.2                                          
+ctrl_dout<1>.D                 11.4                                          
 dtack.D                        11.0                                          
 ide_dtack.D                                                                  
-mapram_en.D                    11.4                                          
-ram_dtack.D                    11.0              11.0  11.0  11.0  11.0      
+mapram_en.D                    11.8                                          
+ram_dtack.D                    10.0              10.0  10.0  10.0  10.0      
 z2_state_FSM_FFd1.D                                                          
 z2_state_FSM_FFd2.D            20.1                                          
 
@@ -1000,13 +1000,13 @@ RAS_n.D
 RW_sync<1>.D                                                                 
 SDRAM/init_done.CE                                                           
 SDRAM/init_refreshed.CE                    10.0  10.0                        
-SDRAM/ram_state_FSM_FFd1.D     10.0                                          
+SDRAM/ram_state_FSM_FFd1.D     11.0                                          
 SDRAM/ram_state_FSM_FFd2.D     11.4        11.0  11.0                        
 SDRAM/ram_state_FSM_FFd3.D     11.4        10.0  10.0                        
 SDRAM/ram_state_FSM_FFd4.D     10.0        11.0  11.0                        
 SDRAM/refresh_request<1>.D                                                   
 SDRAM/refreshing.D                   10.0                                    
-SDRAM/timer_tRFC<0>.D                      11.0  11.0                        
+SDRAM/timer_tRFC<0>.D                      11.0  10.0                        
 SDRAM/timer_tRFC<1>.D                      10.0  10.0                        
 UDS_n_sync<1>.D                                        10.0                  
 autoconf_dtack.D                                                   10.0      
@@ -1110,7 +1110,7 @@ RAS_n.D
 RW_sync<1>.D                                                                 
 SDRAM/init_done.CE                                                           
 SDRAM/init_refreshed.CE                                                      
-SDRAM/ram_state_FSM_FFd1.D                       11.0                        
+SDRAM/ram_state_FSM_FFd1.D                       11.4                        
 SDRAM/ram_state_FSM_FFd2.D                       11.0                        
 SDRAM/ram_state_FSM_FFd3.D                       11.4                        
 SDRAM/ram_state_FSM_FFd4.D                       11.0                        
@@ -1123,12 +1123,12 @@ autoconf_dtack.D
 autoconfig_dout<0>.CE                                                        
 autoconfig_dout<0>.D                                                         
 autoconfig_dout<1>.CE                                                        
-autoconfig_dout<1>.D           11.0                                          
+autoconfig_dout<1>.D           10.0                                          
 autoconfig_dout<2>.CE                                                        
 autoconfig_dout<2>.D                 11.0                                    
 autoconfig_dout<3>.CE                                                        
 autoconfig_dout<3>.D                       11.0                              
-ctrl_dout<1>.D                                   11.0                        
+ctrl_dout<1>.D                                   10.0                        
 dtack.D                                          10.0  11.8  11.4  11.0  11.8
 ide_dtack.D                                                                  
 mapram_en.D                                                                  
@@ -1192,7 +1192,7 @@ CAS_n.D
 CKE.CE                                                     
 CKE.D                                            10.0  10.0
 ControlReg/dtack.D                               11.0  11.0
-ControlReg/flash_progbank.D                      11.8  11.8
+ControlReg/flash_progbank.D                      11.4  11.4
 DQMH.D                                                     
 DQML.D                                                     
 IDE/ds_delay<0>.D                                          
@@ -1220,7 +1220,7 @@ RAS_n.D
 RW_sync<1>.D                                               
 SDRAM/init_done.CE                                         
 SDRAM/init_refreshed.CE                                    
-SDRAM/ram_state_FSM_FFd1.D     11.4        11.0  11.0  11.0
+SDRAM/ram_state_FSM_FFd1.D     11.8        11.4  11.0  11.0
 SDRAM/ram_state_FSM_FFd2.D     11.4        11.0  11.0  11.0
 SDRAM/ram_state_FSM_FFd3.D     11.4        11.4  10.0  11.4
 SDRAM/ram_state_FSM_FFd4.D     11.4        11.4  11.0  11.4
@@ -1238,11 +1238,11 @@ autoconfig_dout<2>.CE                            10.0  10.0
 autoconfig_dout<2>.D                                       
 autoconfig_dout<3>.CE                            10.0  10.0
 autoconfig_dout<3>.D                                       
-ctrl_dout<1>.D                                   12.2  11.8
+ctrl_dout<1>.D                                   11.4  11.4
 dtack.D                        11.0  11.8        11.0  11.0
 ide_dtack.D                                                
-mapram_en.D                    11.4              11.4  11.4
-ram_dtack.D                          11.0        11.0  11.0
+mapram_en.D                    11.8              11.8  11.8
+ram_dtack.D                          10.0        10.0  10.0
 z2_state_FSM_FFd1.D                              10.0  10.0
 z2_state_FSM_FFd2.D            20.1  11.4  19.7  11.0  11.4
 
