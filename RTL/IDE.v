@@ -18,8 +18,6 @@
 
 module IDE(
     input [23:12] ADDR,
-    input UDS_n,
-    input LDS_n,
     input RW,
     input AS_n,
     input CLK,
@@ -27,18 +25,12 @@ module IDE(
     input IORDY,
     input ide_enable,
     input RESET_n,
-    output DTACK,
-    output reg IOR_n,
-    output reg IOW_n,
     output IDECS1_n,
     output IDECS2_n,
     output IDEBUF_OE,
     output IDE_ROMEN
     );
 
-wire ds = !UDS_n || !LDS_n;
-
-reg ide_dtack;
 reg ide_enabled;
 
 assign IDECS1_n = !(ide_access && ADDR[12] && !ADDR[16]) || !ide_enabled;
@@ -46,27 +38,7 @@ assign IDECS2_n = !(ide_access && ADDR[13] && !ADDR[16]) || !ide_enabled;
 
 assign IDE_ROMEN = !(ide_access && (!ide_enabled || ADDR[16]));
 
-assign IDEBUF_OE = !(ide_access && ide_enabled && !ADDR[16] && !AS_n);
-
-reg [2:0] ds_delay;
-
-always @(posedge CLK or posedge AS_n) begin
-  if (AS_n) begin  
-    IOW_n      <= 1;
-    IOR_n      <= 1;
-    ide_dtack  <= 0;
-    ds_delay   <= 3'b000;
-  end else begin
-    ds_delay  <= {ds_delay[1:0],ds};
-    ide_dtack <= ide_access && IORDY;
-    
-    IOR_n <= !(RW);
-
-     // De-assert IOW ~100ns after UDS_n/LDS_n asserted
-     // Data is latched on rising edge by drive, deasserting now ensures hold time met
-    IOW_n <= !(!RW && !ds_delay[2]);
-  end
-end
+assign IDEBUF_OE = !(ide_access && ide_enabled && !ADDR[16] && (!AS_n || !RW));
 
 always @(posedge CLK or negedge RESET_n) begin
   if (!RESET_n) begin
@@ -75,6 +47,5 @@ always @(posedge CLK or negedge RESET_n) begin
     if (ide_access && ide_enable && !RW) ide_enabled <= 1;
   end
 end
-assign DTACK = ide_dtack;
 
 endmodule

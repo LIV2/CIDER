@@ -93,6 +93,7 @@ always @(posedge CLK or negedge RESET_n) begin
   end
 end
 
+
 localparam init_poweron        = 4'b0000,
            init_precharge      = init_poweron + 1,
            init_precharge_wait = init_precharge + 1,
@@ -214,6 +215,7 @@ always @(posedge CLK or negedge RESET_n) begin
           if (refresh_request[1]) begin
             ram_state <= start_refresh;
           end else if (RAM_CYCLE && (z2_state == Z2_START || z2_state == Z2_DATA)) begin
+            dtack <= 1;
             ram_state <= active;
           end else begin
             ram_state <= idle;
@@ -226,8 +228,6 @@ always @(posedge CLK or negedge RESET_n) begin
       active:
         begin
           `cmd(cmd_active)
-          if (RW)
-            dtack <= 1; // For Reads we can get DTACK out early giving a little speed boost
           ram_state   <= active_wait;
           MADDR[11:0] <= ADDR[21:10];
           BA[1:0]     <= ADDR[23:22];
@@ -240,8 +240,7 @@ always @(posedge CLK or negedge RESET_n) begin
       active_wait:
         begin
           `cmd(cmd_nop)
-          if (z2_state == Z2_DATA) begin
-            dtack <= 1;
+          if (z2_state >= Z2_DATA) begin
             if (RW)
               ram_state <= data_read;
             else
@@ -281,7 +280,7 @@ always @(posedge CLK or negedge RESET_n) begin
         begin
           `cmd(cmd_nop)
           if (z2_state != Z2_IDLE) begin
-             CKE      <= 0;
+            CKE      <= 0;
             ram_state <= data_hold;
           end else begin
             CKE       <= 1;

@@ -68,11 +68,9 @@ wire ctrl_access;
 wire flash_access;
 wire [3:0] autoconfig_dout;
 wire [3:0] ctrl_dout;
-wire ide_dtack;
 wire ram_dtack;
 wire autoconf_dtack;
 
-reg dtack;
 reg ranger_enabled;
 reg flash_enabled;
 reg flash_bank;
@@ -114,17 +112,23 @@ always @(posedge MEMCLK or negedge RESET_n) begin
 end
 
 reg [1:0] z2_state;
+reg dtack;
 
 always @(posedge MEMCLK or negedge RESET_n) begin
   if (!RESET_n) begin
     z2_state <= Z2_IDLE;
-    dtack    <= 0;
+    dtack <= 0;
   end else begin
+    if (AS_n_sync[1] == 1) begin
+      dtack <= 0;
+    end else if (ram_dtack) begin
+      dtack <= 1;
+    end
+
     case (z2_state)
       Z2_IDLE:
         begin
-          dtack <= 0;
-          if (~AS_n_sync[2] && (ctrl_access || ram_access || ide_access || autoconfig_cycle || flash_access)) begin
+          if (~AS_n_sync[1] && (ctrl_access || ram_access || autoconfig_cycle)) begin
             z2_state <= Z2_START;
           end
         end
@@ -136,14 +140,12 @@ always @(posedge MEMCLK or negedge RESET_n) begin
         end
       Z2_DATA:
         begin
-          if (ctrl_access || ram_dtack || autoconf_dtack || ide_dtack || flash_access) begin
-            dtack <= 1'b1;
+          if (ctrl_access || ram_dtack || autoconf_dtack) begin
             z2_state <= Z2_END;
           end
         end
       Z2_END:
         if (AS_n_sync[1]) begin
-          dtack <= 0;
           z2_state <= Z2_IDLE;
         end
     endcase
@@ -203,15 +205,10 @@ SDRAM SDRAM (
 
 IDE IDE (
   .ADDR (ADDR[23:12]),
-  .UDS_n (UDS_n_sync[1]),
-  .LDS_n (LDS_n_sync[1]),
   .RW (RW),
-  .AS_n (AS_n_sync[2]),
+  .AS_n (AS_n_sync[1]),
   .CLK (MEMCLK),
   .IORDY (IORDY),
-  .DTACK (ide_dtack),
-  .IOR_n (IOR_n),
-  .IOW_n (IOW_n),
   .IDECS1_n (IDECS1_n),
   .IDECS2_n (IDECS2_n),
   .ide_access (ide_access),
@@ -240,17 +237,38 @@ ControlReg ControlReg (
   .mapram_en (mapram_en)
 );
 
+wire ds = !UDS_n || !LDS_n;
+
+reg [2:0] ds_delay;
+
+always @(posedge MEMCLK or negedge ds)
+begin
+  if (!ds) begin
+    ds_delay <= 'b0;
+  end else begin
+    if (ds_delay < 3'd7) begin
+      ds_delay <= ds_delay + 1;
+    end
+  end
+end
+
+
+// IOR assertion delayed by ~100ns after AS_n to meet t1 Address Setup time for IOR
+// IOW asserted in S4, deasserted ~120ns later so that t4 IOW data hold time is met
+assign IOR_n = !(RW && !AS_n && ds && ds_delay > 3'd5);
+assign IOW_n = !(!RW && !AS_n && ds && ds_delay < 3'd6);
+
 assign DBUS[15:12] = (autoconfig_cycle || ctrl_access) && RW && !UDS_n && RESET_n ? (autoconfig_cycle) ? autoconfig_dout : ctrl_dout[3:0] : 'bZ;
 
 assign RAMOE_n = !(ram_access && !AS_n && RESET_n);
 
-assign FLASH_CE_n = ~flash_access;
+assign FLASH_CE_n = ~flash_access || AS_n;
 
 wire OVR = ((ram_access || ide_access || flash_access) && !AS_n) ? 1'b0 : 1'bZ;
 
 assign OVR_1_n = OVR;
 assign OVR_2_n = OVR;
 
-assign DTACK_n = ((ram_access || ide_access || flash_access) && !AS_n && dtack) ? 1'b0 : 1'bZ;
+assign DTACK_n = (((ram_access && dtack) || ide_access || flash_access) && !AS_n) ? 1'b0 : 1'bZ;
 
 endmodule

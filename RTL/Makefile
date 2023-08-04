@@ -6,7 +6,7 @@ DEFINES=makedefines PRODID=${PRODID}
 
 CABLE=usb21
 
-CPLDFITFLAGS=-loc on -slew slow -init low -terminate keeper -optimize speed -keepio -ignoretspec
+CPLDFITFLAGS=-loc on -slew slow -init low -terminate keeper -optimize speed -keepio
 
 .PHONY:	all clean timing
 
