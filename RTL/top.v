@@ -264,7 +264,7 @@ assign RAMOE_n = !(ram_access && !AS_n && RESET_n);
 
 assign FLASH_CE_n = ~flash_access || AS_n;
 
-wire OVR = ((ram_access || ide_access || flash_access) && !AS_n) ? 1'b0 : 1'bZ;
+wire OVR = (ram_access || ide_access || flash_access) ? 1'b0 : 1'bZ;
 
 assign OVR_1_n = OVR;
 assign OVR_2_n = OVR;
