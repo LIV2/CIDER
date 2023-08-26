@@ -23,8 +23,9 @@ IDE + 11.37 Megabyte Fast RAM + Dual Kickstart flash for the CDTV
     * [PCB Order details](#pcb-order-details)
     * [PCB Assembly](#pcb-assembly)
     * [Bill of materials](#bill-of-materials)
-8. [Acknowledgements](#acknowledgements)
-9. [License](#license)
+8. [Pictures](#pictures)
+9. [Acknowledgements](#acknowledgements)
+10. [License](#license)
 
 ## Compatibility
 
@@ -116,6 +117,10 @@ You can use the following options:
 |RN2-5|4|22 Ohm|R Array Convex 4x0603|[Mouser](https://www.mouser.com/ProductDetail/667-EXB-V8N220JV)| |
 |J2-J3|2|Header|2.0mm 1x02 Right-angle| | |
 |J5|1|Header|2.54mm 1x03 Right-angle| | |
+
+## Pictures
+![CDTV_1](Docs/CDTV_1.png?raw=True)
+![CDTV_2](Docs/CDTV_2.png?raw=True)
 
 ## Acknowledgements
 

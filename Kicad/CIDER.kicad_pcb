@@ -1368,9 +1368,9 @@
     (pad "3" thru_hole oval (at 0 5.08 270) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
       (net 187 "Net-(J5-Pad1)") (pinfunction "Pin_3") (pintype "passive") (tstamp e3d0615c-aeba-42e7-a79c-2b3051ed2f04))
     (model "${KICAD6_3DMODEL_DIR}/Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x03_P2.54mm_Horizontal.wrl"
-      (offset (xyz 0 0 0))
+      (offset (xyz 0 -5.08 -1.905))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz 180 0 0))
     )
   )
 
