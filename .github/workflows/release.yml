@@ -21,11 +21,11 @@ jobs:
       - name: Generate outputs
         run: kibot -c kibot/release.kibot.yaml
         working-directory: Kicad
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@v3
         with:
           name: Gerbers
           path: Gerbers/*
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@v3
         with:
           name: kicad
           path: |
